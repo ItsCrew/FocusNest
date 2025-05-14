@@ -61,3 +61,36 @@ body {
 .Play {
   font-size: 30px;
 }
+
+/* Dark and Light Mode Styling */
+
+.Moon {
+  font-size: 30px;
+}
+
+.DarkMode {
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  border: none;
+}
+
+.DarkModeDiv {
+  margin: 8px;
+}
+
+.Sun {
+  font-size: 30px;
+}
+
+.LightMode {
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  border: none;
+}
+
+.LightModeDiv {
+  display: none;
+  margin: 8px;
+}
