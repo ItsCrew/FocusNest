@@ -1,13 +1,14 @@
-// const bars = document.querySelector(".bars")
+const bars = document.querySelector(".bars")
 const SideBar = document.querySelector(".SideBar")
 const DarkModeDiv = document.querySelector(".DarkModeDiv")
 const DarkMode = document.querySelector(".DarkMode")
 const LightModeDiv = document.querySelector(".LightModeDiv")
 const LightMode = document.querySelector(".LightMode")
 
-// bars.addEventListener("click", () => {
-//     SideBar.style.display = "none"
-// })
+bars.addEventListener("click", () => {
+    SideBar.classList.toggle("hide");
+    bars.classList.toggle("shift-left");
+});
 
 // Dark and Light mode logic
 DarkMode.addEventListener("click", () => {

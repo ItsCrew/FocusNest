@@ -9,6 +9,11 @@ body {
   color: #ededed;
 }
 
+body,
+.SideBar {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
 .Layout {
   display: flex;
   height: 100vh;
@@ -24,12 +29,26 @@ body {
   background-color: #2d3c33;
   text-align: center;
   padding-top: 5px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.SideBar.hide {
+  transform: translateX(-100%);
+  opacity: 0;
 }
 
 .bars {
-  margin: 12px;
+  margin: 12px 12px 12px 0;
+  margin-left: 1vw;
   font-size: 25px;
   cursor: pointer;
+  transition: margin-left 0.3s ease;
+}
+
+.bars.shift-left {
+  margin-left: -11vw;
 }
 
 .MainPageContent {
@@ -41,15 +60,41 @@ body {
   align-items: center;
 }
 
+.InputTask {
+  height: 5vh;
+  width: 20vw;
+  padding: 4px;
+}
+
+.AddTask {
+  height: 5vh;
+  width: 3.5vw;
+}
+
 .Tasks {
   display: flex;
   gap: 20px;
   /* border: #a3b18a solid 4px; */
 }
 
-.Timer {
+.TimerContent {
   padding-top: 100px;
   padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.ModeButtons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.ModeButtons button {
+  height: 40px;
+  width: 90px;
 }
 
 .PlayButton {
@@ -60,6 +105,11 @@ body {
 
 .Play {
   font-size: 30px;
+}
+
+.Timer {
+  font-size: 30px;
+  text-align: center;
 }
 
 /* Dark and Light Mode Styling */
