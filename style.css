@@ -5,8 +5,8 @@
 }
 
 body {
-  background-color: #f7f7f7;
-  color: #333333;
+  background-color: #1e2d24;
+  color: #ededed;
 }
 
 .Layout {
@@ -21,7 +21,7 @@ body {
   margin: 4px;
   border: #a3b18a solid 1px;
   border-radius: 10px;
-  background-color: #91c788;
+  background-color: #2d3c33;
   text-align: center;
   padding-top: 5px;
 }
@@ -76,6 +76,7 @@ body {
 }
 
 .DarkModeDiv {
+  display: none;
   margin: 8px;
 }
 
@@ -91,6 +92,5 @@ body {
 }
 
 .LightModeDiv {
-  display: none;
   margin: 8px;
 }
