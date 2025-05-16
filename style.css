@@ -34,6 +34,38 @@ body,
   opacity: 1;
 }
 
+.SideBarOptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 40px;
+  text-decoration: none;
+}
+
+.Navigation {
+  /* display: block; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0;
+  text-decoration: none;
+  background-color: #6b8f71;
+  /* background-color: #94bd9b; */
+  color: #ededed;
+  border: #333333 2px solid;
+  height: 35px;
+  width: 200px;
+  transition: transform 0.3s ease;
+}
+
+.Navigation:hover {
+  transform: translateY(-5px);
+  background-color: #1f2722;
+  transition: background-color 0.1s ease;
+  cursor: pointer;
+}
+
 .SideBar.hide {
   transform: translateX(-100%);
   opacity: 0;
@@ -60,10 +92,16 @@ body,
   align-items: center;
 }
 
+.InputField {
+  position: relative;
+  bottom: 9vw;
+}
+
 .InputTask {
   height: 5vh;
   width: 20vw;
   padding: 4px;
+  display: none;
 }
 
 .AddTask {
