@@ -193,11 +193,15 @@ html.light-mode .Navigation:hover {
   width: 50px;
   border-radius: 100%;
   border: none;
+  cursor: pointer;
 }
 
 .DarkModeDiv {
   display: none;
-  margin: 8px;
+  /* margin: 10px; */
+  position: fixed;
+  top: 20px;
+  right: 20px;
 }
 
 .Sun {
@@ -209,8 +213,32 @@ html.light-mode .Navigation:hover {
   width: 50px;
   border-radius: 100%;
   border: none;
+  cursor: pointer;
 }
 
 .LightModeDiv {
-  margin: 8px;
+  /* margin: 10px; */
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+/* Tasks Page CSS */
+.Plus {
+  font-size: 30px;
+}
+
+.AddTasksButton {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  bottom: 20px;
+  right: 20px;
+}
+
+.AddTasks {
+  margin: 10px;
 }
