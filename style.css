@@ -52,18 +52,49 @@ body,
   text-decoration: none;
   background-color: #6b8f71;
   /* background-color: #94bd9b; */
-  color: #ededed;
+  color: #333333;
   border: #333333 2px solid;
   height: 35px;
   width: 200px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .Navigation:hover {
   transform: translateY(-5px);
-  background-color: #1f2722;
-  transition: background-color 0.1s ease;
+  background-color: #4b6b58;
+  color: #ededed;
+  transition: background-color 0.3s ease;
   cursor: pointer;
+}
+
+body.dark-mode {
+  background-color: #1e2d24;
+  color: #ededed;
+}
+
+body.light-mode {
+  background-color: #f7f7f7;
+  color: #333333;
+}
+
+body.dark-mode .SideBar {
+  background-color: #2d3c33;
+}
+
+body.light-mode .SideBar {
+  background-color: #91c788;
+}
+
+/* Dark mode hover style */
+body.dark-mode .Navigation:hover {
+  background-color: #58725d;
+  color: #ededed;
+}
+
+/* Light mode hover style */
+body.light-mode .Navigation:hover {
+  background-color: #4b6b58;
+  color: #ededed;
 }
 
 .SideBar.hide {
