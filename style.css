@@ -67,32 +67,33 @@ body,
   cursor: pointer;
 }
 
-body.dark-mode {
+/* Theme styles */
+html.dark-mode body {
   background-color: #1e2d24;
   color: #ededed;
 }
 
-body.light-mode {
+html.light-mode body {
   background-color: #f7f7f7;
   color: #333333;
 }
 
-body.dark-mode .SideBar {
+html.dark-mode .SideBar {
   background-color: #2d3c33;
 }
 
-body.light-mode .SideBar {
+html.light-mode .SideBar {
   background-color: #91c788;
 }
 
 /* Dark mode hover style */
-body.dark-mode .Navigation:hover {
+html.dark-mode .Navigation:hover {
   background-color: #58725d;
   color: #ededed;
 }
 
 /* Light mode hover style */
-body.light-mode .Navigation:hover {
+html.light-mode .Navigation:hover {
   background-color: #4b6b58;
   color: #ededed;
 }

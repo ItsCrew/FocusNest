@@ -57,29 +57,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // 
 
     DarkMode.addEventListener("click", () => {
-        document.body.classList.add("dark-mode");
-        document.body.classList.remove("light-mode");
+        document.documentElement.classList.add("dark-mode");
+        document.documentElement.classList.remove("light-mode");
         localStorage.setItem("theme", "dark");
         LightModeDiv.style.display = "block";
         DarkModeDiv.style.display = "none";
     });
 
     LightMode.addEventListener("click", () => {
-        document.body.classList.remove("dark-mode");
-        document.body.classList.add("light-mode");
+        document.documentElement.classList.remove("dark-mode");
+        document.documentElement.classList.add("light-mode");
         localStorage.setItem("theme", "light");
         LightModeDiv.style.display = "none";
         DarkModeDiv.style.display = "block";
     });
 
     if (savedTheme === "light") {
-        document.body.classList.add("light-mode");
-        document.body.classList.remove("dark-mode");
         LightModeDiv.style.display = "none";
         DarkModeDiv.style.display = "block";
     } else {
-        document.body.classList.add("dark-mode");
-        document.body.classList.remove("light-mode");
         LightModeDiv.style.display = "block";
         DarkModeDiv.style.display = "none";
     }
