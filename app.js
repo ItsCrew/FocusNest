@@ -36,39 +36,19 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     });
 
-    Play.addEventListener("click", () => {
-        Pause.style.display = "block"
-        Play.style.display = "none"
-    })
+    if (Play) {
+        Play.addEventListener("click", () => {
+            Pause.style.display = "block"
+            Play.style.display = "none"
+        })
+    }
 
-    Pause.addEventListener("click", () => {
-        Pause.style.display = "none"
-        Play.style.display = "block"
-    })
-
-
-
-    // Dark and Light mode logic
-    // DarkMode.addEventListener("click", () => {
-    //     LightModeDiv.style.display = "block"
-    //     DarkModeDiv.style.display = "none"
-    //     document.body.style.backgroundColor = "#1e2d24"
-    //     document.body.style.color = "#ededed"
-    //     SideBar.style.backgroundColor = "#2d3c33"
-    //     // Navigation.style.backgroundColor = "#6b8f71"
-
-    // })
-
-    // LightMode.addEventListener("click", () => {
-    //     LightModeDiv.style.display = "none"
-    //     DarkModeDiv.style.display = "block"
-    //     document.body.style.backgroundColor = "#f7f7f7"
-    //     document.body.style.color = "#333333"
-    //     SideBar.style.backgroundColor = "#91c788"
-    //     // Navigation.style.backgroundColor = "#94bd9b"
-
-
-    // 
+    if (Pause) {
+        Pause.addEventListener("click", () => {
+            Pause.style.display = "none"
+            Play.style.display = "block"
+        })
+    }
 
     DarkMode.addEventListener("click", () => {
         document.documentElement.classList.add("dark-mode");
