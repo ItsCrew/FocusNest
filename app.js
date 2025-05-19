@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const Timer = document.querySelector(".Timer")
     const ModeButton = document.querySelectorAll(".ModeButton")
     const Navigation = document.querySelector(".Navigation")
+    const Play = document.querySelector(".PlayButton")
+    const Pause = document.querySelector(".PauseButton")
+
 
 
     bars.addEventListener("click", () => {
@@ -21,9 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const ModesMap = {
-        PomodoroMode: "Default",
-        ShortBreak: "Short Break",
-        LongBreak: "Long Break",
+        PomodoroMode: "25:00",
+        ShortBreak: "5:00",
+        LongBreak: "10:00",
     }
 
     ModeButton.forEach(button => {
@@ -32,6 +35,17 @@ document.addEventListener("DOMContentLoaded", () => {
             Timer.textContent = ModesMap[key];
         })
     });
+
+    Play.addEventListener("click", () => {
+        Pause.style.display = "block"
+        Play.style.display = "none"
+    })
+
+    Pause.addEventListener("click", () => {
+        Pause.style.display = "none"
+        Play.style.display = "block"
+    })
+
 
 
     // Dark and Light mode logic

@@ -98,6 +98,16 @@ html.light-mode .Navigation:hover {
   color: #ededed;
 }
 
+html.light-mode .SettingsIcon {
+  color: black;
+  transition: color 0.3s ease;
+}
+
+html.light-mode .Restart {
+  color: black;
+  transition: color 0.3s ease;
+}
+
 .SideBar.hide {
   transform: translateX(-100%);
   opacity: 0;
@@ -124,6 +134,11 @@ html.light-mode .Navigation:hover {
   align-items: center;
 }
 
+.Controls {
+  display: flex;
+  gap: 10px;
+}
+
 .InputField {
   position: relative;
   bottom: 9vw;
@@ -148,8 +163,8 @@ html.light-mode .Navigation:hover {
 }
 
 .TimerContent {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  /* padding-top: 100px;
+  padding-bottom: 100px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -167,19 +182,56 @@ html.light-mode .Navigation:hover {
   width: 90px;
 }
 
+.Timer {
+  font-size: 80px;
+  text-align: center;
+  padding: 20px;
+  padding-top: 10px;
+}
+
 .PlayButton {
   height: 50px;
   width: 100px;
   border: none;
+  cursor: pointer;
+}
+
+.PauseButton {
+  height: 50px;
+  width: 100px;
+  border: none;
+  display: none;
+  cursor: pointer;
 }
 
 .Play {
   font-size: 30px;
 }
 
-.Timer {
+.Pause {
   font-size: 30px;
-  text-align: center;
+}
+
+.RestartButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.Restart {
+  font-size: 30px;
+  color: #ededed;
+}
+
+.SettingsButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.SettingsIcon {
+  font-size: 30px;
+  color: #ededed;
 }
 
 /* Dark and Light Mode Styling */
