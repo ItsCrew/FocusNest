@@ -54,8 +54,9 @@ body,
   /* background-color: #94bd9b; */
   color: #333333;
   border: #333333 2px solid;
-  height: 35px;
-  width: 200px;
+  overflow: hidden;
+  height: 4vh;
+  width: 11vw;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
@@ -293,4 +294,33 @@ html.light-mode .Restart {
 
 .AddTasks {
   margin: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .SideBar {
+    width: 99vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-radius: 0 10px 10px 0;
+  }
+
+  .bars {
+    position: fixed;
+    top: 20px;
+    left: 10px;
+    z-index: 1100;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .bars.shift-left {
+    margin-left: 0;
+  }
+
+  .Navigation {
+    width: 90vw;
+  }
 }
