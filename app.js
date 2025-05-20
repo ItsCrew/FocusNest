@@ -15,12 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const Navigation = document.querySelector(".Navigation")
     const Play = document.querySelector(".PlayButton")
     const Pause = document.querySelector(".PauseButton")
+    const main = document.querySelector(".MainPageContent");
 
 
 
     bars.addEventListener("click", () => {
         SideBar.classList.toggle("hide");
         bars.classList.toggle("shift-left");
+        main.classList.toggle("shifted");
     });
 
     const ModesMap = {

@@ -30,8 +30,8 @@ body,
   text-align: center;
   padding-top: 5px;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  transform: translateX(0);
-  opacity: 1;
+  transform: translateX(-100%);
+  opacity: 0;
 }
 
 .SideBarOptions {
@@ -110,20 +110,34 @@ html.light-mode .Restart {
 }
 
 .SideBar.hide {
-  transform: translateX(-100%);
-  opacity: 0;
+  transform: translateX(0);
+  opacity: 1;
 }
 
-.bars {
+/* .bars {
   margin: 12px 12px 12px 0;
-  margin-left: 1vw;
+  font-size: 25px;
+  cursor: pointer;
+  transition: margin-left 0.3s ease;
+} */
+
+.bars {
+  position: absolute;
+  top: 20px;
+  left: 20px; /* Top-left corner */
+  z-index: 1100;
   font-size: 25px;
   cursor: pointer;
   transition: margin-left 0.3s ease;
 }
 
 .bars.shift-left {
-  margin-left: -11vw;
+  margin-left: 13vw;
+}
+
+.MainPageContent.shifted {
+  margin-left: 13vw;
+  transition: margin-left 0.3s ease;
 }
 
 .MainPageContent {
@@ -133,6 +147,8 @@ html.light-mode .Restart {
   height: 100vh;
   justify-content: center;
   align-items: center;
+  margin-right: 13vw;
+  transition: margin-left 0.3s ease;
 }
 
 .Controls {
@@ -296,7 +312,7 @@ html.light-mode .Restart {
   margin: 10px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
   .SideBar {
     width: 99vw;
     height: 100vh;
