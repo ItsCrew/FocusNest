@@ -16,7 +16,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const Play = document.querySelector(".PlayButton")
     const Pause = document.querySelector(".PauseButton")
     const main = document.querySelector(".MainPageContent");
+    const Restart = document.querySelector(".RestartButton")
 
+    let interval;
+    let timeLeft = 1500;
+
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
+        const second = (seconds % 60).toString().padStart(2, '0');
+        return `${minutes}:${second}`;
+    }
+
+
+    function startTimer() {
+        if (interval) return console.log
+        interval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                interval = null;
+                return;
+            }
+            timeLeft--;
+            Timer.textContent = formatTime(timeLeft);
+        }, 1000);
+    }
+
+    function pauseTimer() {
+        clearInterval(interval);
+        interval = null;
+    }
 
 
     bars.addEventListener("click", () => {
@@ -31,17 +59,28 @@ document.addEventListener("DOMContentLoaded", () => {
         LongBreak: "10:00",
     }
 
+
+
     ModeButton.forEach(button => {
         button.addEventListener("click", () => {
             const key = button.classList[0];
-            Timer.textContent = ModesMap[key];
-        })
+            const timeString = ModesMap[key];
+            const [minutes, seconds] = timeString.split(':').map(Number);
+            timeLeft = minutes * 60 + seconds;
+
+            Timer.textContent = formatTime(timeLeft);
+
+            pauseTimer();
+            Play.style.display = "block";
+            Pause.style.display = "none";
+        });
     });
 
     if (Play) {
         Play.addEventListener("click", () => {
             Pause.style.display = "block"
             Play.style.display = "none"
+            startTimer();
         })
     }
 
@@ -49,8 +88,18 @@ document.addEventListener("DOMContentLoaded", () => {
         Pause.addEventListener("click", () => {
             Pause.style.display = "none"
             Play.style.display = "block"
+            pauseTimer();
         })
     }
+
+    Restart.addEventListener("click", () => {
+        pauseTimer();
+        Timer.textContent = formatTime(timeLeft); // reset current mode time
+        Play.style.display = "block";
+        Pause.style.display = "none";
+    });
+
+    // Light Mode Switch
 
     DarkMode.addEventListener("click", () => {
         document.documentElement.classList.add("dark-mode");
