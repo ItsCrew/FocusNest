@@ -7,5 +7,8 @@
     { "source": "/Settings", "destination": "/Settings.html"},
     { "source": "/Appearence", "destination": "/Appearence.html"},
     { "source": "/Tasks", "destination": "/Tasks.html"}
+  ],
+  "redirects": [
+    { "source": "/", "destination": "/Home.html", "permanent": true }
   ]
 }
