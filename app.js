@@ -17,9 +17,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const Pause = document.querySelector(".PauseButton")
     const main = document.querySelector(".MainPageContent");
     const Restart = document.querySelector(".RestartButton")
+    const Settings = document.querySelector(".SettingsButton")
+    const FilledCircle = document.querySelectorAll(".FilledCircle")
+    const Circle = document.querySelectorAll(".Circle")
 
     let interval;
     let timeLeft = 1500;
+    let Mode = "PomodoroMode";
+    let Completion = 0
+
+    // const ModesMap = {
+    //     PomodoroMode: 25 * 60,
+    //     ShortBreak: 5 * 60,
+    //     LongBreak: 10 * 60
+    // }
+
+    const ModesMap = {
+        PomodoroMode: 0.2 * 60,
+        ShortBreak: 0.3 * 60,
+        LongBreak: 0.1 * 60
+    }
 
     function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -29,11 +46,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     function startTimer() {
-        if (interval) return console.log
+        if (interval) return;
         interval = setInterval(() => {
             if (timeLeft <= 0) {
                 clearInterval(interval);
                 interval = null;
+                console.log(Completion)
+
+                if (Mode === "PomodoroMode" && Completion < 3) {
+                    Completion++;
+                    Mode = "ShortBreak";
+                    CycleUpdater(Completion);
+                } else if (Mode === "PomodoroMode" && Completion === 3) {
+                    Completion = 0;
+                    CycleUpdater(0);
+                    Mode = "LongBreak"
+                } else {
+                    Mode = "PomodoroMode"
+                }
+
+                [PomodoroMode, ShortBreak, LongBreak].forEach(btn => {
+                    btn.classList.remove("mode-active");
+                });
+                document.querySelector(`.${Mode}`).classList.add("mode-active");
+
+                timeLeft = ModesMap[Mode];
+                Timer.textContent = formatTime(timeLeft);
+                Play.style.display = "none";
+                Pause.style.display = "block";
+                startTimer();
                 return;
             }
             timeLeft--;
@@ -46,29 +87,44 @@ document.addEventListener("DOMContentLoaded", () => {
         interval = null;
     }
 
+    function RestartTimer() {
+        pauseTimer();
+        timeLeft = ModesMap[Mode];
+        Timer.textContent = formatTime(timeLeft);
+        Play.style.display = "block";
+        Pause.style.display = "none"
+    }
 
     bars.addEventListener("click", () => {
         SideBar.classList.toggle("hide");
         bars.classList.toggle("shift-left");
         main.classList.toggle("shifted");
+        localStorage.setItem("sidebar-state", SideBar.classList.contains("hide"));
     });
 
-    const ModesMap = {
-        PomodoroMode: "25:00",
-        ShortBreak: "5:00",
-        LongBreak: "10:00",
+    function CycleUpdater(count) {
+        FilledCircle.forEach((icon, index) => {
+            Circle.forEach((icon, index) => {
+                icon.style.opacity = index < count ? "0" : "1";
+                icon.style.display = index < count ? "none" : "Block";
+            })
+            icon.style.opacity = index < count ? "1" : "0";
+            icon.style.display = index < count ? "block" : "none";
+        });
     }
+
 
 
 
     ModeButton.forEach(button => {
         button.addEventListener("click", () => {
             const key = button.classList[0];
-            const timeString = ModesMap[key];
-            const [minutes, seconds] = timeString.split(':').map(Number);
-            timeLeft = minutes * 60 + seconds;
-
+            Mode = key;
+            timeLeft = ModesMap[key];
             Timer.textContent = formatTime(timeLeft);
+
+            ModeButton.forEach(btn => btn.classList.remove("mode-active"));
+            button.classList.add("mode-active");
 
             pauseTimer();
             Play.style.display = "block";
@@ -91,13 +147,12 @@ document.addEventListener("DOMContentLoaded", () => {
             pauseTimer();
         })
     }
+    if (Restart) {
 
-    Restart.addEventListener("click", () => {
-        pauseTimer();
-        Timer.textContent = formatTime(timeLeft); // reset current mode time
-        Play.style.display = "block";
-        Pause.style.display = "none";
-    });
+        Restart.addEventListener("click", () => {
+            RestartTimer();
+        });
+    }
 
     // Light Mode Switch
 
@@ -123,5 +178,11 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         LightModeDiv.style.display = "block";
         DarkModeDiv.style.display = "none";
+    }
+
+    if (localStorage.getItem("sidebar-state") === "true") {
+        SideBar.classList.add("hide");
+        bars.classList.add("shift-left");
+        main.classList.add("shifted");
     }
 });

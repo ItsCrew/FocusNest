@@ -197,6 +197,23 @@ html.light-mode .Restart {
 .ModeButtons button {
   height: 40px;
   width: 90px;
+  border: none;
+}
+
+.mode-active {
+  background-color: #6b6868;
+}
+
+.CycleIndicator {
+  position: relative;
+  bottom: 18px;
+  display: flex;
+  gap: 4px;
+}
+
+.FilledCircle {
+  display: none;
+  opacity: 0;
 }
 
 .Timer {
