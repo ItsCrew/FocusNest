@@ -26,17 +26,17 @@ document.addEventListener("DOMContentLoaded", () => {
     let Mode = "PomodoroMode";
     let Completion = 0
 
-    // const ModesMap = {
-    //     PomodoroMode: 25 * 60,
-    //     ShortBreak: 5 * 60,
-    //     LongBreak: 10 * 60
-    // }
-
     const ModesMap = {
-        PomodoroMode: 0.2 * 60,
-        ShortBreak: 0.3 * 60,
-        LongBreak: 0.1 * 60
+        PomodoroMode: 25 * 60,
+        ShortBreak: 5 * 60,
+        LongBreak: 10 * 60
     }
+
+    // const ModesMap = {
+    //     PomodoroMode: 0.2 * 60,
+    //     ShortBreak: 0.3 * 60,
+    //     LongBreak: 0.1 * 60
+    // }
 
     function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
