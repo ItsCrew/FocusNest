@@ -5,6 +5,10 @@
     { "source": "/", "destination": "/Home.html" }
   ],
   "redirects": [
-    { "source": "/", "destination": "/Home.html", "permanent": true }
+    { "source": "/", "destination": "/Home.html", "permanent": true },
+    { "source": "/Tasks", "destination": "/Soon.html", "permanent": true },
+    { "source": "/Settings", "destination": "/Soon.html", "permanent": true },
+    { "source": "/Appearence", "destination": "/Soon.html", "permanent": true }
+
   ]
 }
