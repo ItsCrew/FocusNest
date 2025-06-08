@@ -20,11 +20,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const Settings = document.querySelector(".SettingsButton")
     const FilledCircle = document.querySelectorAll(".FilledCircle")
     const Circle = document.querySelectorAll(".Circle")
+    const Done = document.querySelector(".alarm-sound")
+
+    // All Pages Side Bar Logic
+
+    bars.addEventListener("click", () => {
+        SideBar.classList.toggle("hide");
+        bars.classList.toggle("shift-left");
+        main.classList.toggle("shifted");
+        localStorage.setItem("sidebar-state", SideBar.classList.contains("hide"));
+    });
+
+    // Timer Logic
 
     let interval;
     let timeLeft = 1500;
     let Mode = "PomodoroMode";
     let Completion = 0
+
+    if (Timer) {
+        Timer.textContent = formatTime(timeLeft);
+    }
 
     const ModesMap = {
         PomodoroMode: 25 * 60,
@@ -56,13 +72,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (Mode === "PomodoroMode" && Completion < 3) {
                     Completion++;
                     Mode = "ShortBreak";
+                    CompletionSound();
                     CycleUpdater(Completion);
                 } else if (Mode === "PomodoroMode" && Completion === 3) {
                     Completion = 0;
                     CycleUpdater(0);
                     Mode = "LongBreak"
+                    CompletionSound();
                 } else {
                     Mode = "PomodoroMode"
+                    CompletionSound();
                 }
 
                 [PomodoroMode, ShortBreak, LongBreak].forEach(btn => {
@@ -79,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             timeLeft--;
             Timer.textContent = formatTime(timeLeft);
-        }, 1000);
+        }, 400);
     }
 
     function pauseTimer() {
@@ -89,18 +108,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function RestartTimer() {
         pauseTimer();
+        Completion = 0;
+        CycleUpdater(0);
         timeLeft = ModesMap[Mode];
         Timer.textContent = formatTime(timeLeft);
         Play.style.display = "block";
         Pause.style.display = "none"
     }
 
-    bars.addEventListener("click", () => {
-        SideBar.classList.toggle("hide");
-        bars.classList.toggle("shift-left");
-        main.classList.toggle("shifted");
-        localStorage.setItem("sidebar-state", SideBar.classList.contains("hide"));
-    });
 
     function CycleUpdater(count) {
         FilledCircle.forEach((icon, index) => {
@@ -111,6 +126,10 @@ document.addEventListener("DOMContentLoaded", () => {
             icon.style.opacity = index < count ? "1" : "0";
             icon.style.display = index < count ? "block" : "none";
         });
+    }
+
+    function CompletionSound() {
+        Done.play();
     }
 
 
@@ -134,8 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (Play) {
         Play.addEventListener("click", () => {
-            Pause.style.display = "block"
-            Play.style.display = "none"
+            Pause.style.display = "block";
+            Play.style.display = "none";
+            document.querySelector(`.${Mode}`).classList.add("mode-active");
             startTimer();
         })
     }
@@ -153,6 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
             RestartTimer();
         });
     }
+
 
     // Light Mode Switch
 

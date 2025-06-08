@@ -55,7 +55,7 @@ body,
   border: #333333 2px solid;
   overflow: hidden;
   height: 4vh;
-  width: 11vw;
+  width: 95%;
   border-radius: 20px;
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
@@ -368,4 +368,84 @@ html.light-mode .Restart {
   .ComingSoon {
     left: 9vw;
   }
+}
+
+/* Settings Page Styling */
+
+.SettingsContent {
+  padding: 0 20px 150px 0;
+}
+
+.TimerSettingsLayot {
+  height: 30vh;
+  width: 50vw;
+  background-color: black;
+  border: none;
+  border: 2px solid #6b8f71;
+  border-radius: 30px;
+  padding: 20px;
+  margin: 5px;
+}
+
+.NotificationsSettingsLayout {
+  height: 30vh;
+  width: 50vw;
+  background-color: black;
+  border: none;
+  border: 2px solid #6b8f71;
+  border-radius: 30px;
+  padding: 20px;
+  margin: 5px;
+  margin-top: 20px;
+}
+
+.Timers {
+  padding: 5px;
+  font-size: 25px;
+}
+
+.TimerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  font-size: 18px;
+  color: white;
+}
+
+.InputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.InputWrapper input {
+  width: 80px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 16px;
+  background-color: #1e1e1e;
+  color: white;
+  border: 1px solid #6b8f71;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.PomodoroModeToggle {
+  padding: 10px 0 0 40px;
+}
+
+/* Hiding the Arrows/Spinners in the input field */
+
+input[type="number"] {
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
 }

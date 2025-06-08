@@ -16,7 +16,8 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pomodoro</title>
+    <!-- Add timer here in the title -->
+    <title>FocusNest</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -53,7 +54,12 @@
             <button class="ShortBreak ModeButton">Short Break</button>
             <button class="LongBreak ModeButton">Long Break</button>
           </div>
-          <p class="Timer">25:00</p>
+          <audio
+            class="alarm-sound"
+            src="Assets/Sounds/Completed.mp3"
+            preload="auto"
+          ></audio>
+          <p class="Timer"></p>
           <div class="CycleIndicator">
             <div class="CycleWrapper">
               <i class="fa-regular fa-circle Circle Indicator"></i>
@@ -83,7 +89,9 @@
               <i class="fa-solid fa-rotate-right Restart"></i>
             </button>
             <button class="SettingsButton">
-              <i class="fa-solid fa-gear SettingsIcon"></i>
+              <a href="Settings.html"
+                ><i class="fa-solid fa-gear SettingsIcon"></i
+              ></a>
             </button>
           </div>
         </div>
