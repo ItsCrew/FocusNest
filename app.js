@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             timeLeft--;
             Timer.textContent = formatTime(timeLeft);
-        }, 400);
+        }, 1000);
     }
 
     function pauseTimer() {
