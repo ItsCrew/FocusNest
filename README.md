@@ -69,7 +69,7 @@ For major changes, open an issue first to discuss what you'd like to contribute.
 
 ## 📄 License
 
-This project is licensed under the [CC BY-NC-ND 4.0 License](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+Distributed under a proprietary license. See LICENSE.md for more information.
 
 ---
 
