@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
 }
 
 body {
@@ -21,7 +22,7 @@ body,
 }
 
 .SideBar {
-  width: 12vw;
+  width: 13vw;
   height: 99vh;
   margin: 4px;
   border: #a3b18a solid 1px;
@@ -29,7 +30,7 @@ body,
   background-color: #2d3c33;
   text-align: center;
   padding-top: 5px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
   transform: translateX(-100%);
   opacity: 0;
 }
@@ -49,12 +50,12 @@ body,
   align-items: center;
   margin: 15px 0;
   text-decoration: none;
-  background-color: #6b8f71;
+  background-color: #bbdbc1;
   /* background-color: #94bd9b; */
   color: #333333;
   border: #333333 2px solid;
   overflow: hidden;
-  height: 4vh;
+  height: 5vh;
   width: 95%;
   border-radius: 20px;
   transition: transform 0.3s ease, background-color 0.3s ease;
@@ -84,7 +85,58 @@ html.dark-mode .SideBar {
 }
 
 html.light-mode .SideBar {
-  background-color: #91c788;
+  background-color: #edffe9;
+}
+
+html.dark-mode .TimerRow {
+  color: #ededed;
+  transition: color 0.5s ease;
+}
+
+html.light-mode .TimerRow {
+  color: #333333;
+  transition: color 0.5s ease;
+}
+
+html.dark-mode .NotificationsRow {
+  color: #ededed;
+  transition: color 0.5s ease;
+}
+
+html.light-mode .NotificationsRow {
+  color: #333333;
+  transition: color 0.5s ease;
+}
+
+html.dark-mode .TimerSettingsLayot {
+  background-color: #101a14;
+  transition: background-color 0.5s ease;
+}
+
+html.light-mode .TimerSettingsLayot {
+  background-color: #eeeeee;
+  transition: background-color 0.5s ease;
+}
+
+html.dark-mode .NotificationsSettingsLayout {
+  background-color: #101a14;
+  transition: background-color 0.5s ease;
+}
+
+html.light-mode .NotificationsSettingsLayout {
+  background-color: #eeeeee;
+  transition: background-color 0.5s ease;
+}
+
+html.dark-mode .InputWrapper input {
+  background-color: #1e1e1e;
+  transition: background-color 0.5s ease;
+}
+
+html.light-mode .InputWrapper input {
+  background-color: #eeeeee;
+  color: #333333;
+  transition: color 0.5s ease, background-color 0.5s ease;
 }
 
 /* Dark mode hover style */
@@ -101,12 +153,12 @@ html.light-mode .Navigation:hover {
 
 html.light-mode .SettingsIcon {
   color: black;
-  transition: color 0.3s ease;
+  transition: color 0.5s ease;
 }
 
 html.light-mode .Restart {
   color: black;
-  transition: color 0.3s ease;
+  transition: color 0.5s ease;
 }
 
 .SideBar.hide {
@@ -114,17 +166,10 @@ html.light-mode .Restart {
   opacity: 1;
 }
 
-/* .bars {
-  margin: 12px 12px 12px 0;
-  font-size: 25px;
-  cursor: pointer;
-  transition: margin-left 0.3s ease;
-} */
-
 .bars {
   position: absolute;
   top: 20px;
-  left: 20px; /* Top-left corner */
+  left: 20px;
   z-index: 1100;
   font-size: 25px;
   cursor: pointer;
@@ -180,8 +225,6 @@ html.light-mode .Restart {
 }
 
 .TimerContent {
-  /* padding-top: 100px;
-  padding-bottom: 100px; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -292,7 +335,6 @@ html.light-mode .Restart {
 
 .DarkModeDiv {
   display: none;
-  /* margin: 10px; */
   position: fixed;
   top: 20px;
   right: 20px;
@@ -311,7 +353,6 @@ html.light-mode .Restart {
 }
 
 .LightModeDiv {
-  /* margin: 10px; */
   position: fixed;
   top: 20px;
   right: 20px;
@@ -373,13 +414,14 @@ html.light-mode .Restart {
 /* Settings Page Styling */
 
 .SettingsContent {
-  padding: 0 20px 150px 0;
+  padding: 0 20px 45px 0; /* For Windows */
+  /* padding: 0 20px 150px 0; For Linux */
 }
 
 .TimerSettingsLayot {
-  height: 30vh;
-  width: 50vw;
-  background-color: black;
+  height: 40vh; /* For Windows */
+  /* height: 32vh; For Linux */
+  width: 45vw;
   border: none;
   border: 2px solid #6b8f71;
   border-radius: 30px;
@@ -388,9 +430,9 @@ html.light-mode .Restart {
 }
 
 .NotificationsSettingsLayout {
-  height: 30vh;
-  width: 50vw;
-  background-color: black;
+  height: 40vh; /* For Windows */
+  /* height: 32vh; For Linux */
+  width: 45vw;
   border: none;
   border: 2px solid #6b8f71;
   border-radius: 30px;
@@ -426,14 +468,37 @@ html.light-mode .Restart {
   border-radius: 10px;
   text-align: center;
   font-size: 16px;
-  background-color: #1e1e1e;
   color: white;
   border: 1px solid #6b8f71;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .PomodoroModeToggle {
-  padding: 10px 0 0 40px;
+  padding: 10px 0 0 10px;
+}
+
+.NotificationSettingsHeading {
+  padding: 5px;
+  font-size: 25px;
+}
+
+.NotificationSettingsContent {
+  padding: 20px 0 0 0;
+}
+
+.NotificationsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 17px 10px;
+  font-size: 18px;
+  color: white;
+}
+
+.ToggleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Hiding the Arrows/Spinners in the input field */
@@ -449,3 +514,54 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* Container for the toggle switches */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.3s;
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: #4caf50;
+}
+
+.toggle-switch input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
+/* @media only screen and (max-height: 500px) {
+  .TimerSettingsLayot {
+    height: 32vh;
+    width: 45vw;
+  }
+} */

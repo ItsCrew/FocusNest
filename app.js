@@ -1,5 +1,41 @@
 document.addEventListener("DOMContentLoaded", () => {
     const savedTheme = localStorage.getItem("theme");
+    const TimeInputs = document.querySelectorAll(".PomodoroTimeInput")
+    const PomododoModeSlider = document.querySelector(".PomododoModeSlider")
+    const BrowserNotificationsSlider = document.querySelector(".BrowserNotificationsSlider")
+
+    const defaultValues = {
+        PomodoroMode: 25,
+        ShortBreak: 5,
+        LongBreak: 10
+    };
+
+    if (PomododoModeSlider) {
+        PomododoModeSlider.checked = localStorage.getItem("CheckBox") === "true";
+    }
+
+    if (BrowserNotificationsSlider) {
+        BrowserNotificationsSlider.checked = localStorage.getItem("isChecked") === "true";
+    }
+
+    if (BrowserNotificationsSlider) {
+        BrowserNotificationsSlider.addEventListener("change", () => {
+            const isCheckedNotifications = BrowserNotificationsSlider.checked;
+            localStorage.setItem("isChecked", isCheckedNotifications);
+        })
+    }
+
+    if (PomododoModeSlider) {
+        PomodoroModeChange();
+    }
+
+    if (PomododoModeSlider) {
+        PomododoModeSlider.addEventListener("change", () => {
+            const isChecked = PomododoModeSlider.checked;
+            localStorage.setItem("CheckBox", isChecked);
+            PomodoroModeChange();
+        })
+    }
 
     const bars = document.querySelector(".bars")
     const SideBar = document.querySelector(".SideBar")
@@ -33,8 +69,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Timer Logic
 
+    const defaultTime = {
+        PomodoroMode: 25,
+        ShortBreak: 5,
+        LongBreak: 10
+    }
+
+    const ModesMap = {
+        PomodoroMode: (parseInt(localStorage.getItem("PomodoroMode")) || defaultTime.PomodoroMode) * 60,
+        ShortBreak: (parseInt(localStorage.getItem("ShortBreak")) || defaultTime.ShortBreak) * 60,
+        LongBreak: (parseInt(localStorage.getItem("LongBreak")) || defaultTime.LongBreak) * 60
+    }
+
     let interval;
-    let timeLeft = 1500;
+    let timeLeft = (parseInt(localStorage.getItem("PomodoroMode")) || defaultTime.PomodoroMode) * 60;
     let Mode = "PomodoroMode";
     let Completion = 0
 
@@ -42,11 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         Timer.textContent = formatTime(timeLeft);
     }
 
-    const ModesMap = {
-        PomodoroMode: 25 * 60,
-        ShortBreak: 5 * 60,
-        LongBreak: 10 * 60
-    }
+
 
     // const ModesMap = {
     //     PomodoroMode: 0.2 * 60,
@@ -61,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+
     function startTimer() {
         if (interval) return;
         interval = setInterval(() => {
@@ -71,15 +116,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (Mode === "PomodoroMode" && Completion < 3) {
                     Completion++;
+                    TimerCompletionNotification();
                     Mode = "ShortBreak";
                     CompletionSound();
                     CycleUpdater(Completion);
                 } else if (Mode === "PomodoroMode" && Completion === 3) {
+                    TimerCompletionNotification();
                     Completion = 0;
                     CycleUpdater(0);
                     Mode = "LongBreak"
                     CompletionSound();
                 } else {
+                    TimerCompletionNotification();
                     Mode = "PomodoroMode"
                     CompletionSound();
                 }
@@ -157,8 +205,14 @@ document.addEventListener("DOMContentLoaded", () => {
             Play.style.display = "none";
             document.querySelector(`.${Mode}`).classList.add("mode-active");
             startTimer();
+
+            // if (Notification.permission === "denied" && localStorage.getItem("isChecked") === "false") {
+            //     alert("Hey there, If you want better Experience. Consider Enabling Notifications.")
+            // }
+            // Need to add a popup which will only come once and not spam to annoy users. It will tell the users to enable notifications for a better experience
         })
     }
+
 
     if (Pause) {
         Pause.addEventListener("click", () => {
@@ -174,6 +228,91 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    function PomodoroModeChange() {
+        TimeInputs.forEach(input => {
+            const type = input.dataset.type;
+            const saved = localStorage.getItem(type);
+
+            if (PomododoModeSlider.checked) {
+                input.value = defaultValues[type]
+                localStorage.setItem(type, defaultValues[type]);
+                input.disabled = true;
+            } else {
+                input.disabled = false;
+
+                if (saved !== null) {
+                    input.value = saved;
+                } else {
+                    input.value = defaultValues[type];
+                    localStorage.setItem(type, defaultValues[type]);
+                }
+
+                if (!input.dataset.listenerAdded) {
+                    input.addEventListener("blur", () => {
+                        let minutes = parseInt(input.value);
+                        if (isNaN(minutes) || minutes < 1) minutes = 1;
+                        if (minutes > 360) minutes = 60;
+                        input.value = minutes;
+                        localStorage.setItem(type, minutes);
+                    });
+                    input.dataset.listenerAdded = true;
+                }
+            }
+        });
+    }
+
+
+    if (BrowserNotificationsSlider) {
+        BrowserNotificationsSlider.addEventListener("change", () => {
+            if (Notification.permission === "default") {
+                Notification.requestPermission().then(permission => {
+                    console.log(permission)
+                })
+            } else {
+                console.log(Notification.permission)
+            }
+            if (Notification.permission !== "granted" || localStorage.getItem("isChecked") === "false") {
+                console.log("Please Make sure to enable permission by going to the website settings")
+                BrowserNotificationsSlider.checked = false;
+                localStorage.setItem("isChecked", false)
+            }
+        });
+    }
+
+    function TimerCompletionNotification() {
+        if (Notification.permission !== "granted" || localStorage.getItem("isChecked") !== "true") return;
+
+        const DeepWorkTime = localStorage.getItem("PomodoroMode")
+        const ShortBreakTime = localStorage.getItem("ShortBreak")
+        const LongBreakTime = localStorage.getItem("LongBreak")
+
+        const NotificationsData = {
+            PomodoroMode: {
+                title: "Break Time! ☕",
+                body: `You worked for ${DeepWorkTime} minutes. Time to relax a bit.`,
+            },
+            ShortBreak: {
+                title: "Break Over! ⏱️",
+                body: `Hope you're refreshed. Get ready for ${DeepWorkTime} minutes of focus.`,
+            },
+            LongBreak: {
+                title: "Long Break Done! 🚀",
+                body: `Back to grind! Next session: ${DeepWorkTime} minutes.`,
+            }
+        };
+        const { title, body } = NotificationsData[Mode] || {
+            title: "Timer Done!",
+            body: "Session completed.",
+        };
+
+        console.log(Mode)
+
+        new Notification(title, {
+            body,
+            silent: true,
+            // icon: "/path/to/icon.png" 
+        });
+    }
 
     // Light Mode Switch
 

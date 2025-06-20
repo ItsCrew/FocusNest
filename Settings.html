@@ -41,12 +41,18 @@
           <h1>General Settings</h1>
           <div class="TimerSettingsLayot">
             <div class="TimerSettings">
-              <p class="Timers">Timers</p>
+              <p class="Timers">Custom Timer</p>
               <hr />
               <div class="TimerRow">
                 <label>Pomodoro</label>
                 <div class="InputWrapper">
-                  <input type="number" class="PomodoroTimeInput" />
+                  <input
+                    type="number"
+                    class="PomodoroTimeInput"
+                    data-type="PomodoroMode"
+                    min="1"
+                    max="360"
+                  />
                   <span>Minutes</span>
                 </div>
               </div>
@@ -54,7 +60,13 @@
               <div class="TimerRow">
                 <label>Short Break</label>
                 <div class="InputWrapper">
-                  <input type="number" class="PomodoroTimeInput" />
+                  <input
+                    type="number"
+                    class="PomodoroTimeInput"
+                    data-type="ShortBreak"
+                    min="1"
+                    max="60"
+                  />
                   <span>Minutes</span>
                 </div>
               </div>
@@ -62,25 +74,60 @@
               <div class="TimerRow">
                 <label>Long Break</label>
                 <div class="InputWrapper">
-                  <input type="number" class="PomodoroTimeInput" />
+                  <input
+                    type="number"
+                    class="PomodoroTimeInput"
+                    data-type="LongBreak"
+                    min="1"
+                    max="60"
+                  />
                   <span>Minutes</span>
                 </div>
               </div>
 
               <div class="PomodoroModeToggle">
-                <button>Enable</button>
-                Enable Pomodoro Mode so you can have things
+                <!-- <button></button> -->
+                <label class="toggle-switch">
+                  <input type="checkbox" class="PomododoModeSlider" />
+                  <span class="slider"></span>
+                </label>
+                Use the Pomodoro Mode:- Deep Work for 25 minutes -> Short Break,
+                repated for 4 times then One Long Break. Number of Pomodoros
+                complete is indicated with dots under The Timer
               </div>
             </div>
           </div>
-          <div class="NotificationsSettingsLayout">e</div>
+          <div class="NotificationsSettingsLayout">
+            <div class="NotificationSettings">
+              <p class="NotificationSettingsHeading">Alerts & Sounds</p>
+              <hr />
+              <div class="NotificationsRow">
+                <label>Browser Notifications</label>
+                <div class="ToggleWrapper">
+                  <label class="toggle-switch">
+                    <input type="checkbox" class="BrowserNotificationsSlider" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="NotificationsRow">
+                <label>Sounds</label>
+                <div class="ToggleWrapper">Coming Soon</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="DarkModeDiv">
-        <button class="DarkMode"><i class="fa-solid fa-moon Moon"></i></button>
+        <button class="DarkMode" title="Dark Mode">
+          <i class="fa-solid fa-moon Moon"></i>
+        </button>
       </div>
       <div class="LightModeDiv">
-        <button class="LightMode"><i class="fa-solid fa-sun Sun"></i></button>
+        <button class="LightMode" title="Light Mode">
+          <i class="fa-solid fa-sun Sun"></i>
+        </button>
       </div>
     </div>
 
