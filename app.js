@@ -267,6 +267,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (Notification.permission === "default") {
                 Notification.requestPermission().then(permission => {
                     console.log(permission)
+                    if (Notification.permission == "granted") {
+                        BrowserNotificationsSlider.checked = true;
+                        localStorage.setItem("isChecked", true)
+                    }
                 })
             } else {
                 console.log(Notification.permission)
