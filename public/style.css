@@ -381,48 +381,6 @@ html.light-mode .Restart {
   margin: 10px;
 }
 
-@media only screen and (max-width: 900px) {
-  .SideBar {
-    width: 99vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    border-radius: 0 10px 10px 0;
-    margin: 0;
-  }
-
-  .bars {
-    position: fixed;
-    top: 20px;
-    left: 10px;
-    z-index: 1100;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-
-  .bars.shift-left {
-    margin-left: 0;
-  }
-
-  .MainPageContent.shifted {
-    margin-left: 0;
-  }
-
-  .Navigation {
-    width: 90vw;
-  }
-
-  .ComingSoon {
-    left: 9vw;
-  }
-
-  .TimerContent {
-    margin-left: 51px;
-  }
-}
-
 @media only screen and (max-width: 1080px) {
   .TimerContent {
     margin: 0 0 210px 95px;
@@ -595,6 +553,48 @@ input::-webkit-inner-spin-button {
 
   .SettingsContent {
     padding: 0 0 250px 60px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .SideBar {
+    width: 99vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-radius: 0 10px 10px 0;
+    margin: 0;
+  }
+
+  .bars {
+    position: fixed;
+    top: 20px;
+    left: 10px;
+    z-index: 1100;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .bars.shift-left {
+    margin-left: 0;
+  }
+
+  .MainPageContent.shifted {
+    margin-left: 0;
+  }
+
+  .Navigation {
+    width: 90vw;
+  }
+
+  .ComingSoon {
+    left: 9vw;
+  }
+
+  .TimerContent {
+    margin-left: 51px;
   }
 }
 
