@@ -1,0 +1,43 @@
+# Auto-detect text files and normalize line endings to LF in the repo
+* text=auto
+
+# Shell scripts and config files should always use LF
+*.sh     text eol=lf
+*.bash   text eol=lf
+*.zsh    text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.env    text eol=lf
+*.conf   text eol=lf
+
+# Windows batch files and PowerShell scripts use CRLF
+*.bat    text eol=crlf
+*.cmd    text eol=crlf
+*.ps1    text eol=crlf
+
+# Source code files (force normalization, LF preferred)
+*.c      text eol=lf
+*.cpp    text eol=lf
+*.h      text eol=lf
+*.py     text eol=lf
+*.js     text eol=lf
+*.ts     text eol=lf
+*.java   text eol=lf
+*.rb     text eol=lf
+*.go     text eol=lf
+*.rs     text eol=lf
+
+# Mark binary files to avoid any line ending normalization
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.pdf    binary
+*.zip    binary
+*.exe    binary
+*.dll    binary
+
+# Markdown and text files should use LF
+*.md     text eol=lf
+*.txt    text eol=lf

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
 * {
   padding: 0;
   margin: 0;
@@ -8,6 +10,7 @@
 body {
   background-color: #1e2d24;
   color: #ededed;
+  font-family: "Inter", "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
 }
 
 body,
@@ -387,6 +390,7 @@ html.light-mode .Restart {
     left: 0;
     z-index: 1000;
     border-radius: 0 10px 10px 0;
+    margin: 0;
   }
 
   .bars {
@@ -402,12 +406,26 @@ html.light-mode .Restart {
     margin-left: 0;
   }
 
+  .MainPageContent.shifted {
+    margin-left: 0;
+  }
+
   .Navigation {
     width: 90vw;
   }
 
   .ComingSoon {
     left: 9vw;
+  }
+
+  .TimerContent {
+    margin-left: 51px;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  .TimerContent {
+    margin: 0 0 210px 95px;
   }
 }
 
@@ -419,8 +437,10 @@ html.light-mode .Restart {
 }
 
 .TimerSettingsLayot {
-  height: 40vh; /* For Windows */
+  /* height: 40vh; For Windows */
   /* height: 32vh; For Linux */
+  height: auto;
+  min-height: 300px;
   width: 45vw;
   border: none;
   border: 2px solid #6b8f71;
@@ -430,8 +450,10 @@ html.light-mode .Restart {
 }
 
 .NotificationsSettingsLayout {
-  height: 40vh; /* For Windows */
+  /* height: 40vh; For Windows */
   /* height: 32vh; For Linux */
+  height: auto;
+  min-height: 300px;
   width: 45vw;
   border: none;
   border: 2px solid #6b8f71;
@@ -559,9 +581,36 @@ input::-webkit-inner-spin-button {
   transform: translateX(26px);
 }
 
-/* @media only screen and (max-height: 500px) {
+@media only screen and (max-width: 1080px) {
   .TimerSettingsLayot {
-    height: 32vh;
-    width: 45vw;
+    height: auto;
+    min-height: 300px;
+    width: 85vw;
   }
-} */
+  .NotificationsSettingsLayout {
+    height: auto;
+    min-height: 300px;
+    width: 85vw;
+  }
+
+  .SettingsContent {
+    padding: 0 0 250px 60px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .TimerSettingsLayot {
+    height: auto;
+    min-height: 300px;
+    width: 85vw;
+  }
+  .NotificationsSettingsLayout {
+    height: auto;
+    min-height: 200px;
+    width: 85vw;
+  }
+
+  .SettingsContent {
+    padding: 50px 10px 40px 25px;
+  }
+}
