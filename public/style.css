@@ -26,6 +26,8 @@ body,
 
 .SideBar {
   width: 13vw;
+  max-width: 13vw;
+  min-width: 13vw;
   height: 99vh;
   margin: 4px;
   border: #a3b18a solid 1px;
@@ -131,6 +133,36 @@ html.light-mode .NotificationsSettingsLayout {
   transition: background-color 0.5s ease;
 }
 
+html.dark-mode .AppearanceLayout {
+  background-color: #101a14;
+  transition: background-color 0.5s ease;
+}
+
+html.light-mode .AppearanceLayout {
+  background-color: #eeeeee;
+  transition: background-color 0.5s ease;
+}
+
+html.dark-mode .TasksLayout {
+  background-color: #101a14;
+  transition: background-color 0.5s ease;
+}
+
+html.light-mode .TasksLayout {
+  background-color: #eeeeee;
+  transition: background-color 0.5s ease;
+}
+
+html.dark-mode .ModalContent {
+  background-color: #203829;
+  transition: background-color 0.5s ease;
+}
+
+html.light-mode .ModalContent {
+  background-color: #eeeeee;
+  transition: background-color 0.5s ease;
+}
+
 html.dark-mode .InputWrapper input {
   background-color: #1e1e1e;
   transition: background-color 0.5s ease;
@@ -140,6 +172,26 @@ html.light-mode .InputWrapper input {
   background-color: #eeeeee;
   color: #333333;
   transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+html.light-mode .DropDownSwticher {
+  background-color: #eeeeee;
+  color: #333333;
+  transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+html.dark-mode .DropDownSwticher {
+  transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+html.light-mode .DropDownOptions {
+  background-color: #eeeeee;
+  color: #333333;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+html.dark-mode .DropDownOptions {
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 /* Dark mode hover style */
@@ -152,6 +204,10 @@ html.dark-mode .Navigation:hover {
 html.light-mode .Navigation:hover {
   background-color: #4b6b58;
   color: #ededed;
+}
+
+html.light-mode .DropDownOptions:hover {
+  background-color: #58725d;
 }
 
 html.light-mode .SettingsIcon {
@@ -182,6 +238,22 @@ html.light-mode .Restart {
 .bars.shift-left {
   margin-left: 13vw;
 }
+
+.LightMode:hover i {
+  transform: rotate(180deg);
+}
+
+.LightMode i {
+  transition: transform 0.3s ease;
+}
+
+/* .DarkMode:hover i {
+  transform: rotate(180deg);
+}
+
+.DarkMode i {
+  transition: transform 0.3s ease;
+} */
 
 .MainPageContent.shifted {
   margin-left: 13vw;
@@ -241,9 +313,12 @@ html.light-mode .Restart {
 }
 
 .ModeButtons button {
-  height: 40px;
-  width: 90px;
+  height: 55px;
+  width: 120px;
   border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .mode-active {
@@ -270,16 +345,18 @@ html.light-mode .Restart {
 }
 
 .PlayButton {
-  height: 50px;
-  width: 100px;
+  height: 55px;
+  width: 120px;
   border: none;
+  border-radius: 15px;
   cursor: pointer;
 }
 
 .PauseButton {
-  height: 50px;
-  width: 100px;
+  height: 55px;
+  width: 120px;
   border: none;
+  border-radius: 15px;
   display: none;
   cursor: pointer;
 }
@@ -366,25 +443,8 @@ html.light-mode .Restart {
   font-size: 30px;
 }
 
-.AddTasksButton {
-  position: absolute;
-  height: 50px;
-  width: 50px;
-  border-radius: 100%;
-  border: none;
-  cursor: pointer;
-  bottom: 20px;
-  right: 20px;
-}
-
 .AddTasks {
   margin: 10px;
-}
-
-@media only screen and (max-width: 1080px) {
-  .TimerContent {
-    margin: 0 0 210px 95px;
-  }
 }
 
 /* Settings Page Styling */
@@ -539,6 +599,604 @@ input::-webkit-inner-spin-button {
   transform: translateX(26px);
 }
 
+/* Appearance Page Styling */
+
+.AppearanceContent {
+  padding: 0 20px 45px 0;
+}
+
+.AppearanceLayout {
+  height: auto;
+  min-height: 550px;
+  width: 60vw;
+  border: none;
+  border: 2px solid #6b8f71;
+  border-radius: 30px;
+  padding: 20px;
+  padding-top: 40px;
+  margin: 5px;
+}
+
+.DropdownLabel {
+  font-size: 18px;
+}
+
+.DropDownSwticher {
+  position: relative;
+  width: 20vw;
+  background-color: #2d3c33;
+  border: 1px solid #6b8f71;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.SelectedOption {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.DropDownSwticher.open .arrow {
+  transform: rotate(180deg);
+}
+
+.DropDownSwticher.close .arrow {
+  transform: rotate(180deg);
+}
+
+.DropDownToggle {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #1e2d24;
+  border: 1px solid #6b8f71;
+  border-radius: 8px;
+  margin-top: 4px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+}
+
+.DropDownOptions {
+  padding: 10px 15px;
+  transition: background-color 0.2s ease;
+}
+
+.DropDownOptions:hover {
+  background-color: #4b6b58;
+}
+
+.hidden {
+  display: none;
+}
+
+.AppearanceSpacer {
+  margin: 15px;
+}
+
+.ResetDefault {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+body.gradient-1 {
+  background: linear-gradient(to right, #1e3c72, #2a5298);
+}
+
+body.gradient-2 {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+}
+
+body.gradient-3 {
+  background: linear-gradient(to right, #2c3e50, #4ca1af);
+}
+
+#ColorPicker {
+  display: none;
+}
+
+.AddGradientBackground {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.GradientModalContent {
+  background: #2d3c33;
+  border: 2px solid #6b8f71;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(30, 45, 36, 0.4);
+  padding: 32px 24px 24px 24px;
+  max-width: 400px;
+  width: 90vw;
+  color: #ededed;
+  animation: fadeIn 0.3s;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.GradientModalOptions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.GradientModalOptions select,
+.GradientModalOptions input[type="color"] {
+  background: #1e2d24;
+  color: #ededed;
+  border: 1.5px solid #6b8f71;
+  border-radius: 8px;
+  /* padding: 8px; */
+  margin-bottom: 12px;
+  font-size: 1rem;
+  width: 180px;
+  transition: border 0.2s;
+}
+
+.GradientModalOptions select:focus,
+.GradientModalOptions input[type="color"]:focus {
+  border: 2px solid #a3b18a;
+  outline: none;
+}
+
+.GradientModalColourButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.GradientApplyColour {
+  height: 45px;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4f6f56;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.GradientApplyColour:hover {
+  background-color: #5e7f64;
+  transform: scale(1.05);
+}
+
+.GradientApplyColour:active {
+  background-color: #4f6f56;
+  transform: scale(0.97);
+}
+
+.applyCustomGradient {
+  background: #6b8f71;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(30, 45, 36, 0.15);
+  transition: background 0.2s, transform 0.2s;
+}
+.applyCustomGradient:hover {
+  background: #a3b18a;
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.GradientClose {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: #aaaaaa;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+  margin: 0;
+}
+
+.GradientClose:hover,
+.GradientClose:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ResetToDefault {
+  height: 45px;
+  width: 150px;
+  border: none;
+  border-radius: 10px;
+  background-color: #6b8f71;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ResetToDefault:hover {
+  background-color: #5e7f64;
+  transform: scale(1.05);
+}
+
+.ResetToDefault:active {
+  background-color: #4f6f56;
+  transform: scale(0.97);
+}
+
+.ResetButton {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+  border-radius: 40px;
+}
+
+/* Tasks Page Styling */
+
+.TasksContent {
+  padding: 0 20px 10px 0;
+}
+
+.TasksLayout {
+  height: auto;
+  min-height: 550px;
+  width: 58vw;
+  border: none;
+  border: 2px solid #6b8f71;
+  border-radius: 30px;
+  padding: 20px;
+  padding-top: 40px;
+  margin: 5px;
+}
+
+.TextBeforeAddingTasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  min-height: 450px;
+  gap: 16px;
+}
+
+.AddPrompt {
+  justify-content: center;
+  margin-bottom: 25px;
+  border-radius: 40px;
+}
+
+.AddPromptButton {
+  height: 45px;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  background-color: #6b8f71;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.AddPromptButton:hover {
+  background-color: #5e7f64;
+  transform: scale(1.05);
+}
+
+.AddPromptButton:active {
+  background-color: #4f6f56;
+  transform: scale(0.97);
+}
+
+#ListContainer {
+  max-height: 550px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.AddModal {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.ModalContent {
+  padding: 32px 24px 24px 24px;
+  border: 1px solid #888;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 50vw;
+  min-width: 25vw;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0 auto;
+}
+
+.ModalOptions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-top: 20px;
+}
+
+#InputBox {
+  text-align: center;
+  height: 48px;
+  width: 80%;
+  max-width: 70vw;
+  min-width: 45vw;
+  border: none;
+  border: 2px black solid;
+  outline: none;
+  border-radius: 15px;
+  font-size: 15px;
+  margin: 0 auto;
+  display: block;
+}
+
+.ModalAddTaskButton {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.AddTask {
+  height: 45px;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4f6f56;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.AddTask:hover {
+  background-color: #5e7f64;
+  transform: scale(1.05);
+}
+
+.AddTask:active {
+  background-color: #4f6f56;
+  transform: scale(0.97);
+}
+
+.close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  color: #aaaaaa;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+  margin: 0;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ModalHeading {
+  text-align: center;
+  font-size: 25px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin: 0 0 20px 0;
+  padding: 15px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  list-style-type: none;
+}
+
+.MarkNotDone {
+  display: none;
+}
+
+.Clear {
+  display: flex;
+  justify-content: center;
+}
+
+.ClearButton {
+  height: 45px;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4f6f56;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  display: none;
+}
+
+.ClearButton:hover {
+  background-color: #5e7f64;
+  transform: scale(1.05);
+}
+
+.ContextMenu {
+  position: absolute;
+  width: 150px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  font-family: Arial, sans-serif;
+  display: none; /* Hidden by default */
+  z-index: 1;
+}
+
+/* Style each menu option */
+.ContextMenu div {
+  padding: 10px;
+  cursor: pointer;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Hover effect for options */
+.ContextMenu div:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
+}
+
+.ContextMenu .RemoveOption:hover {
+  background-color: red;
+  color: white;
+}
+
+/* Add a smooth transition */
+.ContextMenu div {
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.ContextMenu div:first-child {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.ContextMenu div:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.EditInput {
+  text-align: center;
+  height: 48px;
+  width: 80%;
+  max-width: 70vw;
+  min-width: 45vw;
+  border: none;
+  border: 2px black solid;
+  outline: none;
+  border-radius: 15px;
+  font-size: 15px;
+  margin: 0 auto;
+}
+
+.SaveButton {
+  height: 48px;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4f6f56;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+.SaveButton:hover {
+  background-color: #5e7f64;
+  transform: scale(1.05);
+}
+
+.SaveButton:active {
+  background-color: #4f6f56;
+  transform: scale(0.97);
+}
+
+.AddTasksButton {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  bottom: 20px;
+  right: 20px;
+}
+
+.AddTasksButton i {
+  transition: transform 0.2s ease;
+}
+
+.AddTasksButton:hover i {
+  transform: rotate(90deg);
+}
+
+/* Responsive stuff idk */
+
 @media only screen and (max-width: 1080px) {
   .TimerSettingsLayot {
     height: auto;
@@ -553,6 +1211,10 @@ input::-webkit-inner-spin-button {
 
   .SettingsContent {
     padding: 0 0 250px 60px;
+  }
+
+  .TimerContent {
+    margin: 0 0 210px 95px;
   }
 }
 
@@ -612,5 +1274,40 @@ input::-webkit-inner-spin-button {
 
   .SettingsContent {
     padding: 50px 10px 40px 25px;
+  }
+
+  .AppearanceContent {
+    padding: 50px 10px 40px 25px;
+  }
+
+  .AppearanceLayout {
+    height: auto;
+    min-height: 200px;
+    width: 85vw;
+  }
+
+  .TasksContent h1 {
+    text-align: center;
+    align-items: center;
+  }
+
+  .TasksLayout {
+    height: auto;
+    min-height: 300px;
+    width: 85vw;
+    margin-left: 30px;
+  }
+
+  .AddTasksButton {
+    position: fixed;
+  }
+
+  .ModalContent {
+    max-width: 100vw;
+    min-width: 75vw;
+  }
+
+  #ListContainer {
+    max-height: 450px;
   }
 }

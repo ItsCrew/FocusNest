@@ -1,124 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      // Prevent FART
-      (function () {
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme === "light") {
-          document.documentElement.classList.add("light-mode");
-          document.documentElement.classList.remove("dark-mode");
-        } else {
-          document.documentElement.classList.add("dark-mode");
-          document.documentElement.classList.remove("light-mode");
-        }
-      })();
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Add timer here in the title -->
-    <title>FocusNest</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="Layout">
-      <div class="SideBar">
-        <div class="SideBarOptions">
-          <a href="Home.html" class="Home Navigation">Home</a>
-          <a href="Tasks.html" class="Task Navigation">Tasks</a>
-          <a href="Appearance.html" class="Appearance Navigation">Appearance</a>
-          <a href="Settings.html" class="Settings Navigation">Settings</a>
-        </div>
+
+<head>
+  <script>
+    // Prevent theme flash
+    (function () {
+      const savedTheme = localStorage.getItem("theme");
+      const SavedBackgroundSolidColour = localStorage.getItem("BackgroundSolidColor");
+      const SavedGradientBackgroundColour = localStorage.getItem("BackgroundGradientColor")
+
+      if (savedTheme === "light") {
+        document.documentElement.classList.add("light-mode");
+        document.documentElement.classList.remove("dark-mode");
+      } else {
+        document.documentElement.classList.add("dark-mode");
+        document.documentElement.classList.remove("light-mode");
+      }
+
+      const selectedBackground = localStorage.getItem("BackgroundOptions");
+
+      if (selectedBackground === "solid" && SavedBackgroundSolidColour) {
+        const style = document.createElement("style");
+        style.id = "InjectedStyleID";
+        style.innerHTML = `html, body { background-color: ${SavedBackgroundSolidColour} !important; }`;
+        document.head.appendChild(style);
+      }
+
+      if (selectedBackground === "gradient" && SavedGradientBackgroundColour) {
+        const style2 = document.createElement("style");
+        style2.id = "InjectedStyleID2";
+        style2.innerHTML = `html, body { background-image: ${SavedGradientBackgroundColour} !important; }`;
+        document.head.appendChild(style2);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Add timer here in the title -->
+  <title>FocusNest - Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="Layout">
+    <div class="SideBar">
+      <div class="SideBarOptions">
+        <a href="Home.html" class="Home Navigation">Home</a>
+        <a href="Tasks.html" class="Task Navigation">Tasks</a>
+        <a href="Appearance.html" class="Appearance Navigation">Appearance</a>
+        <a href="Settings.html" class="Settings Navigation">Settings</a>
       </div>
+    </div>
 
-      <i class="fa-solid fa-bars bars"></i>
+    <i class="fa-solid fa-bars bars"></i>
 
-      <div class="MainPageContent">
-        <!-- <h2>Have a task you are completing? Add it here!</h2>
+    <div class="MainPageContent">
+      <!-- <h2>Have a task you are completing? Add it here!</h2>
         <div class="InputField">
           <input type="text" placeholder="Add a Task" class="InputTask" />
           <button class="AddTask">Add</button>
         </div> -->
-        <div class="Tasks">
-          <ol>
-            <!-- task 1 -->
-          </ol>
+      <div class="Tasks">
+        <ol>
+          <!-- task 1 -->
+        </ol>
+      </div>
+      <div class="TimerContent">
+        <div class="ModeButtons">
+          <button class="PomodoroMode ModeButton" title="Deep Work">
+            Pomodoro
+          </button>
+          <button class="ShortBreak ModeButton" title="Short Break">
+            Short Break
+          </button>
+          <button class="LongBreak ModeButton" title="Long Break">
+            Long Break
+          </button>
         </div>
-        <div class="TimerContent">
-          <div class="ModeButtons">
-            <button class="PomodoroMode ModeButton" title="Deep Work">
-              Pomodoro
-            </button>
-            <button class="ShortBreak ModeButton" title="Short Break">
-              Short Break
-            </button>
-            <button class="LongBreak ModeButton" title="Long Break">
-              Long Break
-            </button>
+        <audio class="alarm-sound" src="Assets/Sounds/Completed.mp3" preload="auto"></audio>
+        <p class="Timer"></p>
+        <div class="CycleIndicator">
+          <div class="CycleWrapper">
+            <i class="fa-regular fa-circle Circle Indicator"></i>
+            <i class="fa-solid fa-circle FilledCircle Indicator"></i>
           </div>
-          <audio
-            class="alarm-sound"
-            src="Assets/Sounds/Completed.mp3"
-            preload="auto"
-          ></audio>
-          <p class="Timer"></p>
-          <div class="CycleIndicator">
-            <div class="CycleWrapper">
-              <i class="fa-regular fa-circle Circle Indicator"></i>
-              <i class="fa-solid fa-circle FilledCircle Indicator"></i>
-            </div>
-            <div class="CycleWrapper">
-              <i class="fa-regular fa-circle Circle Indicator"></i>
-              <i class="fa-solid fa-circle FilledCircle Indicator"></i>
-            </div>
-            <div class="CycleWrapper">
-              <i class="fa-regular fa-circle Circle Indicator"></i>
-              <i class="fa-solid fa-circle FilledCircle Indicator"></i>
-            </div>
-            <div class="CycleWrapper">
-              <i class="fa-regular fa-circle Circle Indicator"></i>
-              <i class="fa-solid fa-circle FilledCircle Indicator"></i>
-            </div>
+          <div class="CycleWrapper">
+            <i class="fa-regular fa-circle Circle Indicator"></i>
+            <i class="fa-solid fa-circle FilledCircle Indicator"></i>
           </div>
-          <div class="Controls">
-            <button class="PlayButton" title="Play Timer">
-              <i class="fa-regular fa-circle-play Play"></i>
-            </button>
-            <button class="PauseButton" title="Pause Timer">
-              <i class="fa-regular fa-circle-pause Pause"></i>
-            </button>
-            <button class="RestartButton" title="Reset Timer">
-              <i class="fa-solid fa-rotate-right Restart"></i>
-            </button>
-            <button class="SettingsButton" title="Settings">
-              <a href="Settings.html"
-                ><i class="fa-solid fa-gear SettingsIcon"></i
-              ></a>
-            </button>
+          <div class="CycleWrapper">
+            <i class="fa-regular fa-circle Circle Indicator"></i>
+            <i class="fa-solid fa-circle FilledCircle Indicator"></i>
+          </div>
+          <div class="CycleWrapper">
+            <i class="fa-regular fa-circle Circle Indicator"></i>
+            <i class="fa-solid fa-circle FilledCircle Indicator"></i>
           </div>
         </div>
-        <div class="Tasks">
-          <ol>
-            <!-- Task -->
-          </ol>
+        <div class="Controls">
+          <button class="PlayButton" title="Play Timer">
+            <i class="fa-regular fa-circle-play Play"></i>
+          </button>
+          <button class="PauseButton" title="Pause Timer">
+            <i class="fa-regular fa-circle-pause Pause"></i>
+          </button>
+          <button class="RestartButton" title="Reset Timer">
+            <i class="fa-solid fa-rotate-right Restart"></i>
+          </button>
+          <button class="SettingsButton" title="Settings">
+            <a href="Settings.html"><i class="fa-solid fa-gear SettingsIcon"></i></a>
+          </button>
         </div>
       </div>
-      <div class="DarkModeDiv">
-        <button class="DarkMode" title="Dark Mode">
-          <i class="fa-solid fa-moon Moon"></i>
-        </button>
-      </div>
-      <div class="LightModeDiv">
-        <button class="LightMode" title="Light Mode">
-          <i class="fa-solid fa-sun Sun"></i>
-        </button>
+      <div class="Tasks">
+        <ol>
+          <!-- Task -->
+        </ol>
       </div>
     </div>
+    <div class="DarkModeDiv">
+      <button class="DarkMode" title="Dark Mode">
+        <i class="fa-solid fa-moon Moon"></i>
+      </button>
+    </div>
+    <div class="LightModeDiv">
+      <button class="LightMode" title="Light Mode">
+        <i class="fa-solid fa-sun Sun"></i>
+      </button>
+    </div>
+  </div>
 
-    <script src="scripts/app.js"></script>
-  </body>
+  <script src="scripts/app.js"></script>
+</body>
+
 </html>

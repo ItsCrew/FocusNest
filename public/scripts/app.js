@@ -1,42 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     const savedTheme = localStorage.getItem("theme");
     const TimeInputs = document.querySelectorAll(".PomodoroTimeInput")
-    const PomododoModeSlider = document.querySelector(".PomododoModeSlider")
+    const PomodoroModeSlider = document.querySelector(".PomodoroModeSlider")
     const BrowserNotificationsSlider = document.querySelector(".BrowserNotificationsSlider")
-
-    const defaultValues = {
-        PomodoroMode: 25,
-        ShortBreak: 5,
-        LongBreak: 10
-    };
-
-    if (PomododoModeSlider) {
-        PomododoModeSlider.checked = localStorage.getItem("CheckBox") === "true";
-    }
-
-    if (BrowserNotificationsSlider) {
-        BrowserNotificationsSlider.checked = localStorage.getItem("isChecked") === "true";
-    }
-
-    if (BrowserNotificationsSlider) {
-        BrowserNotificationsSlider.addEventListener("change", () => {
-            const isCheckedNotifications = BrowserNotificationsSlider.checked;
-            localStorage.setItem("isChecked", isCheckedNotifications);
-        })
-    }
-
-    if (PomododoModeSlider) {
-        PomodoroModeChange();
-    }
-
-    if (PomododoModeSlider) {
-        PomododoModeSlider.addEventListener("change", () => {
-            const isChecked = PomododoModeSlider.checked;
-            localStorage.setItem("CheckBox", isChecked);
-            PomodoroModeChange();
-        })
-    }
-
     const bars = document.querySelector(".bars")
     const SideBar = document.querySelector(".SideBar")
     const DarkModeDiv = document.querySelector(".DarkModeDiv")
@@ -57,12 +23,98 @@ document.addEventListener("DOMContentLoaded", () => {
     const FilledCircle = document.querySelectorAll(".FilledCircle")
     const Circle = document.querySelectorAll(".Circle")
     const Done = document.querySelector(".alarm-sound")
+    const ThemeSwitcher = document.querySelector(".ThemeSwitcher")
+    const ThemeOptions = document.querySelectorAll(".ThemeOption")
+    const SelectedTheme = document.querySelector(".SelectedTheme")
+    const DropDownToggle = document.querySelector(".DropDownToggle")
+    const BackgroundSwitcher = document.querySelector(".BackgroundSwitcher")
+    const BackgroundOptions = document.querySelectorAll(".BackgroundOption")
+    const SelectedBackgroundOption = document.querySelector(".SelectedBackgroundOption")
+    const BackgroundDropDownToggle = document.querySelector(".BackgroundDropDownToggle")
+    const UISwitcher = document.querySelector(".UISwitcher")
+    const UIOption = document.querySelectorAll(".UIOption")
+    const SelectedUIOption = document.querySelector(".SelectedUIOption")
+    const UIDropDownToggle = document.querySelector(".UIDropDownToggle")
+    const ColorPicker = document.getElementById("ColorPicker");
+    const OpenColorPickerButton = document.querySelector(".OpenColorPickerButton");
+    const CommonTaskAdding = document.querySelectorAll(".CommonTaskAdding")
+    const AddPrompt = document.querySelector(".AddPrompt");
+    const AddModal = document.querySelector(".AddModal");
+    const CloseModal = document.querySelector(".close");
+    const AddTask = document.querySelector(".AddTask");
+    const ListContainer = document.getElementById("ListContainer");
+    const clearButton = document.querySelector(".ClearButton");
+    const AddPromptButton = document.querySelector(".AddPromptButton")
+    const NoTasks = document.querySelector(".NoTasks")
+    const InputBox = document.getElementById("InputBox");
+    const ContextMenu = document.querySelector(".ContextMenu");
+    const editButton = document.querySelector(".EditOption");
+    const MarkDone = document.querySelector(".MarkDone");
+    const MarkNotDone = document.querySelector(".MarkNotDone");
+    const removeButton = document.querySelector(".RemoveOption");
+    const ColorPickerTasks = document.getElementById("ColorPickerTasks");
+    const OpenColorPickerButtonTasks = document.getElementById("OpenColorPickerButtonTasks");
+    const TextBeforeAddingTasks = document.querySelector(".TextBeforeAddingTasks")
+    const AddGradientBackground = document.querySelector(".AddGradientBackground")
+    const GradientClose = document.querySelector(".GradientClose")
+    const applyCustomGradient = document.querySelector(".applyCustomGradient")
+    const gradientDirection = document.querySelector(".gradientDirection");
+    const gradientColor1 = document.getElementById("gradientColor1");
+    const gradientColor2 = document.getElementById("gradientColor2");
+    const GradientModalContent = document.querySelector(".GradientModalContent")
+    const ResetButton = document.querySelector(".ResetButton")
+    const ResetToDefault = document.querySelector(".ResetToDefault")
+
+
+    loadTasksFromLocalStorage()
+    if (localStorage.getItem("tasks")) {
+        if (TextBeforeAddingTasks && clearButton) {
+            clearButton.style.display = "block"
+            TextBeforeAddingTasks.style.display = "none"
+        }
+    }
+
+
+    const defaultValues = {
+        PomodoroMode: 25,
+        ShortBreak: 5,
+        LongBreak: 10
+    };
+
+    if (PomodoroModeSlider) {
+        PomodoroModeSlider.checked = localStorage.getItem("CheckBox") === "true";
+    }
+
+    if (BrowserNotificationsSlider) {
+        BrowserNotificationsSlider.checked = localStorage.getItem("isChecked") === "true";
+    }
+
+    if (BrowserNotificationsSlider) {
+        BrowserNotificationsSlider.addEventListener("change", () => {
+            const isCheckedNotifications = BrowserNotificationsSlider.checked;
+            localStorage.setItem("isChecked", isCheckedNotifications);
+        })
+    }
+
+    if (PomodoroModeSlider) {
+        PomodoroModeChange();
+    }
+
+    if (PomodoroModeSlider) {
+        PomodoroModeSlider.addEventListener("change", () => {
+            const isChecked = PomodoroModeSlider.checked;
+            localStorage.setItem("CheckBox", isChecked);
+            PomodoroModeChange();
+        })
+    }
+
 
     // All Pages Side Bar Logic
 
     bars.addEventListener("click", () => {
         SideBar.classList.toggle("hide");
         bars.classList.toggle("shift-left");
+        bars.classList.toggle("cross");
         main.classList.toggle("shifted");
         localStorage.setItem("sidebar-state", SideBar.classList.contains("hide"));
     });
@@ -233,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const type = input.dataset.type;
             const saved = localStorage.getItem(type);
 
-            if (PomododoModeSlider.checked) {
+            if (PomodoroModeSlider.checked) {
                 input.value = defaultValues[type]
                 localStorage.setItem(type, defaultValues[type]);
                 input.disabled = true;
@@ -318,7 +370,595 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Light Mode Switch
+    // Appearance Page
+
+    // Theme choosing logic 
+
+    if (ThemeSwitcher) {
+        ThemeSwitcher.addEventListener("click", () => {
+            DropDownToggle.classList.toggle("hidden")
+            ThemeSwitcher.classList.toggle("open");
+        })
+    }
+
+    const ThemeLabels = {
+        dark: "Dark Mode",
+        light: "Light Mode",
+        system: "Sync with system"
+    };
+
+    UpdateSelectedTheme();
+
+    function UpdateSelectedTheme() {
+        const ThemeSelected = localStorage.getItem("theme");
+        const ThemeLabel = ThemeLabels[ThemeSelected] || ThemeLabels["system"];
+        if (SelectedTheme) {
+            SelectedTheme.innerHTML = `${ThemeLabel}<i class="fa-solid fa-angle-down arrow"></i>`;
+        }
+    }
+
+
+
+    ThemeOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            const theme = option.dataset.theme
+            localStorage.setItem("theme", theme)
+            applyTheme(theme)
+
+            UpdateSelectedTheme();
+            DropDownToggle.classList.add("hidden")
+            ThemeSwitcher.classList.remove("open");
+
+        })
+    })
+
+    if (ThemeSwitcher) {
+        window.addEventListener("click", function (event) {
+            if (!ThemeSwitcher.contains(event.target)) {
+                DropDownToggle.classList.add("hidden");
+                ThemeSwitcher.classList.remove("open");
+            }
+        });
+    }
+
+    function setThemeMode(mode) {
+        document.documentElement.classList.remove("dark-mode", "light-mode");
+        if (mode === "dark") {
+            document.documentElement.classList.add("dark-mode");
+            if (LightModeDiv) LightModeDiv.style.display = "block";
+            if (DarkModeDiv) DarkModeDiv.style.display = "none";
+        } else {
+            document.documentElement.classList.add("light-mode");
+            if (LightModeDiv) LightModeDiv.style.display = "none";
+            if (DarkModeDiv) DarkModeDiv.style.display = "block";
+        }
+    }
+
+    function getSystemTheme() {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+
+    function applyTheme(theme) {
+        if (theme === "dark" || theme === "light") {
+            setThemeMode(theme);
+        } else if (theme === "system") {
+            setThemeMode(getSystemTheme());
+        }
+    }
+
+    // Background Options Logic
+
+    // Solid Colour
+
+    const backgroundLabels = {
+        none: "None",
+        solid: "Solid Colour",
+        gradient: "Gradient Background"
+    };
+
+    updateSelectedBackground();
+
+    function updateSelectedBackground() {
+        const selected = localStorage.getItem("BackgroundOptions") || "none";
+        const label = backgroundLabels[selected] || backgroundLabels.none;
+        if (SelectedBackgroundOption) {
+            SelectedBackgroundOption.innerHTML = `${label}<i class="fa-solid fa-angle-down arrow"></i>`;
+        }
+    }
+
+
+    BackgroundOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            localStorage.setItem("BackgroundOptions", option.dataset.background);
+            updateSelectedBackground();
+            DropDownToggle.classList.add("hidden")
+            ThemeSwitcher.classList.remove("open");
+
+            if (option.dataset.background == "gradient") {
+                AddGradientBackground.style.display = "flex"
+                gradientDirection.focus();
+            } else {
+                AddGradientBackground.style.display = "none"
+            }
+
+            if (option.dataset.background === "none") {
+                document.getElementById("InjectedStyleID")?.remove();
+                document.getElementById("InjectedStyleID2")?.remove();
+
+                document.body.style.backgroundColor = "";
+                document.body.style.backgroundImage = "";
+
+                localStorage.removeItem("BackgroundSolidColor");
+                localStorage.removeItem("BackgroundGradientColor");
+            }
+
+
+
+
+
+            // document.body.style.backgroundColor = "";
+            // localStorage.setItem("BackgroundSolidColor", "")
+            // localStorage.setItem("BackgroundGradientColor", "")
+
+            // }
+        })
+    });
+
+
+    if (BackgroundSwitcher) {
+        BackgroundSwitcher.addEventListener("click", () => {
+            BackgroundDropDownToggle.classList.toggle("hidden")
+            BackgroundSwitcher.classList.toggle("open");
+        })
+    }
+
+    if (ThemeSwitcher) {
+        window.addEventListener("click", function (event) {
+            if (!BackgroundSwitcher.contains(event.target)) {
+                BackgroundDropDownToggle.classList.add("hidden");
+                BackgroundSwitcher.classList.remove("open");
+            }
+        });
+    }
+
+    function SetBackgroundColor() {
+        const SelectedColor = ColorPicker.value;
+        console.log("Changing background to:", SelectedColor);
+        // document.documentElement.classList.remove("dark-mode", "light-mode");
+
+        let InjectedStyleID = document.getElementById("InjectedStyleID");
+        if (!InjectedStyleID) {
+            InjectedStyleID = document.createElement("style");
+            InjectedStyleID.id = "InjectedStyleID";
+            document.head.appendChild(InjectedStyleID);
+        }
+
+        document.getElementById("InjectedStyleID2")?.remove();
+
+        InjectedStyleID.innerHTML = `html, body { background-color: ${SelectedColor} !important; }`;
+
+        localStorage.setItem("BackgroundSolidColor", SelectedColor)
+    }
+    if (OpenColorPickerButton) {
+        OpenColorPickerButton.addEventListener("click", () => {
+            ColorPicker.click();
+        });
+    }
+    if (ColorPicker) {
+        ColorPicker.addEventListener("input", SetBackgroundColor);
+    }
+
+
+    // Gradient Colour
+
+    function SetGradientBackgroundColor() {
+        const SelectedColor1 = gradientColor1.value;
+        const SelectedColor2 = gradientColor2.value;
+        const direction = gradientDirection.value;
+        const gradient = `linear-gradient(${direction}, ${SelectedColor1}, ${SelectedColor2})`;
+
+
+        console.log("Changing background to:", gradient);
+        // document.documentElement.classList.remove("dark-mode", "light-mode");
+
+        let InjectedStyleID2 = document.getElementById("InjectedStyleID2");
+        if (!InjectedStyleID2) {
+            InjectedStyleID2 = document.createElement("style");
+            InjectedStyleID2.id = "InjectedStyleID2";
+            document.head.appendChild(InjectedStyleID2);
+        }
+
+        const oldSolid = document.getElementById("InjectedStyleID");
+        if (oldSolid) oldSolid.remove();
+
+
+
+        InjectedStyleID2.innerHTML = `html, body { background-image: ${gradient} !important; }`;
+
+        localStorage.setItem("BackgroundGradientColor", gradient)
+        localStorage.removeItem("BackgroundSolidColor");
+    }
+
+    if (applyCustomGradient) {
+        applyCustomGradient.addEventListener("click", () => {
+            SetGradientBackgroundColor()
+            AddGradientBackground.style.display = "none"
+        })
+    }
+
+    if (GradientClose) {
+        GradientClose.addEventListener("click", () => {
+            AddGradientBackground.style.display = "none";
+        })
+    }
+
+    if (gradientDirection) {
+        gradientDirection.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                AddGradientBackground.style.display = "none";
+            }
+        });
+    }
+
+    // Reset to Default
+    function removeInjectedStyles() {
+        document.getElementById("InjectedStyleID")?.remove();
+        document.getElementById("InjectedStyleID2")?.remove();
+    }
+
+    function clearBackgroundStyles() {
+        document.body.style.backgroundColor = "";
+        document.body.style.backgroundImage = "";
+    }
+
+    function SetToDefault() {
+        removeInjectedStyles();
+        clearBackgroundStyles();
+
+        localStorage.removeItem("BackgroundSolidColor");
+        localStorage.removeItem("BackgroundGradientColor");
+
+        localStorage.setItem("theme", ThemeLabels?.system || "system");
+        localStorage.setItem("BackgroundOptions", "none");
+
+        updateSelectedBackground();
+        UpdateSelectedTheme?.();
+
+        location.reload();
+
+    }
+
+    if (ResetButton) {
+        ResetButton.addEventListener("click", () => {
+            SetToDefault()
+        })
+    }
+
+    // UI logic
+
+    // if (UISwitcher) {
+    //     UISwitcher.addEventListener("click", () => {
+    //         UIDropDownToggle.classList.toggle("hidden")
+    //         UISwitcher.classList.toggle("open")
+    //     })
+    // }
+
+    // window.addEventListener("click", function (event) {
+    //     if (!UISwitcher.contains(event.target)) {
+    //         UIDropDownToggle.classList.add("hidden");
+    //         UISwitcher.classList.remove("open");
+    //     }
+    // });
+
+
+    // TASKS PAGE
+
+    CommonTaskAdding.forEach(modals => {
+        modals.addEventListener("click", () => {
+            AddModal.style.display = "flex";
+            InputBox.focus();
+        })
+    })
+
+    if (CloseModal) {
+        CloseModal.addEventListener("click", () => {
+            AddModal.style.display = "none";
+        })
+    }
+    if (InputBox) {
+        InputBox.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                AddModal.style.display = "none";
+            }
+        });
+    }
+
+    window.addEventListener("click", function (event) {
+        if (event.target === AddGradientBackground) {
+            AddGradientBackground.style.display = "none";
+        }
+        if (event.target === AddModal) {
+            AddModal.style.display = "none";
+        }
+    });
+
+    function UpdateContextMenuOptions() {
+        if (ContextMenu.currentTask) {
+            const taskTextElement =
+                ContextMenu.currentTask.querySelector(".TaskText");
+
+            if (taskTextElement.style.textDecoration === "line-through") {
+                MarkDone.style.display = "none";
+                MarkNotDone.style.display = "block";
+            } else {
+                MarkDone.style.display = "block";
+                MarkNotDone.style.display = "none";
+            }
+        }
+    }
+
+    function AddTaskFunction() {
+        const taskText = InputBox.value.trim();
+        if (taskText !== "") {
+            CreateTaskElement(taskText);
+            saveTasksToLocalStorage();
+            //save
+            InputBox.value = "";
+            TextBeforeAddingTasks.style.display = "none"
+            // NoTasks.style.display = "none";
+            // AddPromptButton.style.display = "none"
+            // AddPrompt.style.display = "none"
+            if (clearButton) clearButton.style.display = "block";
+        }
+        InputBox.focus();
+        AddModal.style.display = "none";
+    }
+
+    function CreateTaskElement(taskText, color = "", checked = false) {
+        const li = document.createElement("li");
+        li.setAttribute("data-checked", checked);
+
+        if (color) {
+            li.style.backgroundColor = color;
+        }
+
+        li.innerHTML = `
+          <span class="TaskText"> <i class="fa-regular fa-square"></i> ${taskText}</span>
+        `;
+        if (checked) {
+            const taskTextElement = li.querySelector(".TaskText");
+            taskTextElement.style.textDecoration = "line-through";
+            const iconElement = taskTextElement.querySelector("i");
+            if (iconElement) {
+                iconElement.classList.remove("fa-square");
+                iconElement.classList.add("fa-check-square");
+            }
+        }
+        if (ListContainer) {
+            ListContainer.appendChild(li);
+        }
+
+        // Context menu setup for the task
+        li.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+
+            // Position and show the context menu
+            ContextMenu.style.top = `${e.clientY}px`;
+            ContextMenu.style.left = `${e.clientX}px`;
+            ContextMenu.style.display = "block";
+
+            // Store reference to the current task for edit/remove actions
+            ContextMenu.currentTask = li;
+            UpdateContextMenuOptions();
+        });
+    }
+
+    if (ContextMenu) {
+        document.addEventListener("click", (e) => {
+            if (!ContextMenu.contains(e.target)) {
+                ContextMenu.style.display = "none";
+            }
+        });
+    }
+
+    if (AddTask) {
+        AddTask.addEventListener("click", () => {
+            AddTaskFunction();
+        });
+    }
+
+    if (InputBox) {
+        InputBox.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                AddTaskFunction();
+            }
+        });
+    }
+    if (editButton) {
+        editButton.addEventListener("click", () => {
+            if (ContextMenu.currentTask) {
+                EditTask(ContextMenu.currentTask);
+                ContextMenu.style.display = "none";
+            }
+        });
+    }
+
+    function EditTask(li) {
+        const taskText = li.querySelector(".TaskText").textContent.trim();
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = taskText;
+        input.placeholder = "Edit the task";
+        input.className = "EditInput";
+
+        const saveButton = document.createElement("button");
+        saveButton.textContent = "Save";
+        saveButton.classList.add("btn");
+        saveButton.className = "SaveButton";
+
+        // Clear the task text and add the input field for editing
+        li.innerHTML = "";
+        li.appendChild(input);
+        li.appendChild(saveButton);
+
+        // Save updated task or revert if empty
+        function saveUpdatedTask() {
+            const updatedText = input.value.trim();
+            if (updatedText) {
+                li.innerHTML = `<span class="TaskText"> <i class="fa-regular fa-square"></i> ${updatedText}</span>`;
+                saveTasksToLocalStorage();
+            } else {
+                console.log("Task cannot be empty!");
+            }
+        }
+
+        saveButton.addEventListener("click", saveUpdatedTask);
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                saveUpdatedTask();
+            }
+        });
+
+        input.focus();
+    }
+
+    function SetTileColor() {
+        const SelectedColor = ColorPickerTasks.value;
+        if (ContextMenu.currentTask) {
+            ContextMenu.currentTask.style.backgroundColor = SelectedColor;
+            saveTasksToLocalStorage();
+        }
+    }
+    if (OpenColorPickerButtonTasks) {
+        OpenColorPickerButtonTasks.addEventListener("click", () => {
+            ColorPickerTasks.click();
+            ContextMenu.style.display = "none";
+        });
+    }
+    if (ColorPickerTasks) {
+        ColorPickerTasks.addEventListener("input", SetTileColor);
+    }
+
+    //Mark a task done/Incomplete
+    function MarkTaskDone(taskElement) {
+        if (taskElement) {
+            const taskTextElement = taskElement.querySelector(".TaskText");
+            taskElement.setAttribute("data-checked", "true");
+            taskTextElement.style.textDecoration = "line-through";
+            const iconElement = taskTextElement.querySelector("i");
+            if (iconElement) {
+                iconElement.classList.remove("fa-square");
+                iconElement.classList.add("fa-check-square");
+            }
+            ContextMenu.style.display = "none";
+            saveTasksToLocalStorage();
+        }
+    }
+
+    function MarkTaskIncomplete(taskElement) {
+        if (taskElement) {
+            const taskTextElement = taskElement.querySelector(".TaskText");
+            taskElement.setAttribute("data-checked", "false");
+            taskTextElement.style.textDecoration = "none";
+            const iconElement = taskTextElement.querySelector("i");
+            if (iconElement) {
+                iconElement.classList.remove("fa-check-square");
+                iconElement.classList.add("fa-square");
+            }
+            ContextMenu.style.display = "none";
+            saveTasksToLocalStorage();
+        }
+    }
+
+    if (ListContainer) {
+        ListContainer.addEventListener("click", (event) => {
+            if (event.target.classList.contains("fa-square")) {
+                event.target.classList.remove("fa-square");
+                event.target.classList.add("fa-check-square");
+                MarkTaskDone(event.target.closest("li"));
+            } else if (event.target.classList.contains("fa-check-square")) {
+                event.target.classList.remove("fa-check-square");
+                event.target.classList.add("fa-square");
+                MarkTaskIncomplete(event.target.closest("li"));
+            }
+        });
+    }
+
+    if (MarkDone) {
+        MarkDone.addEventListener("click", () => {
+            MarkTaskDone(ContextMenu.currentTask);
+        });
+    }
+
+    if (MarkNotDone) {
+        MarkNotDone.addEventListener("click", () => {
+            MarkTaskIncomplete(ContextMenu.currentTask);
+        });
+    }
+
+    function RemoveTask() {
+        if (ContextMenu.currentTask) {
+            ContextMenu.currentTask.remove();
+            ContextMenu.style.display = "none";
+            saveTasksToLocalStorage();
+            if (ListContainer.children.length === 0) {
+                // AddPrompt.style.display = "flex"
+                // AddPromptButton.style.display = "block"
+                clearButton.style.display = "none";
+                // NoTasks.style.display = "block";
+                TextBeforeAddingTasks.style.display = "flex"
+                localStorage.removeItem("tasks");
+
+            }
+        }
+    }
+    if (ListContainer) {
+        if (ListContainer.children.length === 0) {
+            // NoTasks.style.display = "block";
+            clearButton.style.display = "none";
+            // AddPromptButton.style.display = "block"
+            // AddPrompt.style.display = "flex"
+            TextBeforeAddingTasks.style.display = "flex"
+
+        }
+    }
+
+    if (removeButton) {
+        removeButton.addEventListener("click", RemoveTask);
+    }
+
+
+    // Clear Button Logic
+    function Clear_Tasks() {
+        localStorage.removeItem("tasks");
+        ListContainer.innerHTML = "";
+        clearButton.style.display = "none";
+        TextBeforeAddingTasks.style.display = "flex"
+
+    }
+    if (clearButton) {
+        clearButton.addEventListener("click", Clear_Tasks);
+    }
+
+    // Saving to local storage
+    function saveTasksToLocalStorage() {
+        const tasks = Array.from(ListContainer.children).map((li) => ({
+            text: li.querySelector(".TaskText").textContent.trim(),
+            color: li.style.backgroundColor || "",
+            checked: li.getAttribute("data-checked") === "true"
+
+        }));
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    // Load tasks from local storage
+    function loadTasksFromLocalStorage() {
+        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        tasks.forEach(({ text, color, checked }) => CreateTaskElement(text, color, checked));
+    }
+
+    // Theme Switch
 
     DarkMode.addEventListener("click", () => {
         document.documentElement.classList.add("dark-mode");
@@ -326,6 +966,9 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("theme", "dark");
         LightModeDiv.style.display = "block";
         DarkModeDiv.style.display = "none";
+        if (SelectedTheme) {
+            SelectedTheme.innerHTML = `Dark Mode <i class="fa-solid fa-angle-down arrow"></i>`
+        }
     });
 
     LightMode.addEventListener("click", () => {
@@ -334,6 +977,9 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("theme", "light");
         LightModeDiv.style.display = "none";
         DarkModeDiv.style.display = "block";
+        if (SelectedTheme) {
+            SelectedTheme.innerHTML = `Light Mode<i class="fa-solid fa-angle-down arrow"></i>`
+        }
     });
 
     if (savedTheme === "light") {
@@ -347,6 +993,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (localStorage.getItem("sidebar-state") === "true") {
         SideBar.classList.add("hide");
         bars.classList.add("shift-left");
+        bars.classList.add("cross");
         main.classList.add("shifted");
     }
 });

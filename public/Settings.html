@@ -1,136 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      // Prevent theme flash
-      (function () {
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme === "light") {
-          document.documentElement.classList.add("light-mode");
-          document.documentElement.classList.remove("dark-mode");
-        } else {
-          document.documentElement.classList.add("dark-mode");
-          document.documentElement.classList.remove("light-mode");
-        }
-      })();
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FocusNest - Settings</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="Layout">
-      <div class="SideBar">
-        <div class="SideBarOptions">
-          <a href="Home.html" class="Home Navigation">Home</a>
-          <a href="Tasks.html" class="Task Navigation">Tasks</a>
-          <a href="Appearance.html" class="Appearance Navigation">Appearance</a>
-          <a href="Settings.html" class="Settings Navigation">Settings</a>
-        </div>
-      </div>
 
-      <i class="fa-solid fa-bars bars"></i>
+<head>
+  <script>
+    // Prevent theme flash
+    (function () {
+      const savedTheme = localStorage.getItem("theme");
+      const SavedBackgroundSolidColour = localStorage.getItem("BackgroundSolidColor");
+      const SavedGradientBackgroundColour = localStorage.getItem("BackgroundGradientColor")
 
-      <div class="MainPageContent">
-        <div class="SettingsContent">
-          <h1>General Settings</h1>
-          <div class="TimerSettingsLayot">
-            <div class="TimerSettings">
-              <p class="Timers">Custom Timer</p>
-              <hr />
-              <div class="TimerRow">
-                <label>Pomodoro</label>
-                <div class="InputWrapper">
-                  <input
-                    type="number"
-                    class="PomodoroTimeInput"
-                    data-type="PomodoroMode"
-                    min="1"
-                    max="360"
-                  />
-                  <span>Minutes</span>
-                </div>
-              </div>
+      if (savedTheme === "light") {
+        document.documentElement.classList.add("light-mode");
+        document.documentElement.classList.remove("dark-mode");
+      } else {
+        document.documentElement.classList.add("dark-mode");
+        document.documentElement.classList.remove("light-mode");
+      }
 
-              <div class="TimerRow">
-                <label>Short Break</label>
-                <div class="InputWrapper">
-                  <input
-                    type="number"
-                    class="PomodoroTimeInput"
-                    data-type="ShortBreak"
-                    min="1"
-                    max="60"
-                  />
-                  <span>Minutes</span>
-                </div>
-              </div>
+      const selectedBackground = localStorage.getItem("BackgroundOptions");
 
-              <div class="TimerRow">
-                <label>Long Break</label>
-                <div class="InputWrapper">
-                  <input
-                    type="number"
-                    class="PomodoroTimeInput"
-                    data-type="LongBreak"
-                    min="1"
-                    max="60"
-                  />
-                  <span>Minutes</span>
-                </div>
-              </div>
+      if (selectedBackground === "solid" && SavedBackgroundSolidColour) {
+        const style = document.createElement("style");
+        style.id = "InjectedStyleID";
+        style.innerHTML = `html, body { background-color: ${SavedBackgroundSolidColour} !important; }`;
+        document.head.appendChild(style);
+      }
 
-              <div class="PomodoroModeToggle">
-                <!-- <button></button> -->
-                <label class="toggle-switch">
-                  <input type="checkbox" class="PomododoModeSlider" />
-                  <span class="slider"></span>
-                </label>
-                Use the Pomodoro Mode:- Deep Work for 25 minutes -> Short Break,
-                repated for 4 times then One Long Break. Number of Pomodoros
-                complete is indicated with dots under The Timer
-              </div>
-            </div>
-          </div>
-          <div class="NotificationsSettingsLayout">
-            <div class="NotificationSettings">
-              <p class="NotificationSettingsHeading">Alerts & Sounds</p>
-              <hr />
-              <div class="NotificationsRow">
-                <label>Browser Notifications</label>
-                <div class="ToggleWrapper">
-                  <label class="toggle-switch">
-                    <input type="checkbox" class="BrowserNotificationsSlider" />
-                    <span class="slider"></span>
-                  </label>
-                </div>
-              </div>
+      if (selectedBackground === "gradient" && SavedGradientBackgroundColour) {
+        const style2 = document.createElement("style");
+        style2.id = "InjectedStyleID2";
+        style2.innerHTML = `html, body { background-image: ${SavedGradientBackgroundColour} !important; }`;
+        document.head.appendChild(style2);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusNest - Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
 
-              <div class="NotificationsRow">
-                <label>Sounds</label>
-                <div class="ToggleWrapper">Coming Soon</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="DarkModeDiv">
-        <button class="DarkMode" title="Dark Mode">
-          <i class="fa-solid fa-moon Moon"></i>
-        </button>
-      </div>
-      <div class="LightModeDiv">
-        <button class="LightMode" title="Light Mode">
-          <i class="fa-solid fa-sun Sun"></i>
-        </button>
+<body>
+  <div class="Layout">
+    <div class="SideBar">
+      <div class="SideBarOptions">
+        <a href="Home.html" class="Home Navigation">Home</a>
+        <a href="Tasks.html" class="Task Navigation">Tasks</a>
+        <a href="Appearance.html" class="Appearance Navigation">Appearance</a>
+        <a href="Settings.html" class="Settings Navigation">Settings</a>
       </div>
     </div>
 
-    <script src="scripts/app.js"></script>
-  </body>
+    <i class="fa-solid fa-bars bars"></i>
+
+    <div class="MainPageContent">
+      <div class="SettingsContent">
+        <h1>General Settings</h1>
+        <div class="TimerSettingsLayot">
+          <div class="TimerSettings">
+            <p class="Timers">Custom Timer</p>
+            <hr />
+            <div class="TimerRow">
+              <label>Pomodoro</label>
+              <div class="InputWrapper">
+                <input type="number" class="PomodoroTimeInput" data-type="PomodoroMode" min="1" max="360" />
+                <span>Minutes</span>
+              </div>
+            </div>
+
+            <div class="TimerRow">
+              <label>Short Break</label>
+              <div class="InputWrapper">
+                <input type="number" class="PomodoroTimeInput" data-type="ShortBreak" min="1" max="60" />
+                <span>Minutes</span>
+              </div>
+            </div>
+
+            <div class="TimerRow">
+              <label>Long Break</label>
+              <div class="InputWrapper">
+                <input type="number" class="PomodoroTimeInput" data-type="LongBreak" min="1" max="60" />
+                <span>Minutes</span>
+              </div>
+            </div>
+
+            <div class="PomodoroModeToggle">
+              <!-- <button></button> -->
+              <label class="toggle-switch">
+                <input type="checkbox" class="PomodoroModeSlider" />
+                <span class="slider"></span>
+              </label>
+              Use the Pomodoro Mode:- Deep Work for 25 minutes -> Short Break,
+              repated for 4 times then One Long Break. Number of Pomodoros
+              complete is indicated with dots under The Timer
+            </div>
+          </div>
+        </div>
+        <div class="NotificationsSettingsLayout">
+          <div class="NotificationSettings">
+            <p class="NotificationSettingsHeading">Alerts & Sounds</p>
+            <hr />
+            <div class="NotificationsRow">
+              <label>Browser Notifications</label>
+              <div class="ToggleWrapper">
+                <label class="toggle-switch">
+                  <input type="checkbox" class="BrowserNotificationsSlider" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="NotificationsRow">
+              <label>Sounds</label>
+              <div class="ToggleWrapper">Coming Soon</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="DarkModeDiv">
+      <button class="DarkMode" title="Dark Mode">
+        <i class="fa-solid fa-moon Moon"></i>
+      </button>
+    </div>
+    <div class="LightModeDiv">
+      <button class="LightMode" title="Light Mode">
+        <i class="fa-solid fa-sun Sun"></i>
+      </button>
+    </div>
+  </div>
+
+  <script src="scripts/app.js"></script>
+</body>
+
 </html>

@@ -1,51 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      // Prevent FART
-      (function () {
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme === "light") {
-          document.documentElement.classList.add("light-mode");
-          document.documentElement.classList.remove("dark-mode");
-        } else {
-          document.documentElement.classList.add("dark-mode");
-          document.documentElement.classList.remove("light-mode");
-        }
-      })();
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Coming Soon</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="Layout">
-      <div class="SideBar">
-        <div class="SideBarOptions">
-          <a href="Home.html" class="Home Navigation">Home</a>
-          <a href="Tasks.html" class="Task Navigation">Tasks</a>
-          <a href="Appearance.html" class="Appearance Navigation">Appearance</a>
-          <a href="Settings.html" class="Settings Navigation">Settings</a>
-        </div>
-      </div>
 
-      <div class="ComingSoon">Coming Soon</div>
-      <i class="fa-solid fa-bars bars"></i>
+<head>
+  <script>
+    // Prevent theme flash
+    (function () {
+      const savedTheme = localStorage.getItem("theme");
+      const SavedBackgroundSolidColour = localStorage.getItem("BackgroundSolidColor");
+      const SavedGradientBackgroundColour = localStorage.getItem("BackgroundGradientColor")
 
-      <div class="MainPageContent"></div>
-      <div class="DarkModeDiv">
-        <button class="DarkMode"><i class="fa-solid fa-moon Moon"></i></button>
-      </div>
-      <div class="LightModeDiv">
-        <button class="LightMode"><i class="fa-solid fa-sun Sun"></i></button>
+      if (savedTheme === "light") {
+        document.documentElement.classList.add("light-mode");
+        document.documentElement.classList.remove("dark-mode");
+      } else {
+        document.documentElement.classList.add("dark-mode");
+        document.documentElement.classList.remove("light-mode");
+      }
+
+      const selectedBackground = localStorage.getItem("BackgroundOptions");
+
+      if (selectedBackground === "solid" && SavedBackgroundSolidColour) {
+        const style = document.createElement("style");
+        style.id = "InjectedStyleID";
+        style.innerHTML = `html, body { background-color: ${SavedBackgroundSolidColour} !important; }`;
+        document.head.appendChild(style);
+      }
+
+      if (selectedBackground === "gradient" && SavedGradientBackgroundColour) {
+        const style2 = document.createElement("style");
+        style2.id = "InjectedStyleID2";
+        style2.innerHTML = `html, body { background-image: ${SavedGradientBackgroundColour} !important; }`;
+        document.head.appendChild(style2);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="Layout">
+    <div class="SideBar">
+      <div class="SideBarOptions">
+        <a href="Home.html" class="Home Navigation">Home</a>
+        <a href="Tasks.html" class="Task Navigation">Tasks</a>
+        <a href="Appearance.html" class="Appearance Navigation">Appearance</a>
+        <a href="Settings.html" class="Settings Navigation">Settings</a>
       </div>
     </div>
 
-    <script src="scripts/app.js"></script>
-  </body>
+    <div class="ComingSoon">Coming Soon</div>
+    <i class="fa-solid fa-bars bars"></i>
+
+    <div class="MainPageContent"></div>
+    <div class="DarkModeDiv">
+      <button class="DarkMode"><i class="fa-solid fa-moon Moon"></i></button>
+    </div>
+    <div class="LightModeDiv">
+      <button class="LightMode"><i class="fa-solid fa-sun Sun"></i></button>
+    </div>
+  </div>
+
+  <script src="scripts/app.js"></script>
+</body>
+
 </html>

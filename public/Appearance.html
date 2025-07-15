@@ -1,54 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script>
-      // Prevent theme flash
-      (function () {
-        const savedTheme = localStorage.getItem("theme");
-        if (savedTheme === "light") {
-          document.documentElement.classList.add("light-mode");
-          document.documentElement.classList.remove("dark-mode");
-        } else {
-          document.documentElement.classList.add("dark-mode");
-          document.documentElement.classList.remove("light-mode");
-        }
-      })();
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FocusNest - Appearance</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="Layout">
-      <div class="SideBar">
-        <div class="SideBarOptions">
-          <a href="Home.html" class="Home Navigation">Home</a>
-          <a href="Tasks.html" class="Task Navigation">Tasks</a>
-          <a href="Appearance.html" class="Appearance Navigation">Appearance</a>
-          <a href="Settings.html" class="Settings Navigation">Settings</a>
-        </div>
-      </div>
 
-      <i class="fa-solid fa-bars bars"></i>
+<head>
+  <script>
+    // Prevent theme flash
+    (function () {
+      const savedTheme = localStorage.getItem("theme");
+      const SavedBackgroundSolidColour = localStorage.getItem("BackgroundSolidColor");
+      const SavedGradientBackgroundColour = localStorage.getItem("BackgroundGradientColor")
 
-      <div class="MainPageContent"></div>
-      <div class="DarkModeDiv">
-        <button class="DarkMode" title="Dark Mode">
-          <i class="fa-solid fa-moon Moon"></i>
-        </button>
-      </div>
-      <div class="LightModeDiv">
-        <button class="LightMode" title="Light Mode">
-          <i class="fa-solid fa-sun Sun"></i>
-        </button>
+      if (savedTheme === "light") {
+        document.documentElement.classList.add("light-mode");
+        document.documentElement.classList.remove("dark-mode");
+      } else {
+        document.documentElement.classList.add("dark-mode");
+        document.documentElement.classList.remove("light-mode");
+      }
+
+      const selectedBackground = localStorage.getItem("BackgroundOptions");
+
+      if (selectedBackground === "solid" && SavedBackgroundSolidColour) {
+        const style = document.createElement("style");
+        style.id = "InjectedStyleID";
+        style.innerHTML = `html, body { background-color: ${SavedBackgroundSolidColour} !important; }`;
+        document.head.appendChild(style);
+      }
+
+      if (selectedBackground === "gradient" && SavedGradientBackgroundColour) {
+        const style2 = document.createElement("style");
+        style2.id = "InjectedStyleID2";
+        style2.innerHTML = `html, body { background-image: ${SavedGradientBackgroundColour} !important; }`;
+        document.head.appendChild(style2);
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusNest - Appearance</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="Layout">
+    <div class="SideBar">
+      <div class="SideBarOptions">
+        <a href="Home.html" class="Home Navigation">Home</a>
+        <a href="Tasks.html" class="Task Navigation">Tasks</a>
+        <a href="Appearance.html" class="Appearance Navigation">Appearance</a>
+        <a href="Settings.html" class="Settings Navigation">Settings</a>
       </div>
     </div>
 
-    <script src="scripts/app.js"></script>
-  </body>
+    <i class="fa-solid fa-bars bars"></i>
+
+    <div class="MainPageContent">
+      <div class="AppearanceContent">
+        <h1>Appearance Settings</h1>
+        <div class="AppearanceLayout">
+
+          <!-- Theme Structure -->
+
+          <label class="DropdownLabel">
+            <i class="fa-solid fa-palette"></i> Choose a Theme
+          </label>
+          <div class="ThemeSwitcher DropDownSwticher">
+            <div class="SelectedOption SelectedTheme">
+              <i class="fa-solid fa-angle-down arrow"></i>
+            </div>
+            <div class="DropDownToggle hidden">
+              <div class="DropDownOptions ThemeOption" data-theme="dark">
+                Dark Mode
+              </div>
+              <div class="DropDownOptions ThemeOption" data-theme="light">
+                Light Mode
+              </div>
+              <div class="DropDownOptions ThemeOption" data-theme="system">
+                Sync with system
+              </div>
+            </div>
+          </div>
+          <hr class="AppearanceSpacer" />
+
+          <!-- Background Structure -->
+
+          <input type="color" id="ColorPicker" style="display: none" />
+
+          <label class="DropdownLabel">
+            <i class="fa-solid fa-palette"></i> Background Options
+          </label>
+          <div class="BackgroundSwitcher DropDownSwticher">
+            <div class="SelectedOption SelectedBackgroundOption">
+              <i class="fa-solid fa-angle-down arrow"></i>
+            </div>
+            <div class="BackgroundDropDownToggle DropDownToggle hidden">
+              <div class="DropDownOptions BackgroundOption" data-background="none">
+                None
+              </div>
+              <div class="DropDownOptions BackgroundOption OpenColorPickerButton" data-background="solid">
+                Solid Colour
+              </div>
+              <div class="DropDownOptions BackgroundOption" data-background="gradient">
+                Gradient Background
+              </div>
+              <!-- <div class="DropDownOptions BackgroundOption" data-background="image">
+                Background Image (Beta)
+              </div> -->
+            </div>
+          </div>
+          <hr class="AppearanceSpacer" />
+
+          <div id="AddGradientBackground" class="AddGradientBackground">
+            <!-- Inside content -->
+            <div class="GradientModalContent">
+              <span class="GradientClose">&times;</span>
+              <!-- <h2 class="GradientModalHeading">Add a Task</h2> -->
+              <div class="GradientModalOptions">
+                <select id="gradientDirection" class="gradientDirection">
+                  <option value="to right">→ Right</option>
+                  <option value="to left">← Left</option>
+                  <option value="to bottom">↓ Down</option>
+                  <option value="to top">↑ Up</option>
+                  <option value="45deg">↗ 45°</option>
+                </select>
+                <input type="color" id="gradientColor1" class="gradientColor1" />
+                <input type="color" id="gradientColor2" class="gradientColor2" />
+              </div>
+              <div class="GradientModalColourButton">
+                <button id="applyCustomGradient" class="applyCustomGradient">
+                  Apply
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- UI Density -->
+
+          <label class="DropdownLabel">
+            <i class="fa-solid fa-palette"></i> UI Density
+          </label>
+          <div class="UISwitcher DropDownSwticher">
+            <div class="SelectedOption SelectedUIOption">
+              Coming Soon <!-- <i class="fa-solid fa-angle-down arrow"></i> -->
+            </div>
+            <div class="UIDropDownToggle DropDownToggle hidden">
+              <div class="DropDownOptions UIOption" data-UI="compact">
+                Compact Mode
+              </div>
+              <div class="DropDownOptions UIOption" data-UI="comfy">
+                Comfy Mode
+              </div>
+            </div>
+          </div>
+          <hr class="AppearanceSpacer" />
+          <div class="ResetButton">
+            <button class="ResetToDefault">Reset To Default</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="DarkModeDiv">
+      <button class="DarkMode" title="Dark Mode">
+        <i class="fa-solid fa-moon Moon"></i>
+      </button>
+    </div>
+    <div class="LightModeDiv">
+      <button class="LightMode" title="Light Mode">
+        <i class="fa-solid fa-sun Sun"></i>
+      </button>
+    </div>
+  </div>
+
+  <script src="scripts/app.js"></script>
+</body>
+
 </html>
+
+
+<!-- Layout Preference -->
+
+<!-- THIS CAN BE ADDED IN SETTINGS INSTEAD OF APPEARANCE. -->
+
+<!-- <label class="DropdownLabel">
+  <i class="fa-solid fa-palette"></i> Layout Preferences
+</label>
+<div class="LayoutPreferenceChoice DropDownSwticher">
+  <div class="SelectedOption SelectedBackgroundOption">
+    Dark Mode <i class="fa-solid fa-angle-down arrow"></i>
+  </div>
+  <div class="DropDownToggle hidden">
+    <div class="DropDownOptions BackgroundOption" data-background="solid">
+      Solid Colour
+    </div>
+    <div class="DropDownOptions BackgroundOption" data-background="gradient">
+      Gradient Background
+    </div>
+    <div class="DropDownOptions BackgroundOption" data-background="image">
+      Background Image
+    </div>
+  </div>
+</div>
+<hr class="AppearanceSpacer" /> -->
