@@ -312,14 +312,14 @@ html.light-mode .Restart {
   gap: 10px;
 }
 
-.ModeButtons button {
+/* .ModeButtons button {
   height: 55px;
   width: 120px;
   border: none;
   border-radius: 15px;
   font-size: 16px;
   cursor: pointer;
-}
+} */
 
 .mode-active {
   background-color: #6b6868;
@@ -1216,12 +1216,30 @@ li {
   .TimerContent {
     margin: 0 0 210px 95px;
   }
+
+  .TasksContent {
+    padding: 0 0 10px 85px;
+  }
+
+  .TasksLayout {
+    height: auto;
+    min-height: 850px;
+    width: 78vw;
+    border: none;
+    border: 2px solid #6b8f71;
+    border-radius: 30px;
+    padding: 20px;
+    padding-top: 40px;
+    margin: 5px;
+  }
 }
 
 @media only screen and (max-width: 900px) {
   .SideBar {
     width: 99vw;
     height: 100vh;
+    max-width: none;
+    min-width: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -1256,7 +1274,11 @@ li {
   }
 
   .TimerContent {
-    margin-left: 51px;
+    margin-left: 42px;
+  }
+
+  .DropDownSwticher {
+    width: 65vw;
   }
 }
 
@@ -1309,5 +1331,15 @@ li {
 
   #ListContainer {
     max-height: 450px;
+  }
+
+  .ModeButtons button {
+    height: 40px;
+    width: 90px;
+    border: none;
+  }
+
+  .TasksContent {
+    padding: 0 10px 10px 0;
   }
 }
