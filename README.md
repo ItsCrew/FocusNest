@@ -9,11 +9,31 @@
 ## 🚀 Features
 
 - 🕐 Pomodoro, Short Break, and Long Break timers
+
+- 🎨 Fully customizable Appearance Page
+
+  Choose solid or gradient backgrounds
+
+  Light, Dark, and System theme options
+
+- ✅ New Tasks Page
+
+  Add, edit, or delete tasks
+
+  Customize task colors for visual grouping
+
 - 🔁 Auto session switching for effortless flow
+
 - 🌗 Toggle between Light and Dark Mode
+
 - 🔔 End-of-session notification sounds
+
 - 📊 Visual cycle tracker to show your progress
-- 🎛️ Simple timer customization options
+
+- 📱 Fully responsive for mobile, tablet, and desktop
+
+- ⚙️ Persistent settings saved with localStorage
+
 - ✨ More Coming Soon!!
 
 ---
