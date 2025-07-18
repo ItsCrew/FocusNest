@@ -138,6 +138,25 @@ section ul {
   box-shadow: 0 2px 8px rgba(107, 143, 113, 0.3);
 }
 
+.Credits {
+  text-align: center;
+  align-items: center;
+  padding-top: 130px;
+}
+
+.Credits p {
+  padding: 15px;
+}
+
+.Credits h3 {
+  font-size: 28px;
+}
+
+#madeby {
+  font-size: 13px;
+  color: rgb(160, 160, 160);
+}
+
 @media (max-width: 1900px) and (min-width: 769px) {
   :root {
     --navbar-height: 120px;
