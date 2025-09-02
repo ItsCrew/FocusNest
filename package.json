@@ -1,0 +1,36 @@
+{
+  "dependencies": {
+    "axios": "^1.11.0",
+    "body-parser": "^2.2.0",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "mongoose": "^8.18.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "name": "focusnest-private-repo",
+  "version": "1.0.0",
+  "description": "**FocusNest** is a sleek, distraction-free productivity timer based on the Pomodoro Technique. Whether you're studying, coding, or working — FocusNest helps you stay focused, track your progress, and take meaningful breaks.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItsCrew/FocusNest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ItsCrew/FocusNest/issues"
+  },
+  "homepage": "https://github.com/ItsCrew/FocusNest#readme"
+}

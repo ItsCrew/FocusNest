@@ -3,3 +3,5 @@ example.html
 example.js
 Example
 CHANGELOG.md
+node_modules
+.env
