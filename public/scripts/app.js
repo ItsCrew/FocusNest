@@ -65,6 +65,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const ResetButton = document.querySelector(".ResetButton")
     const ResetToDefault = document.querySelector(".ResetToDefault")
 
+    checkAuth();
+
+    async function checkAuth() {
+        try {
+            const response = await fetch('/auth/status');
+            const data = await response.json();
+
+            if (!data.authenticated) {
+                window.location.href = '/Signup.html';
+            }
+        } catch (error) {
+            window.location.href = '/Signup.html';
+        }
+    }
+
 
     loadTasksFromLocalStorage()
     if (localStorage.getItem("tasks")) {
