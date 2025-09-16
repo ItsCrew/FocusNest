@@ -1195,6 +1195,10 @@ li {
   transform: rotate(90deg);
 }
 
+.TestingLogin a {
+  color: white;
+}
+
 /* Responsive stuff idk */
 
 @media only screen and (max-width: 1080px) {

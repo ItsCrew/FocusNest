@@ -1,12 +1,13 @@
 const express = require('express')
-const app = express()
-const dotenv = require('dotenv')
-const connectDB = require('./Database/connect')
-const cookieParser = require('cookie-parser');
 const session = require('express-session')
 const passport = require('passport')
+const cookieParser = require('cookie-parser');
+const app = express()
+const dotenv = require('dotenv')
+const ConnectDB = require('./Database/connect')
 const Auth = require('./routes/Auth')
 const { isAuthenticatedForPages } = require('./Middleware/Auth')
+const Tasks = require('./routes/Tasks')
 const MongoStore = require('connect-mongo')
 
 
@@ -35,18 +36,23 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-// app.use('/api/v1/Tasks', Tasks)
+app.use('/api/v1/Tasks', Tasks)
 app.use('/auth', Auth)
 
-app.get('/', (req, res) => {
-    res.redirect('/Home.html')
-})
+app.get("/", (req, res) => {
+    if (req.isAuthenticated()) {
+        res.redirect("/Home.html");
+    } else {
+        res.redirect("/About.html");
+    }
+});
+
 
 const port = process.env.PORT
 
 const start = async () => {
     try {
-        await connectDB(process.env.MONGO_URI)
+        await ConnectDB(process.env.MONGO_URI)
         console.log('Connected to the Database');
 
         app.listen(port, () => {

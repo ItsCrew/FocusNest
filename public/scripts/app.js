@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ResetButton = document.querySelector(".ResetButton")
     const ResetToDefault = document.querySelector(".ResetToDefault")
 
-    checkAuth();
+    // LoadTasks()
 
     async function checkAuth() {
         try {
@@ -80,14 +80,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // async function LoadTasks() {
+    //     try {
+    //         const response = await axios.get('/api/v1/Tasks'); // Getting all the things we get from api/v1/Notes
+    //         const tasks = response.data.Tasks; // Taking out Notes from
 
-    loadTasksFromLocalStorage()
-    if (localStorage.getItem("tasks")) {
-        if (TextBeforeAddingTasks && clearButton) {
-            clearButton.style.display = "block"
-            TextBeforeAddingTasks.style.display = "none"
-        }
-    }
+    //         // Create and append each note element
+    //         tasks.forEach(task => {
+    //             console.log(task);
+    //         });
+
+
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    loadTasksFromDatabase()
+    // if (ListContainer && ListContainer.children.length === 0) {
+    //     console.log("The children length is 0");
+    //     if (TextBeforeAddingTasks && clearButton) {
+    //         clearButton.style.display = "block"
+    //         TextBeforeAddingTasks.style.display = "none"
+    //     }
+    // }
 
 
     const defaultValues = {
@@ -712,26 +728,37 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function AddTaskFunction() {
-        const taskText = InputBox.value.trim();
-        if (taskText !== "") {
-            CreateTaskElement(taskText);
-            saveTasksToLocalStorage();
-            //save
-            InputBox.value = "";
-            TextBeforeAddingTasks.style.display = "none"
-            // NoTasks.style.display = "none";
-            // AddPromptButton.style.display = "none"
-            // AddPrompt.style.display = "none"
-            if (clearButton) clearButton.style.display = "block";
+    async function AddTaskFunction() {
+        try {
+            const Task = InputBox.value.trim();
+            if (Task !== "") {
+                const response = await axios.post('/api/v1/Tasks', { Task });
+                const task = response.data.Tasks;
+                const Color = "test"
+                CreateTaskElement(Task, Color, false, task._id);
+                // saveTasksToLocalStorage();
+                //save
+                InputBox.value = "";
+                TextBeforeAddingTasks.style.display = "none"
+                // NoTasks.style.display = "none";
+                // AddPromptButton.style.display = "none"
+                // AddPrompt.style.display = "none"
+                if (clearButton) clearButton.style.display = "block";
+            }
+            InputBox.focus();
+            AddModal.style.display = "none";
+        } catch (error) {
+            console.log(error);
         }
-        InputBox.focus();
-        AddModal.style.display = "none";
     }
 
-    function CreateTaskElement(taskText, color = "", checked = false) {
+    async function CreateTaskElement(taskText, color = "", checked = false, taskId = null) {
         const li = document.createElement("li");
         li.setAttribute("data-checked", checked);
+
+        if (taskId) {
+            li.dataset.taskId = taskId;
+        }
 
         if (color) {
             li.style.backgroundColor = color;
@@ -800,6 +827,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function EditTask(li) {
         const taskText = li.querySelector(".TaskText").textContent.trim();
+        const id = li.dataset.taskId; // Get the task ID from the DOM element
 
         const input = document.createElement("input");
         input.type = "text";
@@ -818,13 +846,17 @@ document.addEventListener("DOMContentLoaded", () => {
         li.appendChild(saveButton);
 
         // Save updated task or revert if empty
-        function saveUpdatedTask() {
-            const updatedText = input.value.trim();
-            if (updatedText) {
-                li.innerHTML = `<span class="TaskText"> <i class="fa-regular fa-square"></i> ${updatedText}</span>`;
-                saveTasksToLocalStorage();
-            } else {
-                console.log("Task cannot be empty!");
+        async function saveUpdatedTask() {
+            try {
+                const Task = input.value.trim();
+                if (Task) {
+                    li.innerHTML = `<span class="TaskText"> <i class="fa-regular fa-square"></i> ${Task}</span>`;
+                    await axios.patch(`/api/v1/Tasks/${id}`, { Task })
+                } else {
+                    console.log("Task cannot be empty!");
+                }
+            } catch (error) {
+                console.log(error);
             }
         }
 
@@ -838,11 +870,17 @@ document.addEventListener("DOMContentLoaded", () => {
         input.focus();
     }
 
-    function SetTileColor() {
-        const SelectedColor = ColorPickerTasks.value;
-        if (ContextMenu.currentTask) {
-            ContextMenu.currentTask.style.backgroundColor = SelectedColor;
-            saveTasksToLocalStorage();
+    async function SetTileColor(id) {
+        try {
+            const SelectedColor = ColorPickerTasks.value;
+            if (ContextMenu.currentTask) {
+                ContextMenu.currentTask.style.backgroundColor = SelectedColor;
+                const id = ContextMenu.currentTask.dataset.taskId;
+                if (id) axios.patch(`/api/v1/Tasks/${id}`, { Color: SelectedColor }).catch(console.log);
+            }
+        } catch (error) {
+            console.log(error);
+
         }
     }
     if (OpenColorPickerButtonTasks) {
@@ -851,13 +889,18 @@ document.addEventListener("DOMContentLoaded", () => {
             ContextMenu.style.display = "none";
         });
     }
+
+
     if (ColorPickerTasks) {
-        ColorPickerTasks.addEventListener("input", SetTileColor);
+        ColorPickerTasks.addEventListener("input", () => {
+            SetTileColor(ContextMenu.currentTask)
+        })
     }
 
     //Mark a task done/Incomplete
-    function MarkTaskDone(taskElement) {
+    async function MarkTaskDone(taskElement) {
         if (taskElement) {
+            const id = taskElement.dataset.taskId;
             const taskTextElement = taskElement.querySelector(".TaskText");
             taskElement.setAttribute("data-checked", "true");
             taskTextElement.style.textDecoration = "line-through";
@@ -867,12 +910,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 iconElement.classList.add("fa-check-square");
             }
             ContextMenu.style.display = "none";
-            saveTasksToLocalStorage();
+            await axios.patch(`/api/v1/Tasks/${id}`, { Completed: true })
         }
     }
 
-    function MarkTaskIncomplete(taskElement) {
+    async function MarkTaskIncomplete(taskElement) {
         if (taskElement) {
+            const id = taskElement.dataset.taskId;
             const taskTextElement = taskElement.querySelector(".TaskText");
             taskElement.setAttribute("data-checked", "false");
             taskTextElement.style.textDecoration = "none";
@@ -882,7 +926,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 iconElement.classList.add("fa-square");
             }
             ContextMenu.style.display = "none";
-            saveTasksToLocalStorage();
+            await axios.patch(`/api/v1/Tasks/${id}`, { Completed: false })
         }
     }
 
@@ -912,11 +956,22 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function RemoveTask() {
+    async function RemoveTask() {
         if (ContextMenu.currentTask) {
-            ContextMenu.currentTask.remove();
+            try {
+                const TaskID = ContextMenu.currentTask.dataset.taskId
+                if (!TaskID) {
+                    console.log("No task id found");
+                    return;
+                }
+
+                await axios.delete(`/api/v1/Tasks/${TaskID}`)
+                loadTasksFromDatabase()
+            } catch (error) {
+                console.log(error);
+
+            }
             ContextMenu.style.display = "none";
-            saveTasksToLocalStorage();
             if (ListContainer.children.length === 0) {
                 // AddPrompt.style.display = "flex"
                 // AddPromptButton.style.display = "block"
@@ -940,18 +995,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (removeButton) {
-        removeButton.addEventListener("click", RemoveTask);
+        removeButton.addEventListener("click", () => {
+            RemoveTask()
+        })
     }
 
 
     // Clear Button Logic
-    function Clear_Tasks() {
-        localStorage.removeItem("tasks");
-        ListContainer.innerHTML = "";
-        clearButton.style.display = "none";
-        TextBeforeAddingTasks.style.display = "flex"
-
+    async function Clear_Tasks() {
+        try {
+            await axios.delete('/api/v1/Tasks')
+            loadTasksFromDatabase()
+            ListContainer.innerHTML = "";
+            clearButton.style.display = "none";
+            TextBeforeAddingTasks.style.display = "flex"
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+
     if (clearButton) {
         clearButton.addEventListener("click", Clear_Tasks);
     }
@@ -972,7 +1035,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
         tasks.forEach(({ text, color, checked }) => CreateTaskElement(text, color, checked));
     }
+    async function loadTasksFromDatabase() {
+        try {
+            const response = await axios.get('/api/v1/Tasks');
+            const tasks = response.data.Tasks;
 
+            if (ListContainer && ListContainer.innerHTML !== "") {
+                ListContainer.innerHTML = "";
+                console.log("Clearing List Container");
+            }
+
+            if (!tasks || tasks.length === 0) {
+                console.log("No tasks found");
+                if (TextBeforeAddingTasks && clearButton) {
+                    clearButton.style.display = "none";
+                    TextBeforeAddingTasks.style.display = "flex";
+                }
+            } else {
+                tasks.forEach(({ _id, Task, Color, Completed }) => CreateTaskElement(Task, Color, Completed, _id));
+                if (TextBeforeAddingTasks && clearButton) {
+                    clearButton.style.display = "block";
+                    TextBeforeAddingTasks.style.display = "none";
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     // Theme Switch
 
     DarkMode.addEventListener("click", () => {
