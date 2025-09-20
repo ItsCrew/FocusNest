@@ -20,7 +20,8 @@
   "description": "**FocusNest** is a sleek, distraction-free productivity timer based on the Pomodoro Technique. Whether you're studying, coding, or working — FocusNest helps you stay focused, track your progress, and take meaningful breaks.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
