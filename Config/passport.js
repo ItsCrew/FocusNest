@@ -18,7 +18,7 @@ passport.deserializeUser(async (id, done) => {
 passport.use(new Google({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.PROD_CALLBACK_URL
+    callbackURL: process.env.PREV_CALLBACK_URL
 }, async (accessToken, refreshToken, profile, done) => {
     try {
         let user = await User.findOne({ googleId: profile.id })

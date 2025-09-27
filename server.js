@@ -9,12 +9,16 @@ const Auth = require('./routes/Auth')
 const { isAuthenticatedForPages } = require('./Middleware/Auth')
 const Tasks = require('./routes/Tasks')
 const MongoStore = require('connect-mongo')
+const cors = require('cors')
+const path = require("path");
+const fs = require('fs');
 
 
 dotenv.config()
 require('./Config/passport')
 
-app.use(express.static('./public'))
+app.use(express.static(path.join(__dirname, "public")));
+app.use(cors())
 app.use(express.json())
 app.use(cookieParser())
 
@@ -39,26 +43,49 @@ app.use(passport.session())
 app.use('/api/v1/Tasks', Tasks)
 app.use('/auth', Auth)
 
+
+app.get('/auth/status', (req, res) => {
+    res.json({ authenticated: req.isAuthenticated() });
+});
+
 app.get("/", (req, res) => {
     if (req.isAuthenticated()) {
-        res.redirect("/Home.html");
+        res.redirect("/Home");
     } else {
-        res.redirect("/About.html");
+        res.redirect("/About");
     }
 });
 
+const PublicDir = path.join(__dirname, 'public');
+const StaticFiles = fs.readdirSync(PublicDir).filter(file => file.endsWith('.html'));
 
-const port = process.env.PORT
+StaticFiles.forEach(file => {
+    const cleanName = file.replace('.html', '');
+
+    if (cleanName === 'Tasks') {
+        return;
+    }
+
+    app.get(`/${cleanName}`, (req, res) => {
+        res.sendFile(path.join(PublicDir, file));
+    });
+});
+
+app.get('/Tasks', (req, res) => {
+    console.log('Tasks route hit! Authenticated:', req.isAuthenticated());
+    if (req.isAuthenticated()) {
+        console.log('User is authenticated, serving Tasks.html');
+        res.sendFile(path.join(PublicDir, 'Tasks.html'));
+    } else {
+        console.log('User not authenticated, redirecting to Signup.html');
+        res.redirect('/Signup.html');
+    }
+});
 
 const start = async () => {
     try {
         await ConnectDB(process.env.MONGO_URI)
         console.log('Connected to the Database');
-
-        app.listen(port, () => {
-            console.log(`Server is running on http://localhost:${port}...`);
-
-        })
     } catch (error) {
         console.log(error);
 
@@ -66,3 +93,5 @@ const start = async () => {
 }
 
 start()
+
+module.exports = app;

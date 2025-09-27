@@ -1,3 +1,5 @@
+// Auth check removed - handled server-side for Tasks page
+
 document.addEventListener("DOMContentLoaded", () => {
     const savedTheme = localStorage.getItem("theme");
     const TimeInputs = document.querySelectorAll(".PomodoroTimeInput")
@@ -736,13 +738,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const task = response.data.Tasks;
                 const Color = "test"
                 CreateTaskElement(Task, Color, false, task._id);
-                // saveTasksToLocalStorage();
-                //save
                 InputBox.value = "";
                 TextBeforeAddingTasks.style.display = "none"
-                // NoTasks.style.display = "none";
-                // AddPromptButton.style.display = "none"
-                // AddPrompt.style.display = "none"
                 if (clearButton) clearButton.style.display = "block";
             }
             InputBox.focus();

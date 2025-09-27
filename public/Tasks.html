@@ -4,19 +4,6 @@
 <head>
   <script>
     // Prevent theme flash
-    checkAuth()
-    async function checkAuth() {
-      try {
-        const response = await fetch('/auth/status');
-        const data = await response.json();
-
-        if (!data.authenticated) {
-          window.location.href = '/Signup.html';
-        }
-      } catch (error) {
-        window.location.href = '/Signup.html';
-      }
-    }
     (function () {
 
 
@@ -53,17 +40,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tasks • FocusNest</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 
 <body>
   <div class="Layout">
     <div class="SideBar">
       <div class="SideBarOptions">
-        <a href="Home.html" class="Home Navigation">Home</a>
-        <a href="Tasks.html" class="Task Navigation">Tasks</a>
-        <a href="Appearance.html" class="Appearance Navigation">Appearance</a>
-        <a href="Settings.html" class="Settings Navigation">Settings</a>
+        <a href="/Home" class="Home Navigation">Home</a>
+        <a href="/Tasks" class="Task Navigation">Tasks</a>
+        <a href="/Appearance" class="Appearance Navigation">Appearance</a>
+        <a href="/Settings" class="Settings Navigation">Settings</a>
       </div>
     </div>
 
@@ -129,6 +116,9 @@
           <i class="fa-solid fa-palette"></i> Choose Colour
           <input type="color" id="ColorPickerTasks" style="display: none" />
         </div>
+        <div class="ChooseColour" id="OpenColorPickerButtonTasks">
+          <i class="fa-solid fa-palette"></i> Remove Colour (coming soon)
+        </div>
         <div class="MarkDone">
           <i class="fa-regular fa-square-check"></i> Mark Done
         </div>
@@ -145,7 +135,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
       integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="scripts/app.js"></script>
+    <script src="/scripts/app.js"></script>
 </body>
 
 </html>
