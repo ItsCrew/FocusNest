@@ -78,7 +78,7 @@ app.get('/Tasks', (req, res) => {
         res.sendFile(path.join(PublicDir, 'Tasks.html'));
     } else {
         console.log('User not authenticated, redirecting to Signup.html');
-        res.redirect('/Signup.html');
+        res.redirect('/Signup');
     }
 });
 

@@ -9,7 +9,7 @@ router.get('/google',
 router.get('/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
     (req, res) => {
-        res.redirect('/Home.html')
+        res.redirect('/Tasks')
     }
 )
 

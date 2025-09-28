@@ -75,10 +75,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (!data.authenticated) {
-                window.location.href = '/Signup.html';
+                window.location.href = '/Signup';
             }
         } catch (error) {
-            window.location.href = '/Signup.html';
+            window.location.href = '/Signup';
         }
     }
 

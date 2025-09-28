@@ -1195,11 +1195,370 @@ li {
   transform: rotate(90deg);
 }
 
-.TestingLogin a {
-  color: white;
+/* Signup Page Styling */
+
+.SignupContainer {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
 }
 
-/*Optional Sign Up page*/
+.SignupCard {
+  background-color: #2d3c33;
+  border: 2px solid #6b8f71;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(30, 45, 36, 0.4);
+  transition: all 0.3s ease;
+}
+
+.SignupCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(30, 45, 36, 0.6);
+}
+
+.SignupHeader {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.SignupLogo {
+  height: 80px;
+  width: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.SignupTitle {
+  font-size: 28px;
+  font-weight: 600;
+  color: #ededed;
+  margin-bottom: 10px;
+}
+
+.SignupSubtitle {
+  font-size: 16px;
+  color: #a3b18a;
+  margin-bottom: 0;
+}
+
+.SignupContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.GoogleSignInButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 50px;
+  width: 100%;
+  background-color: #4f6f56;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(79, 111, 86, 0.3);
+}
+
+.GoogleSignInButton:hover {
+  background-color: #5e7f64;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(79, 111, 86, 0.4);
+}
+
+.GoogleSignInButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(79, 111, 86, 0.3);
+}
+
+.GoogleSignInButton i {
+  font-size: 18px;
+}
+
+.Divider {
+  position: relative;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.Divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #6b8f71;
+}
+
+.Divider span {
+  background-color: #2d3c33;
+  padding: 0 15px;
+  color: #a3b18a;
+  font-size: 14px;
+}
+
+.GuestContinueButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 50px;
+  width: 100%;
+  background-color: transparent;
+  color: #a3b18a;
+  border: 2px solid #6b8f71;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.GuestContinueButton:hover {
+  background-color: #6b8f71;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(107, 143, 113, 0.3);
+}
+
+.GuestContinueButton:active {
+  transform: translateY(0);
+}
+
+.GuestContinueButton i {
+  font-size: 16px;
+}
+
+.SignupFeatures {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #6b8f71;
+}
+
+.Feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  text-align: center;
+}
+
+.Feature i {
+  font-size: 20px;
+  color: #a3b18a;
+}
+
+.Feature span {
+  font-size: 12px;
+  color: #a3b18a;
+  font-weight: 500;
+}
+
+.ThemeToggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+/* Light mode styles for signup page */
+html.light-mode .SignupCard {
+  background-color: #edffe9;
+  border-color: #6b8f71;
+}
+
+html.light-mode .SignupTitle {
+  color: #333333;
+}
+
+html.light-mode .SignupSubtitle {
+  color: #4b6b58;
+}
+
+html.light-mode .Divider::before {
+  background-color: #6b8f71;
+}
+
+html.light-mode .Divider span {
+  background-color: #edffe9;
+  color: #4b6b58;
+}
+
+html.light-mode .GuestContinueButton {
+  color: #4b6b58;
+  border-color: #6b8f71;
+}
+
+html.light-mode .GuestContinueButton:hover {
+  background-color: #6b8f71;
+  color: #ffffff;
+}
+
+html.light-mode .SignupFeatures {
+  border-top-color: #6b8f71;
+}
+
+html.light-mode .Feature i,
+html.light-mode .Feature span {
+  color: #4b6b58;
+}
+
+/* Main Signup Page Styling */
+
+.SignupBenefits {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 0;
+  padding: 20px 0;
+  border-top: 1px solid #6b8f71;
+  border-bottom: 1px solid #6b8f71;
+}
+
+.Benefit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  text-align: center;
+}
+
+.Benefit i {
+  font-size: 20px;
+  color: #a3b18a;
+}
+
+.Benefit span {
+  font-size: 12px;
+  color: #a3b18a;
+  font-weight: 500;
+}
+
+.SignupFooter {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.SignupFooterText {
+  font-size: 14px;
+  color: #a3b18a;
+  margin: 0;
+}
+
+.SignupFooterLink {
+  color: #6b8f71;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.SignupFooterLink:hover {
+  color: #a3b18a;
+  text-decoration: underline;
+}
+
+/* Light mode styles for main signup page */
+html.light-mode .SignupBenefits {
+  border-top-color: #6b8f71;
+  border-bottom-color: #6b8f71;
+}
+
+html.light-mode .Benefit i,
+html.light-mode .Benefit span {
+  color: #4b6b58;
+}
+
+html.light-mode .SignupFooterText {
+  color: #4b6b58;
+}
+
+html.light-mode .SignupFooterLink {
+  color: #6b8f71;
+}
+
+html.light-mode .SignupFooterLink:hover {
+  color: #4b6b58;
+}
+
+/* Responsive design for signup page */
+@media only screen and (max-width: 600px) {
+  .SignupContainer {
+    padding: 15px;
+  }
+
+  .SignupCard {
+    padding: 30px 25px;
+  }
+
+  .SignupTitle {
+    font-size: 24px;
+  }
+
+  .SignupSubtitle {
+    font-size: 14px;
+  }
+
+  .SignupFeatures {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .Feature {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .SignupBenefits {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .Benefit {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .ThemeToggle {
+    top: 15px;
+    right: 15px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .SignupCard {
+    padding: 25px 20px;
+  }
+
+  .SignupTitle {
+    font-size: 22px;
+  }
+
+  .GoogleSignInButton,
+  .GuestContinueButton {
+    height: 45px;
+    font-size: 15px;
+  }
+}
 
 /* Responsive stuff idk */
 
