@@ -18,7 +18,7 @@ router.get('/logout', (req, res) => {
         if (err) {
             return res.status(500).json({ message: 'Error during logout' });
         }
-        res.redirect('/');
+        res.redirect('/Home');
     });
 });
 
