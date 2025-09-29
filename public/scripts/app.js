@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const SelectedUIOption = document.querySelector(".SelectedUIOption")
     const UIDropDownToggle = document.querySelector(".UIDropDownToggle")
     const ColorPicker = document.getElementById("ColorPicker");
+    const RemoveColour = document.querySelector(".RemoveColour")
     const OpenColorPickerButton = document.querySelector(".OpenColorPickerButton");
     const CommonTaskAdding = document.querySelectorAll(".CommonTaskAdding")
     const AddPrompt = document.querySelector(".AddPrompt");
@@ -727,6 +728,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 MarkDone.style.display = "block";
                 MarkNotDone.style.display = "none";
             }
+
+            if (ContextMenu.currentTask.style.backgroundColor == "") {
+                RemoveColour.style.display = "none"
+            } else {
+                RemoveColour.style.display = "block"
+            }
         }
     }
 
@@ -873,13 +880,28 @@ document.addEventListener("DOMContentLoaded", () => {
             if (ContextMenu.currentTask) {
                 ContextMenu.currentTask.style.backgroundColor = SelectedColor;
                 const id = ContextMenu.currentTask.dataset.taskId;
-                if (id) axios.patch(`/api/v1/Tasks/${id}`, { Color: SelectedColor }).catch(console.log);
+                if (id) await axios.patch(`/api/v1/Tasks/${id}`, { Color: SelectedColor }).catch(console.log);
             }
         } catch (error) {
             console.log(error);
 
         }
     }
+
+    async function RemoveTileColor(id) {
+        try {
+            if (ContextMenu.currentTask) {
+                ContextMenu.currentTask.style.backgroundColor = "";
+                const id = ContextMenu.currentTask.dataset.taskId;
+                if (id) await axios.patch(`/api/v1/Tasks/${id}`, { Color: "" })
+            }
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
+
     if (OpenColorPickerButtonTasks) {
         OpenColorPickerButtonTasks.addEventListener("click", () => {
             ColorPickerTasks.click();
@@ -891,6 +913,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (ColorPickerTasks) {
         ColorPickerTasks.addEventListener("input", () => {
             SetTileColor(ContextMenu.currentTask)
+        })
+    }
+
+    if (RemoveColour) {
+        RemoveColour.addEventListener("click", () => {
+            RemoveTileColor(ContextMenu.currentTask)
+            ContextMenu.style.display = "none";
         })
     }
 
