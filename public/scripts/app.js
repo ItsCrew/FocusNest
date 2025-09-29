@@ -1,6 +1,6 @@
-// Auth check removed - handled server-side for Tasks page
 
 document.addEventListener("DOMContentLoaded", () => {
+    checkAuth()
     const savedTheme = localStorage.getItem("theme");
     const TimeInputs = document.querySelectorAll(".PomodoroTimeInput")
     const PomodoroModeSlider = document.querySelector(".PomodoroModeSlider")
@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const GradientModalContent = document.querySelector(".GradientModalContent")
     const ResetButton = document.querySelector(".ResetButton")
     const ResetToDefault = document.querySelector(".ResetToDefault")
+    const Logout = document.querySelector(".Logout")
 
     // LoadTasks()
 
@@ -76,10 +77,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (!data.authenticated) {
-                window.location.href = '/Signup';
+                Logout.style.display = "none"
+            } else {
+                Logout.style.display = "flex"
             }
         } catch (error) {
-            window.location.href = '/Signup';
+            console.log(error);
+
         }
     }
 

@@ -74,6 +74,12 @@ body,
   cursor: pointer;
 }
 
+.Logout {
+  display: none;
+  position: absolute;
+  bottom: 8px;
+}
+
 /* Theme styles */
 html.dark-mode body {
   background-color: #1e2d24;
