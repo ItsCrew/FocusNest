@@ -745,16 +745,15 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const Task = InputBox.value.trim();
             if (Task !== "") {
+                AddModal.style.display = "none";
                 const response = await axios.post('/api/v1/Tasks', { Task });
                 const task = response.data.Tasks;
-                const Color = "test"
-                CreateTaskElement(Task, Color, false, task._id);
+                CreateTaskElement(Task, "", false, task._id);
                 InputBox.value = "";
                 TextBeforeAddingTasks.style.display = "none"
                 if (clearButton) clearButton.style.display = "block";
             }
             InputBox.focus();
-            AddModal.style.display = "none";
         } catch (error) {
             console.log(error);
         }
@@ -796,6 +795,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ContextMenu.style.top = `${e.clientY}px`;
             ContextMenu.style.left = `${e.clientX}px`;
             ContextMenu.style.display = "block";
+            if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
 
             // Store reference to the current task for edit/remove actions
             ContextMenu.currentTask = li;
@@ -807,6 +807,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener("click", (e) => {
             if (!ContextMenu.contains(e.target)) {
                 ContextMenu.style.display = "none";
+                if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
             }
         });
     }
@@ -995,24 +996,20 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
+                ContextMenu.currentTask.remove();
+                ContextMenu.style.display = "none";
+                if (ListContainer.children.length === 0) {
+                    clearButton.style.display = "none";
+                    TextBeforeAddingTasks.style.display = "flex"
+                }
                 await axios.delete(`/api/v1/Tasks/${TaskID}`)
                 loadTasksFromDatabase()
             } catch (error) {
                 console.log(error);
-
-            }
-            ContextMenu.style.display = "none";
-            if (ListContainer.children.length === 0) {
-                // AddPrompt.style.display = "flex"
-                // AddPromptButton.style.display = "block"
-                clearButton.style.display = "none";
-                // NoTasks.style.display = "block";
-                TextBeforeAddingTasks.style.display = "flex"
-                localStorage.removeItem("tasks");
-
             }
         }
     }
+
     if (ListContainer) {
         if (ListContainer.children.length === 0) {
             // NoTasks.style.display = "block";
@@ -1034,11 +1031,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Clear Button Logic
     async function Clear_Tasks() {
         try {
-            await axios.delete('/api/v1/Tasks')
-            loadTasksFromDatabase()
             ListContainer.innerHTML = "";
             clearButton.style.display = "none";
             TextBeforeAddingTasks.style.display = "flex"
+            await axios.delete('/api/v1/Tasks')
+            loadTasksFromDatabase()
         } catch (error) {
             console.log(error);
         }
