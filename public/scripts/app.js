@@ -795,7 +795,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ContextMenu.style.top = `${e.clientY}px`;
             ContextMenu.style.left = `${e.clientX}px`;
             ContextMenu.style.display = "block";
-            if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
 
             // Store reference to the current task for edit/remove actions
             ContextMenu.currentTask = li;
