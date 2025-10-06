@@ -744,20 +744,30 @@ document.addEventListener("DOMContentLoaded", () => {
     async function AddTaskFunction() {
         try {
             const Task = InputBox.value.trim();
-            if (Task !== "") {
-                AddModal.style.display = "none";
-                const response = await axios.post('/api/v1/Tasks', { Task });
-                const task = response.data.Tasks;
-                CreateTaskElement(Task, "", false, task._id);
-                InputBox.value = "";
-                TextBeforeAddingTasks.style.display = "none"
-                if (clearButton) clearButton.style.display = "block";
-            }
-            InputBox.focus();
+            if (!Task) return;
+            AddModal.style.display = "none";
+            InputBox.value = "";
+            TextBeforeAddingTasks.style.display = "none";
+            if (clearButton) clearButton.style.display = "block";
+
+            const tempId = `temp-${Date.now()}`;
+            const taskElement = CreateTaskElement(Task, "", false, tempId);
+
+            axios.post('/api/v1/Tasks', { Task })
+                .then(response => {
+                    const realTask = response.data.Tasks;
+                    taskElement.dataset.id = realTask._id;
+                })
+                .catch(error => {
+                    console.error(error);
+                    taskElement.remove();
+                    alert("Failed to add task. Try again.");
+                });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
+
 
     async function CreateTaskElement(taskText, color = "", checked = false, taskId = null) {
         const li = document.createElement("li");
