@@ -807,7 +807,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener("click", (e) => {
             if (!ContextMenu.contains(e.target)) {
                 ContextMenu.style.display = "none";
-                if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
             }
         });
     }
