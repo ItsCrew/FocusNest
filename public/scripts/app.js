@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const RemoveColour = document.querySelector(".RemoveColour")
     const OpenColorPickerButton = document.querySelector(".OpenColorPickerButton");
     const CommonTaskAdding = document.querySelectorAll(".CommonTaskAdding")
+    const AddTasksButton = document.querySelector(".AddTasksButton")
     const AddPrompt = document.querySelector(".AddPrompt");
     const AddModal = document.querySelector(".AddModal");
     const CloseModal = document.querySelector(".close");
@@ -749,6 +750,7 @@ document.addEventListener("DOMContentLoaded", () => {
             InputBox.value = "";
             TextBeforeAddingTasks.style.display = "none";
             if (clearButton) clearButton.style.display = "block";
+            if (AddTasksButton) AddTasksButton.style.display = "block";
 
             const tempId = `temp-${Date.now()}`;
             const taskElement = CreateTaskElement(Task, "", false, tempId);
@@ -1011,6 +1013,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (ListContainer.children.length === 0) {
                     clearButton.style.display = "none";
                     TextBeforeAddingTasks.style.display = "flex"
+                    AddTasksButton.style.display = "none";
                 }
                 await axios.delete(`/api/v1/Tasks/${TaskID}`)
                 loadTasksFromDatabase()
@@ -1043,6 +1046,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             ListContainer.innerHTML = "";
             clearButton.style.display = "none";
+            AddTasksButton.style.display = "none";
             TextBeforeAddingTasks.style.display = "flex"
             await axios.delete('/api/v1/Tasks')
             loadTasksFromDatabase()
@@ -1086,12 +1090,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.log("No tasks found");
                 if (TextBeforeAddingTasks && clearButton) {
                     clearButton.style.display = "none";
+                    AddTasksButton.style.display = "none";
                     TextBeforeAddingTasks.style.display = "flex";
                 }
             } else {
                 tasks.forEach(({ _id, Task, Color, Completed }) => CreateTaskElement(Task, Color, Completed, _id));
                 if (TextBeforeAddingTasks && clearButton) {
                     clearButton.style.display = "block";
+                    AddTasksButton.style.display = "block";
                     TextBeforeAddingTasks.style.display = "none";
                 }
             }
