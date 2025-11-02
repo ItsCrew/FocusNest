@@ -69,6 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const ResetButton = document.querySelector(".ResetButton")
     const ResetToDefault = document.querySelector(".ResetToDefault")
     const Logout = document.querySelector(".Logout")
+    const ClearAllPopUp = document.querySelector(".ClearAllPopUp")
+    const ConfirmButton = document.querySelector(".ConfirmButton")
+    const CancelButton = document.querySelector(".CancelButton")
+
 
     // LoadTasks()
 
@@ -1055,7 +1059,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     if (clearButton) {
-        clearButton.addEventListener("click", Clear_Tasks);
+        clearButton.addEventListener("click", () => {
+            ClearAllPopUp.classList.add("show")
+        })
+    }
+
+    if (ConfirmButton) {
+        ConfirmButton.addEventListener("click", () => {
+            Clear_Tasks()
+            ClearAllPopUp.classList.remove("show")
+        })
+    }
+
+    if (CancelButton) {
+        CancelButton.addEventListener("click", () => {
+            ClearAllPopUp.classList.remove("show")
+        })
     }
 
     // Saving to local storage
