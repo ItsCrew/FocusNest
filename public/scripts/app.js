@@ -811,6 +811,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ContextMenu.style.left = `${e.clientX}px`;
             ContextMenu.style.display = "block";
             if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
+            // if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
 
             // Store reference to the current task for edit/remove actions
             ContextMenu.currentTask = li;
@@ -823,6 +824,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!ContextMenu.contains(e.target)) {
                 ContextMenu.style.display = "none";
                 if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
+                // if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
             }
         });
     }
