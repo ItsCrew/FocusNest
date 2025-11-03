@@ -810,7 +810,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ContextMenu.style.top = `${e.clientY}px`;
             ContextMenu.style.left = `${e.clientX}px`;
             ContextMenu.style.display = "block";
-            if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
             // if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
 
             // Store reference to the current task for edit/remove actions
@@ -823,7 +822,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener("click", (e) => {
             if (!ContextMenu.contains(e.target)) {
                 ContextMenu.style.display = "none";
-                if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
                 // if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
             }
         });
