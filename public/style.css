@@ -1026,7 +1026,7 @@ body.gradient-3 {
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(30, 45, 36, 0.4);
   padding: 32px 24px 24px 24px;
-  max-width: 450px;
+  max-width: 600px;
   width: 90vw;
   color: #ededed;
   animation: fadeIn 0.3s;
@@ -1036,12 +1036,21 @@ body.gradient-3 {
   text-align: center;
 }
 
+.ClearAllPopUp h1 {
+  font-size: 25px;
+  margin-bottom: 16px;
+  color: #ededed;
+  font-weight: 600;
+  text-align: center;
+}
+
 .ClearAllPopUp p {
-  font-size: 18px;
+  font-size: 17px;
   margin-bottom: 24px;
   color: #ededed;
   line-height: 1.5;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .ClearAllPopUpButtons {
@@ -1098,6 +1107,10 @@ body.gradient-3 {
 html.light-mode .ClearAllPopUpContent {
   background-color: #eeeeee;
   border-color: #6b8f71;
+}
+
+html.light-mode .ClearAllPopUp h1 {
+  color: #333333;
 }
 
 html.light-mode .ClearAllPopUp p {
