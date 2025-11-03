@@ -1306,9 +1306,8 @@ li {
   border-radius: 100%;
   border: none;
   cursor: pointer;
-  top: -57px;
-  right: 1px;
-  display: none;
+  top: -56px;
+  right: 14px;
 }
 
 .AddTasksButton i {
@@ -1317,6 +1316,28 @@ li {
 
 .AddTasksButton:hover i {
   transform: rotate(90deg);
+}
+
+.KebabMenu {
+  display: none;
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 10px 0 10px;
+}
+
+.TaskText {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  padding-right: 25px;
+}
+
+li:hover .KebabMenu {
+  display: inline-block;
 }
 
 /* Signup Page Styling */
@@ -1721,6 +1742,13 @@ html.light-mode .SignupFooterLink:hover {
     padding-top: 40px;
     margin: 5px;
   }
+
+  .AddTasksButton {
+    position: fixed;
+    top: auto;
+    bottom: 10px;
+    right: 10px;
+  }
 }
 
 @media only screen and (max-width: 900px) {
@@ -1811,6 +1839,9 @@ html.light-mode .SignupFooterLink:hover {
 
   .AddTasksButton {
     position: fixed;
+    top: auto;
+    bottom: 10px;
+    right: 10px;
   }
 
   .ModalContent {

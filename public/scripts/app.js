@@ -788,7 +788,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         li.innerHTML = `
-          <span class="TaskText"> <i class="fa-regular fa-square"></i> ${taskText}</span>
+          <span class="TaskText"> <i class="fa-regular fa-square"></i> ${taskText} <i class="fa-solid fa-ellipsis-vertical KebabMenu"></i> </span>
         `;
         if (checked) {
             const taskTextElement = li.querySelector(".TaskText");
@@ -802,7 +802,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (ListContainer) {
             ListContainer.appendChild(li);
         }
-
         // Context menu setup for the task
         li.addEventListener("contextmenu", (e) => {
             e.preventDefault();
@@ -875,7 +874,7 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 const Task = input.value.trim();
                 if (Task) {
-                    li.innerHTML = `<span class="TaskText"> <i class="fa-regular fa-square"></i> ${Task}</span>`;
+                    li.innerHTML = `<span class="TaskText"> <i class="fa-regular fa-square"></i> ${Task} <i class="fa-solid fa-ellipsis-vertical KebabMenu"></i> </span>`;
                     await axios.patch(`/api/v1/Tasks/${id}`, { Task })
                 } else {
                     console.log("Task cannot be empty!");
@@ -979,6 +978,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (ListContainer) {
         ListContainer.addEventListener("click", (event) => {
+            if (event.target.classList && event.target.classList.contains("KebabMenu")) {
+                const li = event.target.closest("li");
+                const rect = event.target.getBoundingClientRect();
+
+                ContextMenu.style.top = `${Math.round(rect.bottom + window.scrollY)}px`;
+                ContextMenu.style.left = `${Math.round(rect.left + window.scrollX)}px`;
+                ContextMenu.style.display = "block";
+                if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
+
+                ContextMenu.currentTask = li;
+                UpdateContextMenuOptions();
+
+                event.stopPropagation();
+                return;
+            }
+
             if (event.target.classList.contains("fa-square")) {
                 event.target.classList.remove("fa-square");
                 event.target.classList.add("fa-check-square");
