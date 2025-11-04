@@ -1050,7 +1050,6 @@ body.gradient-3 {
   color: #ededed;
   line-height: 1.5;
   font-weight: 500;
-  white-space: nowrap;
 }
 
 .ClearAllPopUpButtons {
@@ -1748,6 +1747,11 @@ html.light-mode .SignupFooterLink:hover {
     top: auto;
     bottom: 10px;
     right: 10px;
+  }
+
+  .ClearAllPopUp p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
 
