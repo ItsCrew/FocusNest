@@ -261,13 +261,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     function CycleUpdater(count) {
-        FilledCircle.forEach((icon, index) => {
-            Circle.forEach((icon, index) => {
-                icon.style.opacity = index < count ? "0" : "1";
-                icon.style.display = index < count ? "none" : "Block";
-            })
-            icon.style.opacity = index < count ? "1" : "0";
-            icon.style.display = index < count ? "block" : "none";
+        const wrappers = document.querySelectorAll('.CycleWrapper');
+
+        wrappers.forEach((wrapper, index) => {
+            const emptyCircle = wrapper.querySelector('.Circle');
+            const filledCircle = wrapper.querySelector('.FilledCircle');
+
+            if (index < count) {
+                filledCircle.style.opacity = "1";
+                emptyCircle.style.opacity = "0";
+            } else {
+                filledCircle.style.opacity = "0";
+                emptyCircle.style.opacity = "1";
+            }
         });
     }
 
