@@ -985,7 +985,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ContextMenu.style.top = `${Math.round(rect.bottom + window.scrollY)}px`;
                 ContextMenu.style.left = `${Math.round(rect.left + window.scrollX)}px`;
                 ContextMenu.style.display = "block";
-                if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
+                // if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
 
                 ContextMenu.currentTask = li;
                 UpdateContextMenuOptions();
