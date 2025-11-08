@@ -1361,6 +1361,100 @@ li:hover .KebabMenu {
 }
 
 .WhatsNewModal {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  z-index: 1400;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.WhatsNewModal.show {
+  display: flex;
+  animation: fadeIn 0.3s;
+}
+
+.WhatsNewModalContent {
+  background-color: #2d3c33;
+  border: 2px solid #6b8f71;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(30, 45, 36, 0.4);
+  padding: 40px 32px 32px 32px;
+  max-width: 500px;
+  width: 90vw;
+  color: #ededed;
+  animation: fadeIn 0.3s;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.WhatsNewModalTitle {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #ededed;
+  font-weight: 600;
+  text-align: center;
+}
+
+.WhatsNewModalBody {
+  font-size: 17px;
+  margin-bottom: 32px;
+  color: #ededed;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.WhatsNewModalButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.OkayButton {
+  height: 45px;
+  width: 120px;
+  border: none;
+  border-radius: 10px;
+  background-color: #6b8f71;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.OkayButton:hover {
+  background-color: #5e7f64;
+  transform: scale(1.05);
+}
+
+.OkayButton:active {
+  background-color: #4f6f56;
+  transform: scale(0.97);
+}
+
+/* Light mode styles for WhatsNewModal */
+html.light-mode .WhatsNewModalContent {
+  background-color: #eeeeee;
+  border-color: #6b8f71;
+}
+
+html.light-mode .WhatsNewModalTitle {
+  color: #333333;
+}
+
+html.light-mode .WhatsNewModalBody {
+  color: #333333;
+}
+
 /* Signup Page Styling */
 
 .SignupContainer {

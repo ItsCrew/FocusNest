@@ -96,10 +96,21 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 console.log('up to date');
             }
+
+            return data.authenticated;
         } catch (error) {
             console.log(error);
-
+            return false;
         }
+    }
+
+    async function ensureAuthenticated() {
+        const isAuthenticated = await checkAuth();
+        if (!isAuthenticated) {
+            window.location.href = '/Signup';
+            return false;
+        }
+        return true;
     }
 
     // async function LoadTasks() {
@@ -775,6 +786,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const tempId = `temp-${Date.now()}`;
             const taskElement = CreateTaskElement(Task, "", false, tempId);
 
+            const isAuthenticated = await ensureAuthenticated();
+            if (!isAuthenticated) return;
+
             axios.post('/api/v1/Tasks', { Task })
                 .then(response => {
                     const realTask = response.data.Tasks;
@@ -909,12 +923,14 @@ document.addEventListener("DOMContentLoaded", () => {
         li.appendChild(input);
         li.appendChild(saveButton);
 
-        // Save updated task or revert if empty
         async function saveUpdatedTask() {
+
             try {
                 const Task = input.value.trim();
                 if (Task) {
                     li.innerHTML = `<span class="TaskText"> <i class="fa-regular fa-square"></i> ${Task} <i class="fa-solid fa-ellipsis-vertical KebabMenu"></i> </span>`;
+                    const isAuthenticated = await ensureAuthenticated();
+                    if (!isAuthenticated) return;
                     await axios.patch(`/api/v1/Tasks/${id}`, { Task })
                 } else {
                     console.log("Task cannot be empty!");
@@ -935,11 +951,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function SetTileColor(id) {
+
         try {
             const SelectedColor = ColorPickerTasks.value;
             if (ContextMenu.currentTask) {
                 ContextMenu.currentTask.style.backgroundColor = SelectedColor;
                 const id = ContextMenu.currentTask.dataset.taskId;
+                const isAuthenticated = await ensureAuthenticated();
+                if (!isAuthenticated) return;
                 if (id) await axios.patch(`/api/v1/Tasks/${id}`, { Color: SelectedColor }).catch(console.log);
             }
         } catch (error) {
@@ -949,10 +968,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function RemoveTileColor(id) {
+
         try {
             if (ContextMenu.currentTask) {
                 ContextMenu.currentTask.style.backgroundColor = "";
                 const id = ContextMenu.currentTask.dataset.taskId;
+                const isAuthenticated = await ensureAuthenticated();
+                if (!isAuthenticated) return;
                 if (id) await axios.patch(`/api/v1/Tasks/${id}`, { Color: "" })
             }
         } catch (error) {
@@ -986,6 +1008,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //Mark a task done/Incomplete
     async function MarkTaskDone(taskElement) {
         if (taskElement) {
+
             const id = taskElement.dataset.taskId;
             const taskTextElement = taskElement.querySelector(".TaskText");
             taskElement.setAttribute("data-checked", "true");
@@ -996,12 +1019,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 iconElement.classList.add("fa-check-square");
             }
             ContextMenu.style.display = "none";
+            const isAuthenticated = await ensureAuthenticated();
+            if (!isAuthenticated) return;
             await axios.patch(`/api/v1/Tasks/${id}`, { Completed: true })
         }
     }
 
     async function MarkTaskIncomplete(taskElement) {
         if (taskElement) {
+
             const id = taskElement.dataset.taskId;
             const taskTextElement = taskElement.querySelector(".TaskText");
             taskElement.setAttribute("data-checked", "false");
@@ -1012,6 +1038,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 iconElement.classList.add("fa-square");
             }
             ContextMenu.style.display = "none";
+            const isAuthenticated = await ensureAuthenticated();
+            if (!isAuthenticated) return;
             await axios.patch(`/api/v1/Tasks/${id}`, { Completed: false })
         }
     }
@@ -1060,6 +1088,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function RemoveTask() {
         if (ContextMenu.currentTask) {
+
             try {
                 const TaskID = ContextMenu.currentTask.dataset.taskId
                 if (!TaskID) {
@@ -1074,6 +1103,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     TextBeforeAddingTasks.style.display = "flex"
                     AddTasksButton.style.display = "none";
                 }
+                const isAuthenticated = await ensureAuthenticated();
+                if (!isAuthenticated) return;
                 await axios.delete(`/api/v1/Tasks/${TaskID}`)
                 loadTasksFromDatabase()
             } catch (error) {
@@ -1102,11 +1133,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Clear Button Logic
     async function Clear_Tasks() {
+
         try {
             ListContainer.innerHTML = "";
             clearButton.style.display = "none";
             AddTasksButton.style.display = "none";
             TextBeforeAddingTasks.style.display = "flex"
+            const isAuthenticated = await ensureAuthenticated();
+            if (!isAuthenticated) return;
             await axios.delete('/api/v1/Tasks')
             loadTasksFromDatabase()
         } catch (error) {
@@ -1134,6 +1168,10 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
+    if (OkayButton) {
+        OkayButton.addEventListener("click", () => {
+            WhatsNewModal.classList.remove("show")
+        })
     }
 
     async function loadTasksFromDatabase() {

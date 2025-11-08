@@ -66,6 +66,17 @@ StaticFiles.forEach(file => {
         return;
     }
 
+    if (cleanName === 'Signup') {
+        app.get(`/${cleanName}`, (req, res) => {
+            if (req.isAuthenticated()) {
+                res.redirect('/Home');
+            } else {
+                res.sendFile(path.join(PublicDir, file));
+            }
+        });
+        return;
+    }
+
     app.get(`/${cleanName}`, (req, res) => {
         res.sendFile(path.join(PublicDir, file));
     });
