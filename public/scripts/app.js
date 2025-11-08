@@ -71,7 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const ClearAllPopUp = document.querySelector(".ClearAllPopUp")
     const ConfirmButton = document.querySelector(".ConfirmButton")
     const CancelButton = document.querySelector(".CancelButton")
-
+    const WhatsNewModal = document.querySelector(".WhatsNewModal")
+    const OkayButton = document.querySelector(".OkayButton")
+    const CurrentVersion = '2.8' //2.1.8
 
     // LoadTasks()
 
@@ -84,6 +86,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 Logout.style.display = "none"
             } else {
                 Logout.style.display = "flex"
+            }
+
+            let UserVersion = localStorage.getItem('focusnest_version')
+
+            if (UserVersion < CurrentVersion) {
+                WhatsNewModal.classList.add("show")
+                localStorage.setItem('focusnest_version', CurrentVersion)
+            } else {
+                console.log('up to date');
             }
         } catch (error) {
             console.log(error);
