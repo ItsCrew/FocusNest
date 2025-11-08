@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     checkAuth()
     const savedTheme = localStorage.getItem("theme");
@@ -768,7 +767,7 @@ document.addEventListener("DOMContentLoaded", () => {
             axios.post('/api/v1/Tasks', { Task })
                 .then(response => {
                     const realTask = response.data.Tasks;
-                    taskElement.dataset.id = realTask._id;
+                    taskElement.dataset.taskId = realTask._id;
                 })
                 .catch(error => {
                     console.error(error);
@@ -781,7 +780,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    async function CreateTaskElement(taskText, color = "", checked = false, taskId = null) {
+    function CreateTaskElement(taskText, color = "", checked = false, taskId = null) {
         const li = document.createElement("li");
         li.setAttribute("data-checked", checked);
 
@@ -794,7 +793,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         li.innerHTML = `
-          <span class="TaskText"> <i class="fa-regular fa-square"></i> ${taskText} <i class="fa-solid fa-ellipsis-vertical KebabMenu"></i> </span>
+          <span class="TaskText"> <i class="fa-regular fa-square"></i> ${taskText} <i class="fa-solid fa-ellipsis-vertical KebabMenu" title="Drag to move\nClick to open menu"></i> </span>
         `;
         if (checked) {
             const taskTextElement = li.querySelector(".TaskText");
@@ -822,6 +821,8 @@ document.addEventListener("DOMContentLoaded", () => {
             ContextMenu.currentTask = li;
             UpdateContextMenuOptions();
         });
+
+        return li;
     }
 
     if (ContextMenu) {
@@ -833,6 +834,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Enable drag-and-drop reordering for tasks using SortableJS
+    if (ListContainer && window.Sortable) {
+        const sortable = new Sortable(ListContainer, {
+            animation: 150,
+            // ghostClass: 'drag-ghost',
+            handle: ".KebabMenu",
+            async onEnd() {
+                const isAuthenticated = await ensureAuthenticated();
+                if (!isAuthenticated) return;
+
+                const orderedIds = Array.from(ListContainer.children)
+                    .map(li => li.dataset.taskId)
+                    .filter(Boolean);
+                if (orderedIds.length > 0) {
+                    axios.post('/api/v1/Tasks/reorder', { orderedIds })
+                        .catch(error => {
+                            console.error('Failed to save task order:', error);
+                        });
+                }
+            }
+        });
+    }
     if (AddTask) {
         AddTask.addEventListener("click", () => {
             AddTaskFunction();
@@ -1100,22 +1123,8 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    // Saving to local storage
-    function saveTasksToLocalStorage() {
-        const tasks = Array.from(ListContainer.children).map((li) => ({
-            text: li.querySelector(".TaskText").textContent.trim(),
-            color: li.style.backgroundColor || "",
-            checked: li.getAttribute("data-checked") === "true"
-
-        }));
-        localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
-    // Load tasks from local storage
-    function loadTasksFromLocalStorage() {
-        const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        tasks.forEach(({ text, color, checked }) => CreateTaskElement(text, color, checked));
-    }
     async function loadTasksFromDatabase() {
         try {
             const response = await axios.get('/api/v1/Tasks');
@@ -1145,8 +1154,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log(error);
         }
     }
-    // Theme Switch
 
+    // Theme Switch
     DarkMode.addEventListener("click", () => {
         document.documentElement.classList.add("dark-mode");
         document.documentElement.classList.remove("light-mode");

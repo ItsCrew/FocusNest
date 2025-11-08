@@ -12,6 +12,10 @@ const TasksSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    orderIndex: {
+        type: Number,
+        default: 0
+    },
     CreatedAt: {
         type: Date,
         default: Date.now
