@@ -64,19 +64,19 @@
           <div class="TextBeforeAddingTasks">
             <h2 class="NoTasks" id="NoTasks">Nothing here. Add a task</h2>
             <div class="AddPrompt">
-              <button class="AddPromptButton CommonTaskAdding">Add</button>
+              <button class="AddPromptButton CommonTaskAdding" title="Add Task">Add</button>
             </div>
           </div>
           <div id="AddModal" class="AddModal">
             <!-- Inside content -->
             <div class="ModalContent">
-              <span class="close">&times;</span>
+              <span class="close" title="Close">&times;</span>
               <h2 class="ModalHeading">Add a Task</h2>
               <div class="ModalOptions">
                 <input type="text" id="InputBox" placeholder="Add a new task!" />
               </div>
               <div class="ModalAddTaskButton">
-                <button id="AddTask" class="AddTask">
+                <button id="AddTask" class="AddTask" title="Add Task">
                   Add
                 </button>
               </div>
@@ -89,9 +89,9 @@
             <!-- The list will be here -->
           </ol>
           <div class="Clear">
-            <button class="ClearButton">Clear all</button>
+            <button class="ClearButton" title="Delete all Tasks">Clear all</button>
             <div class="AddTasks">
-              <button class="AddTasksButton CommonTaskAdding">
+              <button class="AddTasksButton CommonTaskAdding" title="Add Task">
                 <i class="fa-solid fa-plus Plus"></i>
               </button>
             </div>
@@ -110,24 +110,24 @@
       </div>
       <!-- Context Menu -->
       <div class="ContextMenu">
-        <div class="EditOption">
+        <div class="EditOption" title="Edit Task">
           <i class="fa-solid fa-pen"></i> Edit
         </div>
-        <div class="ChooseColour" id="OpenColorPickerButtonTasks">
-          <i class="fa-solid fa-palette"></i> Choose Colour
+        <div class="ChooseColour" id="OpenColorPickerButtonTasks" title="Choose Color">
+          <i class="fa-solid fa-palette"></i> Choose Color
           <input type="color" id="ColorPickerTasks" style="display: none" />
         </div>
-        <div class="RemoveColour">
-          <i class="fa-solid fa-palette"></i> Remove Colour
+        <div class="RemoveColour" title="Remove Color">
+          <i class="fa-solid fa-palette"></i> Remove Color
         </div>
-        <div class="MarkDone">
+        <div class="MarkDone" title="Mark as Done">
           <i class="fa-regular fa-square-check"></i> Mark Done
         </div>
-        <div class="MarkNotDone">
+        <div class="MarkNotDone" title="Mark as Not Done">
           <i class="fa-regular fa-rectangle-xmark"></i> Mark
           Incomplete
         </div>
-        <div class="RemoveOption">
+        <div class="RemoveOption" title="Remove Task">
           <i class="fa-solid fa-trash"></i> Remove
         </div>
       </div>
