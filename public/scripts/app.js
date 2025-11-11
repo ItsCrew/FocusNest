@@ -1152,6 +1152,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (clearButton) {
         clearButton.addEventListener("click", () => {
             ClearAllPopUp.classList.add("show")
+            if (ConfirmButton) ConfirmButton.focus();
         })
     }
 
@@ -1161,6 +1162,24 @@ document.addEventListener("DOMContentLoaded", () => {
             ClearAllPopUp.classList.remove("show")
         })
     }
+
+
+    if (ConfirmButton) {
+        ConfirmButton.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                Clear_Tasks()
+                ClearAllPopUp.classList.remove("show")
+            } else if (event.key === "Escape") {
+                ClearAllPopUp.classList.remove("show")
+            }
+        });
+    }
+
+    window.addEventListener("click", function (event) {
+        if (event.target === ClearAllPopUp) {
+            ClearAllPopUp.classList.remove("show")
+        }
+    });
 
     if (CancelButton) {
         CancelButton.addEventListener("click", () => {
