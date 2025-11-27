@@ -807,7 +807,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function FetchP() {
         try {
             const pr = axios.get('/api/v1/Tasks/priorities')
-            console.log(pr.data.Priority);
+            console.log(pr.data.priorities);
         } catch (error) {
             console.log(error);
 
