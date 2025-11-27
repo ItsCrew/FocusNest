@@ -804,18 +804,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function FetchP() {
-        try {
-            const pr = await axios.get('/api/v1/Tasks/priorities')
-            console.log(pr.data.AllPriorities);
-        } catch (error) {
-            console.log(error);
-
-        }
-    }
-
     function CreateTaskElement(taskText, color = "", checked = false, taskId = null) {
-    FetchP()
         const li = document.createElement("li");
         li.setAttribute("data-checked", checked);
 
