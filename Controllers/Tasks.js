@@ -63,7 +63,7 @@ const ReorderTasks = asyncWrapper(async (req, res) => {
 })
 
 const FetchPriority = asyncWrapper(async (req, res) => {
-    const AllPriorities = await Task.find({ Priority: 'P0' })
+    const AllPriorities = await Task.find({ Priority: 'P0' }).select(Priority)
     res.status(200).json({ AllPriorities })
 })
 
