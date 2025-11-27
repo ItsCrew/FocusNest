@@ -62,11 +62,17 @@ const ReorderTasks = asyncWrapper(async (req, res) => {
     res.status(200).json({ msg: 'Tasks reordered successfully' });
 })
 
+const FetchPriority = asyncWrapper(async (req, res) => {
+    const AllPriorities = await Task.find({ Priority: 'P0' })
+    res.status(200).json({ AllPriorities })
+})
+
 module.exports = {
     FetchAllTasks,
     CreateTask,
     DeleteTask,
     ClearAll,
     EditTask,
-    ReorderTasks
+    ReorderTasks,
+    FetchPriority
 }
