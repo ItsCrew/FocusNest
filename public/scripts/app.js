@@ -960,12 +960,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 const Task = input.value.trim();
+                const Priority = PriorityDropdownToggle.getAttribute("data-priority");
                 if (Task) {
                     li.innerHTML = `
                         <span class="TaskText"> 
                             <i class="fa-regular fa-square"></i> 
                             <span class="TaskContent">${Task}</span> 
-                            <span class="prioritybox">P0</span> 
+                            <span class="prioritybox"> ${Priority} <i class="fa-solid fa-circle-chevron-down chevron"> </i> </span>
                             <i class="fa-solid fa-ellipsis-vertical KebabMenu"></i> 
                         </span>
                     `;
