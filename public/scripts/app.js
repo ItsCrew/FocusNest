@@ -821,14 +821,16 @@ document.addEventListener("DOMContentLoaded", () => {
             li.style.backgroundColor = color;
         }
 
+        const priorityClass = Priority === "P0" ? "PriorityZero" : Priority === "P1" ? "PriorityOne" : "PriorityTwo";
         li.innerHTML = `
             <span class="TaskText"> 
                 <i class="fa-regular fa-square"></i> 
                 <span class="TaskContent">${taskText}</span> 
-                <span class="prioritybox"> ${Priority} <i class="fa-solid fa-circle-chevron-down chevron"> </i> </span>  
+                <span class="prioritybox ${priorityClass}"> ${Priority} <i class="fa-solid fa-circle-chevron-down chevron"> </i> </span>  
                 <i class="fa-solid fa-ellipsis-vertical KebabMenu" title="Drag to move\nClick to open menu"></i> 
             </span>
 `;
+
         if (checked) {
             const taskTextElement = li.querySelector(".TaskText");
             taskTextElement.style.textDecoration = "line-through";
@@ -866,8 +868,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (PriorityContextMenu) {
-        document.addEventListener("click", (e) => {
+        document.addEventListener("click", async (e) => {
             if (!PriorityContextMenu.contains(e.target)) {
+                PriorityContextMenu.style.display = "none";
+            } else if (e.target.closest(".PriorityZero, .PriorityOne, .PriorityTwo")) {
+                const priorityOption = e.target.closest(".PriorityZero, .PriorityOne, .PriorityTwo");
+                const priority = priorityOption.dataset.priority;
+                const taskElement = PriorityContextMenu.currentTask;
+
+                if (taskElement && priority) {
+                    // Update the data-priority attribute
+                    taskElement.setAttribute("data-priority", priority);
+
+                    // Update the prioritybox text and class
+                    const prioritybox = taskElement.querySelector(".prioritybox");
+                    if (prioritybox) {
+                        const priorityClass = priority === "P0" ? "PriorityZero" : priority === "P1" ? "PriorityOne" : "PriorityTwo";
+                        prioritybox.className = `prioritybox ${priorityClass}`;
+                        prioritybox.childNodes[0].textContent = ` ${priority} `;
+                    }
+
+                    // Update in database
+                    const taskId = taskElement.dataset.taskId;
+                    if (taskId) {
+                        const isAuthenticated = await ensureAuthenticated();
+                        if (isAuthenticated) {
+                            axios.patch(`/api/v1/Tasks/${taskId}`, { Priority: priority })
+                                .catch(error => console.error('Failed to update priority:', error));
+                        }
+                    }
+                }
+
                 PriorityContextMenu.style.display = "none";
             }
         });
@@ -960,13 +991,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
                 const Task = input.value.trim();
-                const Priority = PriorityDropdownToggle.getAttribute("data-priority");
+                const currentPriority = li.getAttribute("data-priority") || "P0";
+                const priorityClass = currentPriority === "P0" ? "PriorityZero" : currentPriority === "P1" ? "PriorityOne" : "PriorityTwo";
                 if (Task) {
                     li.innerHTML = `
                         <span class="TaskText"> 
                             <i class="fa-regular fa-square"></i> 
                             <span class="TaskContent">${Task}</span> 
-                            <span class="prioritybox"> ${Priority} <i class="fa-solid fa-circle-chevron-down chevron"> </i> </span>
+                            <span class="prioritybox ${priorityClass}"> ${currentPriority} <i class="fa-solid fa-circle-chevron-down chevron"> </i> </span>
                             <i class="fa-solid fa-ellipsis-vertical KebabMenu"></i> 
                         </span>
                     `;

@@ -1516,7 +1516,26 @@ li:hover .KebabMenu {
 
 .prioritybox:hover .chevron {
   opacity: 1;
-  transform: translateY(2px);
+  transform: translateY(0.5px);
+}
+
+/* Priority box color variations based on priority class */
+.prioritybox.PriorityZero {
+  background-color: rgba(248, 113, 113, 0.2);
+  color: #f87171;
+  border-color: #f87171;
+}
+
+.prioritybox.PriorityOne {
+  background-color: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  border-color: #fbbf24;
+}
+
+.prioritybox.PriorityTwo {
+  background-color: rgba(156, 163, 175, 0.2);
+  color: #9ca3af;
+  border-color: #9ca3af;
 }
 
 .PriorityContextMenu {
