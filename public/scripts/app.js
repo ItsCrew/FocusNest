@@ -887,6 +887,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         prioritybox.className = `prioritybox ${priorityClass}`;
                         prioritybox.childNodes[0].textContent = ` ${priority} `;
                     }
+                    PriorityContextMenu.style.display = "none";
 
                     // Update in database
                     const taskId = taskElement.dataset.taskId;
@@ -899,7 +900,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
-                PriorityContextMenu.style.display = "none";
             }
         });
     }
