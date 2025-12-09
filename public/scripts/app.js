@@ -73,6 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const CancelButton = document.querySelector(".CancelButton")
     const WhatsNewModal = document.querySelector(".WhatsNewModal")
     const OkayButton = document.querySelector(".OkayButton")
+    const PriorityContextMenu = document.querySelector(".PriorityContextMenu")
+    const PriorityDropdownMenu = document.querySelector(".PriorityDropdownMenu")
+    const PriorityDropdownToggle = document.querySelector(".PriorityDropdownToggle")
     const CurrentVersion = '2.8' //2.1.8
 
     // LoadTasks()
@@ -784,12 +787,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (AddTasksButton) AddTasksButton.style.display = "block";
 
             const tempId = `temp-${Date.now()}`;
-            const taskElement = CreateTaskElement(Task, "", false, tempId);
+            const Priority = PriorityDropdownToggle.getAttribute("data-priority");
+            const taskElement = CreateTaskElement(Task, "", false, Priority, tempId);
 
             const isAuthenticated = await ensureAuthenticated();
             if (!isAuthenticated) return;
 
-            axios.post('/api/v1/Tasks', { Task })
+            axios.post('/api/v1/Tasks', { Task, Priority })
                 .then(response => {
                     const realTask = response.data.Tasks;
                     taskElement.dataset.taskId = realTask._id;
@@ -804,9 +808,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function CreateTaskElement(taskText, color = "", checked = false, taskId = null) {
+    function CreateTaskElement(taskText, color = "", checked = false, Priority, taskId = null) {
         const li = document.createElement("li");
         li.setAttribute("data-checked", checked);
+        li.setAttribute("data-priority", Priority);
 
         if (taskId) {
             li.dataset.taskId = taskId;
@@ -817,8 +822,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         li.innerHTML = `
-          <span class="TaskText"> <i class="fa-regular fa-square"></i> ${taskText} <i class="fa-solid fa-ellipsis-vertical KebabMenu" title="Drag to move\nClick to open menu"></i> </span>
-        `;
+            <span class="TaskText"> 
+                <i class="fa-regular fa-square"></i> 
+                <span class="TaskContent">${taskText}</span> 
+                <span class="prioritybox"> ${Priority} <i class="fa-solid fa-circle-chevron-down chevron"> </i> </span>  
+                <i class="fa-solid fa-ellipsis-vertical KebabMenu" title="Drag to move\nClick to open menu"></i> 
+            </span>
+`;
         if (checked) {
             const taskTextElement = li.querySelector(".TaskText");
             taskTextElement.style.textDecoration = "line-through";
@@ -839,9 +849,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ContextMenu.style.top = `${e.clientY}px`;
             ContextMenu.style.left = `${e.clientX}px`;
             ContextMenu.style.display = "block";
-            // if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
 
-            // Store reference to the current task for edit/remove actions
             ContextMenu.currentTask = li;
             UpdateContextMenuOptions();
         });
@@ -853,7 +861,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener("click", (e) => {
             if (!ContextMenu.contains(e.target)) {
                 ContextMenu.style.display = "none";
-                // if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
+            }
+        });
+    }
+
+    if (PriorityContextMenu) {
+        document.addEventListener("click", (e) => {
+            if (!PriorityContextMenu.contains(e.target)) {
+                PriorityContextMenu.style.display = "none";
             }
         });
     }
@@ -902,8 +917,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    if (PriorityDropdownMenu) {
+        PriorityDropdownToggle.addEventListener("click", (event) => {
+            PriorityDropdownMenu.classList.toggle("show");
+            PriorityDropdownToggle.classList.toggle("open");
+        });
+
+        PriorityDropdownMenu.addEventListener("click", (event) => {
+            const target = event.target;
+            if (target.classList.contains("PriorityOption")) {
+                const priority = target.dataset.priority;
+                PriorityDropdownToggle.setAttribute("data-priority", priority);
+                PriorityDropdownToggle.querySelector(".SelectedPriority").textContent = priority;
+            }
+
+            PriorityDropdownMenu.classList.remove("show");
+            PriorityDropdownToggle.classList.remove("open");
+        });
+    }
+
     function EditTask(li) {
-        const taskText = li.querySelector(".TaskText").textContent.trim();
+        const taskText = li.querySelector(".TaskContent").textContent.trim();
         const id = li.dataset.taskId; // Get the task ID from the DOM element
 
         const input = document.createElement("input");
@@ -927,7 +961,14 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 const Task = input.value.trim();
                 if (Task) {
-                    li.innerHTML = `<span class="TaskText"> <i class="fa-regular fa-square"></i> ${Task} <i class="fa-solid fa-ellipsis-vertical KebabMenu"></i> </span>`;
+                    li.innerHTML = `
+                        <span class="TaskText"> 
+                            <i class="fa-regular fa-square"></i> 
+                            <span class="TaskContent">${Task}</span> 
+                            <span class="prioritybox">P0</span> 
+                            <i class="fa-solid fa-ellipsis-vertical KebabMenu"></i> 
+                        </span>
+                    `;
                     const isAuthenticated = await ensureAuthenticated();
                     if (!isAuthenticated) return;
                     await axios.patch(`/api/v1/Tasks/${id}`, { Task })
@@ -1055,6 +1096,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 // if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
 
                 ContextMenu.currentTask = li;
+
+                event.stopPropagation();
+                return;
+            } else if (event.target.classList && event.target.classList.contains("prioritybox") || event.target.classList.contains("chevron")) {
+                const li = event.target.closest("li");
+                const rect = event.target.getBoundingClientRect();
+
+                PriorityContextMenu.style.top = `${Math.round(rect.bottom + window.scrollY)}px`;
+                PriorityContextMenu.style.left = `${Math.round(rect.left + window.scrollX)}px`;
+                PriorityContextMenu.style.display = "block";
+
+                PriorityContextMenu.currentTask = li;
                 UpdateContextMenuOptions();
 
                 event.stopPropagation();
@@ -1210,7 +1263,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     TextBeforeAddingTasks.style.display = "flex";
                 }
             } else {
-                tasks.forEach(({ _id, Task, Color, Completed }) => CreateTaskElement(Task, Color, Completed, _id));
+                tasks.forEach(({ _id, Task, Color, Completed, Priority }) => CreateTaskElement(Task, Color, Completed, Priority, _id));
                 if (TextBeforeAddingTasks && clearButton) {
                     clearButton.style.display = "block";
                     AddTasksButton.style.display = "block";

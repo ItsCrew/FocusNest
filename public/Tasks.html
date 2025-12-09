@@ -68,13 +68,33 @@
             </div>
           </div>
           <div id="AddModal" class="AddModal">
-            <!-- Inside content -->
             <div class="ModalContent">
               <span class="close" title="Close">&times;</span>
               <h2 class="ModalHeading">Add a Task</h2>
+
               <div class="ModalOptions">
-                <input type="text" id="InputBox" placeholder="Add a new task!" />
+                <div class="InputWithPriority">
+                  <input type="text" id="InputBox" placeholder="Add a new task!" />
+                  <div class="ModalPriorityDropdown">
+                    <div class="PriorityDropdownToggle" id="PriorityDropdownToggle" data-priority="P0">
+                      <span class="SelectedPriority">P0</span>
+                      <i class="fa-solid fa-angle-down PriorityArrow"></i>
+                    </div>
+                    <div class="PriorityDropdownMenu" id="PriorityDropdownMenu">
+                      <div class="PriorityOption PriorityZero" data-priority="P0" title="High Priority">
+                        P0
+                      </div>
+                      <div class="PriorityOption PriorityOne" data-priority="P1" title="Medium Priority">
+                        P1
+                      </div>
+                      <div class="PriorityOption PriorityTwo" data-priority="P2" title="Low Priority">
+                        P2
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <div class="ModalAddTaskButton">
                 <button id="AddTask" class="AddTask" title="Add Task">
                   Add
@@ -82,9 +102,6 @@
               </div>
             </div>
           </div>
-          <!-- <div class="AddPrompt">
-            <button class="AddPromptButton CommonTaskAdding">Add</button>
-          </div> -->
           <ol id="ListContainer">
             <!-- The list will be here -->
           </ol>
@@ -129,6 +146,18 @@
         </div>
         <div class="RemoveOption" title="Remove Task">
           <i class="fa-solid fa-trash"></i> Remove
+        </div>
+      </div>
+
+      <div class="PriorityContextMenu">
+        <div class="PriorityZero" data-priority="P0">
+          <i class="fa-solid fa-pen"></i> P0
+        </div>
+        <div class="PriorityOne" data-priority="P1">
+          <i class="fa-solid fa-pen"></i> P1
+        </div>
+        <div class="PriorityTwo" data-priority="P2">
+          <i class="fa-solid fa-pen"></i> P2
         </div>
       </div>
 
