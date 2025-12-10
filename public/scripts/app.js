@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const PriorityContextMenu = document.querySelector(".PriorityContextMenu")
     const PriorityDropdownMenu = document.querySelector(".PriorityDropdownMenu")
     const PriorityDropdownToggle = document.querySelector(".PriorityDropdownToggle")
-    const CurrentVersion = '2.8' //2.1.8
+    const CurrentVersion = '2.3' //2.3.0
 
     // LoadTasks()
 
