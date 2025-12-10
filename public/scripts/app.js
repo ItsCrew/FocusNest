@@ -1129,6 +1129,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 // if (PriorityContextMenu) PriorityContextMenu.style.display = "none";
 
                 ContextMenu.currentTask = li;
+                if (ContextMenu.currentTask.style.backgroundColor == "") {
+                    RemoveColour.style.display = "none"
+                } else {
+                    RemoveColour.style.display = "block"
+                }
 
                 event.stopPropagation();
                 return;
