@@ -2,7 +2,7 @@ const isAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
         return next()
     }
-    res.status(400).json({ message: "Unauthorized" })
+    res.status(403).json({ message: "Unauthorized" })
 }
 
 const isAuthenticatedForPages = (req, res, next) => {
