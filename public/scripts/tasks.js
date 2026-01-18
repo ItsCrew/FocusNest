@@ -26,8 +26,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const PriorityContextMenu = document.querySelector(".PriorityContextMenu")
     const PriorityDropdownMenu = document.querySelector(".PriorityDropdownMenu")
     const PriorityDropdownToggle = document.querySelector(".PriorityDropdownToggle")
+    const AddPromptButton = document.querySelector(".AddPromptButton")
     const CurrentVersion = '2.3' //2.3.0
     // TASKS PAGE
+
+    // Helper function to focus the visible button that opens the modal
+    function focusModalTriggerButton() {
+        if (AddTasksButton && window.getComputedStyle(AddTasksButton).display !== "none") {
+            AddTasksButton.focus();
+            return;
+        }
+        if (AddPromptButton && window.getComputedStyle(AddPromptButton).display !== "none") {
+            AddPromptButton.focus();
+            return;
+        }
+    }
 
     CommonTaskAdding.forEach(modals => {
         modals.addEventListener("click", () => {
@@ -39,12 +52,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (CloseModal) {
         CloseModal.addEventListener("click", () => {
             AddModal.style.display = "none";
+            focusModalTriggerButton();
         })
     }
     if (InputBox) {
         InputBox.addEventListener("keydown", (event) => {
             if (event.key === "Escape") {
                 AddModal.style.display = "none";
+                focusModalTriggerButton();
             }
         });
     }
@@ -55,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (event.target === AddModal) {
             AddModal.style.display = "none";
+            focusModalTriggerButton();
         }
     });
 
@@ -232,6 +248,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (AddTask) {
         AddTask.addEventListener("click", () => {
             AddTaskFunction();
+            focusModalTriggerButton();
+
         });
     }
 
@@ -564,6 +582,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ClearAllPopUp.classList.remove("show")
             } else if (event.key === "Escape") {
                 ClearAllPopUp.classList.remove("show")
+                clearButton.focus();
             }
         });
     }
@@ -571,12 +590,14 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("click", function (event) {
         if (event.target === ClearAllPopUp) {
             ClearAllPopUp.classList.remove("show")
+            clearButton.focus();
         }
     });
 
     if (CancelButton) {
         CancelButton.addEventListener("click", () => {
             ClearAllPopUp.classList.remove("show")
+            clearButton.focus();
         })
     }
 
