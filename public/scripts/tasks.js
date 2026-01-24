@@ -37,9 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
 
             if (!data.authenticated) {
-                Logout.style.display = "none"
+                if (Logout) {
+                    Logout.style.display = "none"
+                }
             } else {
-                Logout.style.display = "flex"
+                if (Logout) {
+
+                    Logout.style.display = "flex"
+                }
 
             }
 
