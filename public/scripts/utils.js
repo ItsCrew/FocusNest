@@ -1,15 +1,3 @@
-// Shared utility functions used across multiple pages
-
-// Authentication check - expose globally for use in other modules
-window.ensureAuthenticated = async function () {
-    // return true;
-    const isAuthenticated = await checkAuth();
-    if (!isAuthenticated) {
-        window.location.href = '/Signup';
-        return false;
-    }
-    return true;
-}
 
 // Sidebar initialization
 function initializeSidebar() {

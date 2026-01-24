@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    checkAuth()
     const RemoveColour = document.querySelector(".RemoveColour")
     const CommonTaskAdding = document.querySelectorAll(".CommonTaskAdding")
     const AddTasksButton = document.querySelector(".AddTasksButton")
@@ -29,6 +30,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const AddPromptButton = document.querySelector(".AddPromptButton")
     const CurrentVersion = '2.3' //2.3.0
     // TASKS PAGE
+
+    async function checkAuth() {
+        try {
+            const response = await fetch('/auth/status');
+            const data = await response.json();
+
+            if (!data.authenticated) {
+                Logout.style.display = "none"
+            } else {
+                Logout.style.display = "flex"
+
+            }
+
+            let UserVersion = localStorage.getItem('focusnest_version')
+
+            if (UserVersion < CurrentVersion) {
+                WhatsNewModal.classList.add("show")
+                localStorage.setItem('focusnest_version', CurrentVersion)
+            } else {
+                console.log('up to date');
+            }
+
+            return data.authenticated;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+
+    window.ensureAuthenticated = async function () {
+        // return true;
+        const isAuthenticated = await checkAuth();
+        if (!isAuthenticated) {
+            window.location.href = '/Signup';
+            return false;
+        }
+        return true;
+    }
 
     // Helper function to focus the visible button that opens the modal
     function focusModalTriggerButton() {
