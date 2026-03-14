@@ -4,7 +4,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 body {
@@ -167,6 +167,21 @@ html.dark-mode .ModalContent {
 html.light-mode .ModalContent {
   background-color: #eeeeee;
   transition: background-color 0.5s ease;
+}
+
+html.light-mode .PriorityDropdownToggle {
+  background-color: #eeeeee;
+  border-color: #6b8f71;
+  color: #f87171;
+}
+
+html.light-mode .PriorityDropdownToggle:hover {
+  background-color: #dddddd;
+}
+
+html.light-mode .PriorityDropdownMenu {
+  background-color: #eeeeee;
+  border-color: #6b8f71;
 }
 
 html.dark-mode .InputWrapper input {
@@ -1001,19 +1016,127 @@ body.gradient-3 {
   margin-top: 20px;
 }
 
-#InputBox {
-  text-align: center;
-  height: 48px;
+.InputWithPriority {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 80%;
   max-width: 70vw;
   min-width: 45vw;
+  margin: 0 auto;
+}
+
+#InputBox {
+  padding-left: 8px;
+  height: 48px;
+  flex: 1;
   border: none;
   border: 2px black solid;
   outline: none;
   border-radius: 15px;
   font-size: 15px;
-  margin: 0 auto;
+}
+
+.ModalPriorityDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.PriorityDropdownToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 48px;
+  min-width: 80px;
+  padding: 0 16px;
+  background-color: #2d3c33;
+  border: 2px solid #6b8f71;
+  border-radius: 15px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease-in-out;
+  font-size: 15px;
+  font-weight: 600;
+  color: #f87171;
+}
+
+.PriorityDropdownToggle[data-priority="P0"] {
+  background-color: rgba(248, 113, 113, 0.2);
+  border-color: #f87171;
+  color: #f87171;
+}
+
+.PriorityDropdownToggle[data-priority="P1"] {
+  background-color: rgba(251, 191, 36, 0.2);
+  border-color: #fbbf24;
+  color: #fbbf24;
+}
+
+.PriorityDropdownToggle[data-priority="P2"] {
+  background-color: rgba(156, 163, 175, 0.2);
+  border-color: #9ca3af;
+  color: #9ca3af;
+}
+
+.PriorityDropdownToggle:hover {
+  transform: scale(1.02);
+}
+
+.PriorityDropdownToggle.open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.PriorityArrow {
+  font-size: 12px;
+  transition: transform 0.3s ease;
+  opacity: 0.8;
+}
+
+.PriorityDropdownToggle.open .PriorityArrow {
+  transform: rotate(180deg);
+}
+
+.PriorityDropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  background-color: #2d3c33;
+  border-top: none;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: none;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.PriorityDropdownMenu.show {
   display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+.PriorityDropdownMenu .PriorityOption {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 0.2s ease;
+  border: none;
+  border-radius: 0;
+  min-width: auto;
+  width: 100%;
+}
+
+.PriorityDropdownMenu .PriorityOption:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.PriorityDropdownMenu .PriorityOption:last-child {
+  border-radius: 0 0 13px 13px;
 }
 
 .ModalAddTaskButton {
@@ -1358,6 +1481,507 @@ li {
 
 li:hover .KebabMenu {
   display: inline-block;
+}
+
+.prioritybox {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background-color: rgba(248, 113, 113, 0.2);
+  color: #f87171;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.prioritybox:hover {
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.prioritybox .chevron {
+  font-size: 12px;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.prioritybox:hover .chevron {
+  opacity: 1;
+  transform: translateY(0.5px);
+}
+
+/* Priority box color variations based on priority class */
+.prioritybox.PriorityZero {
+  background-color: rgba(248, 113, 113, 0.2);
+  color: #f87171;
+  border-color: #f87171;
+}
+
+.prioritybox.PriorityOne {
+  background-color: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  border-color: #fbbf24;
+}
+
+.prioritybox.PriorityTwo {
+  background-color: rgba(156, 163, 175, 0.2);
+  color: #9ca3af;
+  border-color: #9ca3af;
+}
+
+.PriorityContextMenu {
+  position: absolute;
+  width: 80px;
+  background-color: #2d3c33;
+  border: 1px solid #6b8f71;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-family: Arial, sans-serif;
+  display: none;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* Style each menu option */
+.PriorityContextMenu div {
+  padding: 12px 16px;
+  cursor: pointer;
+  color: #ededed;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Hover effect for options */
+.PriorityContextMenu div:hover {
+  background-color: rgba(107, 143, 113, 0.3);
+  transform: scale(1.02);
+}
+
+.PriorityContextMenu div:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.PriorityContextMenu div:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.PriorityContextMenu .PriorityZero {
+  background-color: rgba(248, 113, 113, 0.2);
+  color: #f87171;
+}
+
+.PriorityContextMenu .PriorityZero:hover {
+  background-color: rgba(248, 113, 113, 0.3);
+}
+
+.PriorityContextMenu .PriorityOne {
+  background-color: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+.PriorityContextMenu .PriorityOne:hover {
+  background-color: rgba(251, 191, 36, 0.3);
+}
+
+.PriorityContextMenu .PriorityTwo {
+  background-color: rgba(156, 163, 175, 0.2);
+  color: #9ca3af;
+}
+
+.PriorityContextMenu .PriorityTwo:hover {
+  background-color: rgba(156, 163, 175, 0.3);
+}
+
+/* Light mode styles for PriorityContextMenu */
+html.light-mode .PriorityContextMenu {
+  background-color: #eeeeee;
+  border-color: #6b8f71;
+}
+
+html.light-mode .PriorityContextMenu div {
+  color: #333333;
+}
+
+html.light-mode .PriorityContextMenu div:hover {
+  background-color: rgba(107, 143, 113, 0.2);
+}
+
+.PriorityOption {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid transparent;
+  min-width: 60px;
+  text-align: center;
+  user-select: none;
+}
+
+.PriorityOption:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.PriorityOption:active {
+  transform: scale(0.95);
+}
+
+.PriorityZero {
+  background-color: rgba(248, 113, 113, 0.2);
+  color: #f87171;
+  border-color: #f87171;
+}
+
+.PriorityZero:hover {
+  background-color: rgba(248, 113, 113, 0.3);
+}
+
+.PriorityZero.selected {
+  background-color: rgba(248, 113, 113, 0.4);
+  border-color: #f87171;
+}
+
+.PriorityOne {
+  background-color: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  border-color: #fbbf24;
+}
+
+.PriorityOne:hover {
+  background-color: rgba(251, 191, 36, 0.3);
+}
+
+.PriorityOne.selected {
+  background-color: rgba(251, 191, 36, 0.4);
+  border-color: #fbbf24;
+}
+
+.PriorityTwo {
+  background-color: rgba(156, 163, 175, 0.2);
+  color: #9ca3af;
+  border-color: #9ca3af;
+}
+
+.PriorityTwo:hover {
+  background-color: rgba(156, 163, 175, 0.3);
+}
+
+.PriorityTwo.selected {
+  background-color: rgba(156, 163, 175, 0.4);
+  border-color: #9ca3af;
+}
+
+.WhatsNewModal {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  z-index: 1400;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.WhatsNewModal.show {
+  display: flex;
+  animation: fadeIn 0.3s;
+}
+
+.WhatsNewModalContent {
+  background-color: #2d3c33;
+  border: 2px solid #6b8f71;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(30, 45, 36, 0.4);
+  padding: 36px 32px 28px 32px;
+  max-width: 520px;
+  width: 90vw;
+  color: #ededed;
+  animation: fadeIn 0.3s;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.WhatsNewModalClose {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(237, 237, 237, 0.8);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.WhatsNewModalClose:hover {
+  color: #ededed;
+  background-color: rgba(107, 143, 113, 0.25);
+}
+
+.WhatsNewModalClose:active {
+  background-color: rgba(107, 143, 113, 0.4);
+}
+
+.WhatsNewModalTitle {
+  font-size: 26px;
+  margin-bottom: 10px;
+  color: #ededed;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Paginated pages */
+.WhatsNewModalPages {
+  position: relative;
+  min-height: 200px;
+  margin-bottom: 20px;
+}
+
+.WhatsNewModalPage {
+  display: none;
+  animation: fadeIn 0.25s ease;
+}
+
+.WhatsNewModalPage.active {
+  display: block;
+}
+
+.WhatsNewModalPageTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #e8f0ea;
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
+.WhatsNewModalPageBody {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #ededed;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.WhatsNewModalPageSub {
+  font-size: 14px;
+  color: rgba(237, 237, 237, 0.85);
+  margin: 0;
+  text-align: center;
+}
+
+.WhatsNewModalPriorityDemo {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0 12px 0;
+}
+
+.WhatsNewPriorityBadge {
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.WhatsNewKebab {
+  font-family: ui-monospace, monospace;
+  font-size: 1.1em;
+  opacity: 0.9;
+}
+
+/* Pagination dots */
+.WhatsNewModalPagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.WhatsNewModalDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background-color: rgba(237, 237, 237, 0.35);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.WhatsNewModalDot:hover {
+  background-color: rgba(237, 237, 237, 0.6);
+}
+
+.WhatsNewModalDot.active {
+  background-color: #6b8f71;
+  transform: scale(1.2);
+}
+
+/* Action buttons: Prev, Next, Got it */
+.WhatsNewModalActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.WhatsNewModalPrev {
+  display: none;
+  padding: 10px 18px;
+  border: 1px solid rgba(107, 143, 113, 0.6);
+  border-radius: 10px;
+  background: transparent;
+  color: #6b8f71;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.WhatsNewModalPrev.visible {
+  display: inline-block;
+}
+
+.WhatsNewModalPrev:hover {
+  background-color: rgba(107, 143, 113, 0.15);
+  color: #5e7f64;
+}
+
+.WhatsNewModalNext {
+  padding: 10px 24px;
+  border: none;
+  border-radius: 10px;
+  background-color: #6b8f71;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.WhatsNewModalNext:hover {
+  background-color: #5e7f64;
+  transform: scale(1.03);
+}
+
+.WhatsNewModalDone {
+  display: none;
+}
+
+.WhatsNewModalDone.visible {
+  display: inline-block;
+}
+
+.WhatsNewModalNext.hidden {
+  display: none;
+}
+
+.OkayButton {
+  height: 45px;
+  min-width: 100px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #6b8f71;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.OkayButton:hover {
+  background-color: #5e7f64;
+  transform: scale(1.05);
+}
+
+.OkayButton:active {
+  background-color: #4f6f56;
+  transform: scale(0.97);
+}
+
+/* Light mode styles for WhatsNewModal */
+html.light-mode .WhatsNewModalContent {
+  background-color: #f5f7f5;
+  border-color: #6b8f71;
+}
+
+html.light-mode .WhatsNewModalClose {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+html.light-mode .WhatsNewModalClose:hover {
+  color: #1a1f1c;
+  background-color: rgba(107, 143, 113, 0.2);
+}
+
+html.light-mode .WhatsNewModalTitle {
+  color: #1a1f1c;
+}
+
+html.light-mode .WhatsNewModalPageTitle {
+  color: #1a1f1c;
+}
+
+html.light-mode .WhatsNewModalPageBody,
+html.light-mode .WhatsNewModalPageSub {
+  color: #333333;
+}
+
+html.light-mode .WhatsNewModalDot {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+html.light-mode .WhatsNewModalDot:hover {
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+html.light-mode .WhatsNewModalDot.active {
+  background-color: #6b8f71;
+}
+
+html.light-mode .WhatsNewModalPrev {
+  color: #4a6b4f;
+  border-color: rgba(107, 143, 113, 0.6);
+}
+
+html.light-mode .WhatsNewModalPrev:hover {
+  background-color: rgba(107, 143, 113, 0.12);
+  color: #3d5a42;
 }
 
 /* Signup Page Styling */

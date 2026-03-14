@@ -41,6 +41,10 @@
   <title>Tasks • FocusNest</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="apple-touch-icon" sizes="180x180" href="Assets/Icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="Assets/Icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="Assets/Icons/favicon-16x16.png">
+  <link rel="manifest" href="Assets/Icons/site.webmanifest">
 </head>
 
 <body>
@@ -64,34 +68,51 @@
           <div class="TextBeforeAddingTasks">
             <h2 class="NoTasks" id="NoTasks">Nothing here. Add a task</h2>
             <div class="AddPrompt">
-              <button class="AddPromptButton CommonTaskAdding">Add</button>
+              <button class="AddPromptButton CommonTaskAdding" title="Add Task">Add</button>
             </div>
           </div>
           <div id="AddModal" class="AddModal">
-            <!-- Inside content -->
             <div class="ModalContent">
-              <span class="close">&times;</span>
+              <span class="close" title="Close">&times;</span>
               <h2 class="ModalHeading">Add a Task</h2>
+
               <div class="ModalOptions">
-                <input type="text" id="InputBox" placeholder="Add a new task!" />
+                <div class="InputWithPriority">
+                  <input type="text" id="InputBox" placeholder="Add a new task!" />
+                  <div class="ModalPriorityDropdown">
+                    <div class="PriorityDropdownToggle" id="PriorityDropdownToggle" data-priority="P0">
+                      <span class="SelectedPriority">P0</span>
+                      <i class="fa-solid fa-angle-down PriorityArrow"></i>
+                    </div>
+                    <div class="PriorityDropdownMenu" id="PriorityDropdownMenu">
+                      <div class="PriorityOption PriorityZero" data-priority="P0" title="High Priority">
+                        P0
+                      </div>
+                      <div class="PriorityOption PriorityOne" data-priority="P1" title="Medium Priority">
+                        P1
+                      </div>
+                      <div class="PriorityOption PriorityTwo" data-priority="P2" title="Low Priority">
+                        P2
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <div class="ModalAddTaskButton">
-                <button id="AddTask" class="AddTask">
+                <button id="AddTask" class="AddTask" title="Add Task">
                   Add
                 </button>
               </div>
             </div>
           </div>
-          <!-- <div class="AddPrompt">
-            <button class="AddPromptButton CommonTaskAdding">Add</button>
-          </div> -->
           <ol id="ListContainer">
             <!-- The list will be here -->
           </ol>
           <div class="Clear">
-            <button class="ClearButton">Clear all</button>
+            <button class="ClearButton" title="Delete all Tasks">Clear all</button>
             <div class="AddTasks">
-              <button class="AddTasksButton CommonTaskAdding">
+              <button class="AddTasksButton CommonTaskAdding" title="Add Task">
                 <i class="fa-solid fa-plus Plus"></i>
               </button>
             </div>
@@ -110,25 +131,37 @@
       </div>
       <!-- Context Menu -->
       <div class="ContextMenu">
-        <div class="EditOption">
+        <div class="EditOption" title="Edit Task">
           <i class="fa-solid fa-pen"></i> Edit
         </div>
-        <div class="ChooseColour" id="OpenColorPickerButtonTasks">
-          <i class="fa-solid fa-palette"></i> Choose Colour
+        <div class="ChooseColour" id="OpenColorPickerButtonTasks" title="Choose Color">
+          <i class="fa-solid fa-palette"></i> Choose Color
           <input type="color" id="ColorPickerTasks" style="display: none" />
         </div>
-        <div class="RemoveColour">
-          <i class="fa-solid fa-palette"></i> Remove Colour
+        <div class="RemoveColour" title="Remove Color">
+          <i class="fa-solid fa-palette"></i> Remove Color
         </div>
-        <div class="MarkDone">
+        <div class="MarkDone" title="Mark as Done">
           <i class="fa-regular fa-square-check"></i> Mark Done
         </div>
-        <div class="MarkNotDone">
+        <div class="MarkNotDone" title="Mark as Not Done">
           <i class="fa-regular fa-rectangle-xmark"></i> Mark
           Incomplete
         </div>
-        <div class="RemoveOption">
+        <div class="RemoveOption" title="Remove Task">
           <i class="fa-solid fa-trash"></i> Remove
+        </div>
+      </div>
+
+      <div class="PriorityContextMenu">
+        <div class="PriorityZero" data-priority="P0">
+          <i class="fa-solid fa-pen"></i> P0
+        </div>
+        <div class="PriorityOne" data-priority="P1">
+          <i class="fa-solid fa-pen"></i> P1
+        </div>
+        <div class="PriorityTwo" data-priority="P2">
+          <i class="fa-solid fa-pen"></i> P2
         </div>
       </div>
 
@@ -144,10 +177,48 @@
       </div>
     </div>
 
+    <div class="WhatsNewModal">
+      <div class="WhatsNewModalContent">
+        <button type="button" class="WhatsNewModalClose" aria-label="Close">&times;</button>
+        <h1 class="WhatsNewModalTitle">What's new in FocusNest?</h1>
+
+        <div class="WhatsNewModalPages">
+          <div class="WhatsNewModalPage active" data-page="1">
+            <p class="WhatsNewModalPageTitle">Task priorities</p>
+            <p class="WhatsNewModalPageBody">Set priority when adding a task, or change it from the <span class="WhatsNewKebab">⋮</span> menu on any task.</p>
+            <div class="WhatsNewModalPriorityDemo">
+              <span class="WhatsNewPriorityBadge PriorityZero">P0</span>
+              <span class="WhatsNewPriorityBadge PriorityOne">P1</span>
+              <span class="WhatsNewPriorityBadge PriorityTwo">P2</span>
+            </div>
+            <p class="WhatsNewModalPageSub">P0 = high, P1 = medium, P2 = low.</p>
+          </div>
+          <div class="WhatsNewModalPage" data-page="2">
+            <p class="WhatsNewModalPageTitle">Reorder tasks</p>
+            <p class="WhatsNewModalPageBody">Drag a task by its kebab menu (<span class="WhatsNewKebab">⋮</span>) to reorder your list. Order is saved automatically.</p>
+            <p class="WhatsNewModalPageSub">Grab the <span class="WhatsNewKebab">⋮</span> on the right of a task and drag it up or down.</p>
+          </div>
+        </div>
+
+        <div class="WhatsNewModalPagination">
+          <button type="button" class="WhatsNewModalDot active" aria-label="Page 1" data-page="1"></button>
+          <button type="button" class="WhatsNewModalDot" aria-label="Page 2" data-page="2"></button>
+        </div>
+
+        <div class="WhatsNewModalActions">
+          <button type="button" class="WhatsNewModalPrev" aria-label="Previous">Previous</button>
+          <button type="button" class="WhatsNewModalNext">Next</button>
+          <button type="button" class="OkayButton WhatsNewModalDone">Got it!</button>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
       integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="scripts/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.3/Sortable.min.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/tasks.js"></script>
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>
