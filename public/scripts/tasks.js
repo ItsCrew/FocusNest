@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const PriorityDropdownMenu = document.querySelector(".PriorityDropdownMenu")
     const PriorityDropdownToggle = document.querySelector(".PriorityDropdownToggle")
     const AddPromptButton = document.querySelector(".AddPromptButton")
-    const CurrentVersion = '2.3' //2.3.0
+    const CurrentVersion = '2.2' //2.2.0
     // TASKS PAGE
 
     async function checkAuth() {
@@ -42,15 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } else {
                 if (Logout) {
-
                     Logout.style.display = "flex"
                 }
-
             }
 
             let UserVersion = localStorage.getItem('focusnest_version')
 
-            if (UserVersion < CurrentVersion) {
+            if (UserVersion != CurrentVersion) {
                 WhatsNewModal.classList.add("show")
                 localStorage.setItem('focusnest_version', CurrentVersion)
             } else {
