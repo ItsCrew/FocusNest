@@ -19,7 +19,7 @@ const CreateTask = asyncWrapper(async (req, res) => {
 
 const EditTask = asyncWrapper(async (req, res) => {
     const { id: TaskID } = req.params;
-    const Tasks = await Task.findByIdAndUpdate({ _id: TaskID }, req.body, {
+    const Tasks = await Task.findByIdAndUpdate({ _id: TaskID, user: req.user._id }, req.body, {
         new: true,
         runValidators: true
     })
@@ -31,7 +31,7 @@ const EditTask = asyncWrapper(async (req, res) => {
 
 const DeleteTask = asyncWrapper(async (req, res) => {
     const { id: TaskID } = req.params;
-    const Tasks = await Task.findOneAndDelete({ _id: TaskID })
+    const Tasks = await Task.findOneAndDelete({ _id: TaskID, user: req.user._id })
     if (!Tasks) {
         return res.status(404).json({ msg: `No Task with id: ${TaskID} Found` })
     }

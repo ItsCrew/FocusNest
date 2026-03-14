@@ -179,10 +179,36 @@
 
     <div class="WhatsNewModal">
       <div class="WhatsNewModalContent">
-        <h1 class="WhatsNewModalTitle">Whats new in Focusnest?</h1>
-        <p class="WhatsNewModalBody">You can now re arrange your tasks by dragging on the kebab menu</p>
-        <div class="WhatsNewModalButton">
-          <button class="OkayButton">Awesome!</button>
+        <button type="button" class="WhatsNewModalClose" aria-label="Close">&times;</button>
+        <h1 class="WhatsNewModalTitle">What's new in FocusNest?</h1>
+
+        <div class="WhatsNewModalPages">
+          <div class="WhatsNewModalPage active" data-page="1">
+            <p class="WhatsNewModalPageTitle">Task priorities</p>
+            <p class="WhatsNewModalPageBody">Set priority when adding a task, or change it from the <span class="WhatsNewKebab">⋮</span> menu on any task.</p>
+            <div class="WhatsNewModalPriorityDemo">
+              <span class="WhatsNewPriorityBadge PriorityZero">P0</span>
+              <span class="WhatsNewPriorityBadge PriorityOne">P1</span>
+              <span class="WhatsNewPriorityBadge PriorityTwo">P2</span>
+            </div>
+            <p class="WhatsNewModalPageSub">P0 = high, P1 = medium, P2 = low.</p>
+          </div>
+          <div class="WhatsNewModalPage" data-page="2">
+            <p class="WhatsNewModalPageTitle">Reorder tasks</p>
+            <p class="WhatsNewModalPageBody">Drag a task by its kebab menu (<span class="WhatsNewKebab">⋮</span>) to reorder your list. Order is saved automatically.</p>
+            <p class="WhatsNewModalPageSub">Grab the <span class="WhatsNewKebab">⋮</span> on the right of a task and drag it up or down.</p>
+          </div>
+        </div>
+
+        <div class="WhatsNewModalPagination">
+          <button type="button" class="WhatsNewModalDot active" aria-label="Page 1" data-page="1"></button>
+          <button type="button" class="WhatsNewModalDot" aria-label="Page 2" data-page="2"></button>
+        </div>
+
+        <div class="WhatsNewModalActions">
+          <button type="button" class="WhatsNewModalPrev" aria-label="Previous">Previous</button>
+          <button type="button" class="WhatsNewModalNext">Next</button>
+          <button type="button" class="OkayButton WhatsNewModalDone">Got it!</button>
         </div>
       </div>
     </div>

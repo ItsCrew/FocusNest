@@ -24,6 +24,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const CancelButton = document.querySelector(".CancelButton")
     const WhatsNewModal = document.querySelector(".WhatsNewModal")
     const OkayButton = document.querySelector(".OkayButton")
+    const WhatsNewModalPages = document.querySelectorAll(".WhatsNewModalPage")
+    const WhatsNewModalDots = document.querySelectorAll(".WhatsNewModalDot")
+    const WhatsNewModalPrev = document.querySelector(".WhatsNewModalPrev")
+    const WhatsNewModalNext = document.querySelector(".WhatsNewModalNext")
+    const WhatsNewModalDone = document.querySelector(".WhatsNewModalDone")
     const PriorityContextMenu = document.querySelector(".PriorityContextMenu")
     const PriorityDropdownMenu = document.querySelector(".PriorityDropdownMenu")
     const PriorityDropdownToggle = document.querySelector(".PriorityDropdownToggle")
@@ -50,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (UserVersion != CurrentVersion) {
                 WhatsNewModal.classList.add("show")
+                whatsNewGoToPage(1)
                 localStorage.setItem('focusnest_version', CurrentVersion)
             } else {
                 console.log('up to date');
@@ -644,11 +650,43 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    if (OkayButton) {
-        OkayButton.addEventListener("click", () => {
-            WhatsNewModal.classList.remove("show")
+    function whatsNewGoToPage(pageNum) {
+        const n = Math.max(1, Math.min(2, pageNum))
+        WhatsNewModalPages.forEach((page) => {
+            page.classList.toggle("active", parseInt(page.getAttribute("data-page"), 10) === n)
         })
+        WhatsNewModalDots.forEach((dot) => {
+            dot.classList.toggle("active", parseInt(dot.getAttribute("data-page"), 10) === n)
+        })
+        if (WhatsNewModalPrev) {
+            WhatsNewModalPrev.classList.toggle("visible", n === 2)
+        }
+        if (WhatsNewModalNext) {
+            WhatsNewModalNext.classList.toggle("hidden", n === 2)
+        }
+        if (WhatsNewModalDone) {
+            WhatsNewModalDone.classList.toggle("visible", n === 2)
+        }
     }
+
+    WhatsNewModalDots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+            const page = parseInt(dot.getAttribute("data-page"), 10)
+            whatsNewGoToPage(page)
+        })
+    })
+    if (WhatsNewModalPrev) {
+        WhatsNewModalPrev.addEventListener("click", () => whatsNewGoToPage(1))
+    }
+    if (WhatsNewModalNext) {
+        WhatsNewModalNext.addEventListener("click", () => whatsNewGoToPage(2))
+    }
+    const WhatsNewModalClose = document.querySelector(".WhatsNewModalClose")
+    function closeWhatsNewModal() {
+        WhatsNewModal.classList.remove("show")
+    }
+    if (OkayButton) OkayButton.addEventListener("click", closeWhatsNewModal)
+    if (WhatsNewModalClose) WhatsNewModalClose.addEventListener("click", closeWhatsNewModal)
 
     async function loadTasksFromDatabase() {
         try {
