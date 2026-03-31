@@ -1,4 +1,7 @@
 
+// Global app version
+window.FOCUSNEST_VERSION = "2.2.5";
+
 // Sidebar initialization
 function initializeSidebar() {
     const bars = document.querySelector(".bars");
@@ -67,8 +70,20 @@ function initializeThemeButtons() {
     }
 }
 
+// Apply version text to any sidebar version badges
+function applyVersionBadges() {
+    const version = window.FOCUSNEST_VERSION;
+    if (!version) return;
+
+    const versionBadges = document.querySelectorAll(".SideBarBrandVersion");
+    versionBadges.forEach((el) => {
+        el.textContent = `v${version}`;
+    });
+}
+
 // Initialize shared functionality on DOM ready
 document.addEventListener("DOMContentLoaded", () => {
     initializeSidebar();
     initializeThemeButtons();
+    applyVersionBadges();
 });

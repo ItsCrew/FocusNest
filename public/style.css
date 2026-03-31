@@ -45,8 +45,46 @@ body,
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 25px;
   text-decoration: none;
+}
+
+.SideBarBrand {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-top: 12px;
+}
+
+.SideBarBrandName {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.SideBarBrandVersion {
+  font-size: 12px;
+  font-weight: 600;
+  color: #a3b18a;
+  background-color: rgba(107, 143, 113, 0.15);
+  border: 1px solid rgba(107, 143, 113, 0.7);
+  padding: 5px 12px;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.SideBarBrandDivider {
+  width: 80%;
+  border-top: 1px solid rgba(163, 177, 138, 0.35);
+  margin-top: 6px;
+}
+
+html.light-mode .SideBarBrandVersion {
+  color: #4b6b58;
+  background-color: rgba(107, 143, 113, 0.12);
+  border-color: rgba(107, 143, 113, 0.7);
 }
 
 .Navigation {

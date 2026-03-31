@@ -33,7 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const PriorityDropdownMenu = document.querySelector(".PriorityDropdownMenu")
     const PriorityDropdownToggle = document.querySelector(".PriorityDropdownToggle")
     const AddPromptButton = document.querySelector(".AddPromptButton")
-    const CurrentVersion = '2.2' //2.2.0
+    const CurrentVersion = window.FOCUSNEST_VERSION
+    // Version 3 wll be when i remake this website using react
     // TASKS PAGE
 
     async function checkAuth() {
