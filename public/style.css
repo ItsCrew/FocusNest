@@ -64,6 +64,11 @@ body,
   letter-spacing: 0.3px;
 }
 
+.SideBarBrandName a {
+  text-decoration: none;
+  color: white;
+}
+
 .SideBarBrandVersion {
   font-size: 12px;
   font-weight: 600;
