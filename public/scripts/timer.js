@@ -159,6 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // }
             // Need to add a popup which will only come once and not spam to annoy users. It will tell the users to enable notifications for a better experience
         })
+
+
     }
 
 
@@ -168,11 +170,38 @@ document.addEventListener("DOMContentLoaded", () => {
             Play.style.display = "block"
             pauseTimer();
         })
-    }
-    if (Restart) {
 
+    }
+
+    document.addEventListener("keydown", (event) => {
+        const target = event.target;
+        const isTypingTarget = target instanceof HTMLElement &&
+            (target.tagName === "INPUT" ||
+                target.tagName === "TEXTAREA" ||
+                target.isContentEditable);
+
+        if (isTypingTarget) return;
+
+        if (event.code === "Space" || event.key === "Enter") {
+            event.preventDefault();
+
+            if (interval) {
+                Pause.style.display = "none";
+                Play.style.display = "block";
+                pauseTimer();
+            } else {
+                Pause.style.display = "block";
+                Play.style.display = "none";
+                document.querySelector(`.${Mode}`).classList.add("mode-active");
+                startTimer();
+            }
+        }
+    });
+
+    if (Restart) {
         Restart.addEventListener("click", () => {
             RestartTimer();
+            document.title = `Home • FocusNest`
         });
     }
 
