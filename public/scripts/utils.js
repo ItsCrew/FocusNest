@@ -1,6 +1,6 @@
 
 // Global app version
-window.FOCUSNEST_VERSION = "2.2.5";
+window.FOCUSNEST_VERSION = "2.2.1";
 
 // Sidebar initialization
 function initializeSidebar() {
