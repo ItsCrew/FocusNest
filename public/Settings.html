@@ -50,7 +50,7 @@
     <div class="SideBar">
       <div class="SideBarBrand">
         <div class="SideBarBrandName"><a href="/public/Home.html">FocusNest</a></div>
-        <div class="SideBarBrandVersion">v2.2.1</div>
+        <div class="SideBarBrandVersion"></div>
         <div class="SideBarBrandDivider"></div>
       </div>
       <div class="SideBarOptions">
@@ -109,13 +109,23 @@
         </div>
         <div class="NotificationsSettingsLayout">
           <div class="NotificationSettings">
-            <p class="NotificationSettingsHeading">Alerts & Sounds</p>
-            <hr />
+            <p class="NotificationSettingsHeading"></p>
+            <!-- <hr /> -->
             <div class="NotificationsRow">
               <label>Browser Notifications</label>
               <div class="ToggleWrapper">
                 <label class="toggle-switch">
                   <input type="checkbox" class="BrowserNotificationsSlider" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="NotificationsRow">
+              <label>Auto-Start Next Session</label>
+              <div class="ToggleWrapper">
+                <label class="toggle-switch">
+                  <input type="checkbox" class="AutoStartSlider" checked/>
                   <span class="slider"></span>
                 </label>
               </div>

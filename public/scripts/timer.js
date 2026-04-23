@@ -46,6 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${minutes}:${second}`;
     }
 
+    function setActiveModeButton(mode) {
+        [PomodoroMode, ShortBreak, LongBreak].forEach(btn => {
+            btn.classList.remove("mode-active");
+        });
+        document.querySelector(`.${mode}`).classList.add("mode-active");
+    }
+
 
 
     function startTimer() {
@@ -68,16 +75,24 @@ document.addEventListener("DOMContentLoaded", () => {
                     CycleUpdater(0);
                     Mode = "LongBreak"
                     CompletionSound();
+                } else if (localStorage.getItem('AutoStart') === 'false' && Completion === 0) {
+                    console.log("Autostart is set to false");
+                    TimerCompletionNotification();
+                    Mode = "PomodoroMode";
+                    timeLeft = ModesMap[Mode];
+                    setActiveModeButton(Mode);
+                    CompletionSound();
+                    Timer.textContent = formatTime(timeLeft);
+                    Play.style.display = "block";
+                    Pause.style.display = "none";
+                    return;
                 } else {
                     TimerCompletionNotification();
                     Mode = "PomodoroMode"
                     CompletionSound();
                 }
 
-                [PomodoroMode, ShortBreak, LongBreak].forEach(btn => {
-                    btn.classList.remove("mode-active");
-                });
-                document.querySelector(`.${Mode}`).classList.add("mode-active");
+                setActiveModeButton(Mode);
 
                 timeLeft = ModesMap[Mode];
                 Timer.textContent = formatTime(timeLeft);
@@ -88,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             timeLeft--;
             Timer.textContent = formatTime(timeLeft);
+            document.title = `${formatTime(timeLeft)} • FocusNest`
         }, 1000);
     }
 

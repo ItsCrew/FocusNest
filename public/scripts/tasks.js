@@ -225,6 +225,11 @@ document.addEventListener("DOMContentLoaded", () => {
             UpdateContextMenuOptions();
         });
 
+        li.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            EditTask(li)
+        })
+
         return li;
     }
 
@@ -386,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         saveButton.addEventListener("click", saveUpdatedTask);
         input.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
+            if (event.key === "Enter" || event.key === "Escape"){
                 saveUpdatedTask();
             }
         });

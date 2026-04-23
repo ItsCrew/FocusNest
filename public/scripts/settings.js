@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const TimeInputs = document.querySelectorAll(".PomodoroTimeInput")
     const PomodoroModeSlider = document.querySelector(".PomodoroModeSlider")
     const BrowserNotificationsSlider = document.querySelector(".BrowserNotificationsSlider")
+    const AutoStartSlider = document.querySelector(".AutoStartSlider")
 
     const defaultValues = {
         PomodoroMode: 25,
@@ -21,6 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
         BrowserNotificationsSlider.addEventListener("change", () => {
             const isCheckedNotifications = BrowserNotificationsSlider.checked;
             localStorage.setItem("isChecked", isCheckedNotifications);
+        })
+    }
+
+    if (AutoStartSlider) {
+        const AutoStartSaved = localStorage.getItem('AutoStart')
+
+        if (AutoStartSaved !== null) {
+            AutoStartSlider.checked = (AutoStartSaved === 'true');
+        }
+
+        AutoStartSlider.addEventListener("change", () => {
+            const isCheckedAutoStart = AutoStartSlider.checked;
+            localStorage.setItem("AutoStart", isCheckedAutoStart);
         })
     }
 
