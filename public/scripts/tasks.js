@@ -749,7 +749,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     TextBeforeAddingTasks.style.display = "flex";
                 }
             } else {
-                tasks.forEach(({ _id, Task, Color, Completed, IsActive, Priority }) => CreateTaskElement(Task, Color, Completed, IsActive, Priority, _id));
+                tasks.forEach(({ _id, Task, Color, Completed, Priority, IsActive }) => CreateTaskElement(Task, Color, Completed, IsActive, Priority, _id));
                 if (TextBeforeAddingTasks && clearButton) {
                     clearButton.style.display = "block";
                     AddTasksButton.style.display = "block";
