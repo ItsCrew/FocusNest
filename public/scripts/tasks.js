@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function CreateTaskElement(taskText, color = "", checked = false, IsActive = false, Priority, taskId = null) {
+    function CreateTaskElement(taskText, color = "", checked = false, Priority, IsActive = false, taskId = null) {
         const li = document.createElement("li");
         li.setAttribute("data-checked", checked);
         li.setAttribute("data-priority", Priority);
