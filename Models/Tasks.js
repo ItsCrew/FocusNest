@@ -12,6 +12,10 @@ const TasksSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    IsActive: {
+        type: Boolean,
+        default: false
+    },
     Priority: {
         type: String,
         default: "P0"

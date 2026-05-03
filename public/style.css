@@ -1374,6 +1374,10 @@ li {
   display: none;
 }
 
+/* .SetInactive {
+  display: none;
+} */
+
 .Clear {
   display: flex;
   justify-content: center;

@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const editButton = document.querySelector(".EditOption");
     const MarkDone = document.querySelector(".MarkDone");
     const MarkNotDone = document.querySelector(".MarkNotDone");
+    const SetActive = document.querySelector(".SetActive")
+    const SetInactive = document.querySelector(".SetInactive")
     const removeButton = document.querySelector(".RemoveOption");
     const ColorPickerTasks = document.getElementById("ColorPickerTasks");
     const OpenColorPickerButtonTasks = document.getElementById("OpenColorPickerButtonTasks");
@@ -177,11 +179,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function CreateTaskElement(taskText, color = "", checked = false, Priority, taskId = null) {
+    function CreateTaskElement(taskText, color = "", checked = false, IsActive = false, Priority, taskId = null) {
         const li = document.createElement("li");
         li.setAttribute("data-checked", checked);
         li.setAttribute("data-priority", Priority);
-
+        li.setAttribute("data-isactive", IsActive); 
         if (taskId) {
             li.dataset.taskId = taskId;
         }
@@ -417,7 +419,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function RemoveTileColor(id) {
-
         try {
             if (ContextMenu.currentTask) {
                 ContextMenu.currentTask.style.backgroundColor = "";
@@ -493,6 +494,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    async function SetTaskActive(taskElement) {
+        if (taskElement) {
+            const id = taskElement.dataset.taskId;
+            taskElement.setAttribute("data-isactive", "true");
+            const taskTextElement = taskElement.querySelector(".TaskText");
+            taskTextElement.style.fontWeight = "bold";
+            const isAuthenticated = await window.ensureAuthenticated();
+            if (!isAuthenticated) return;
+            await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: true })
+        }
+    }
+
+    async function SetTaskInactive(taskElement) {
+        if (taskElement) {
+            const id = taskElement.dataset.taskId;
+            taskElement.setAttribute("data-isactive", "false");
+            const taskTextElement = taskElement.querySelector(".TaskText");
+            taskTextElement.style.fontWeight = "normal";
+            const isAuthenticated = await window.ensureAuthenticated();
+            if (!isAuthenticated) return;
+            await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: false })
+        }
+    }
+
     if (ListContainer) {
         ListContainer.addEventListener("click", (event) => {
             if (event.target.classList && event.target.classList.contains("KebabMenu")) {
@@ -549,6 +574,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (MarkNotDone) {
         MarkNotDone.addEventListener("click", () => {
             MarkTaskIncomplete(ContextMenu.currentTask);
+        });
+    }
+
+    if (SetActive) {
+        SetActive.addEventListener("click", () => {
+            SetTaskActive(ContextMenu.currentTask);
+        });
+    }
+
+    if (SetInactive) {
+        SetInactive.addEventListener("click", () => {
+            SetTaskInactive(ContextMenu.currentTask);
         });
     }
 
@@ -712,7 +749,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     TextBeforeAddingTasks.style.display = "flex";
                 }
             } else {
-                tasks.forEach(({ _id, Task, Color, Completed, Priority }) => CreateTaskElement(Task, Color, Completed, Priority, _id));
+                tasks.forEach(({ _id, Task, Color, Completed, IsActive, Priority }) => CreateTaskElement(Task, Color, Completed, IsActive, Priority, _id));
                 if (TextBeforeAddingTasks && clearButton) {
                     clearButton.style.display = "block";
                     AddTasksButton.style.display = "block";
