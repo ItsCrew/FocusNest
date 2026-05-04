@@ -393,7 +393,8 @@ html.light-mode .Restart {
   display: flex;
   gap: 10px;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-top: 4px;
+  margin-bottom: 10px;
   min-height: 20px;
 }
 
@@ -427,6 +428,83 @@ html.light-mode .Restart {
   text-align: center;
   padding: 20px;
   padding-top: 10px;
+  padding-bottom: 12px;
+}
+
+.HomeActiveTask {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: min(480px, 92vw);
+  margin: 8px 16px 22px;
+  padding: 14px 22px 16px;
+  text-align: center;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+}
+
+.HomeActiveTaskLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.HomeActiveTaskTitle {
+  font-size: clamp(15px, 2.1vw, 17px);
+  font-weight: 600;
+  line-height: 1.4;
+  max-width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.HomeActiveTaskTitle.is-placeholder {
+  font-weight: 500;
+}
+
+html.dark-mode .HomeActiveTask {
+  background: rgba(30, 45, 36, 0.55);
+  border: 1px solid rgba(163, 177, 138, 0.28);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+}
+
+html.dark-mode .HomeActiveTaskLabel {
+  color: #a3b18a;
+  opacity: 0.9;
+}
+
+html.dark-mode .HomeActiveTaskTitle {
+  color: #f2f5f3;
+}
+
+html.dark-mode .HomeActiveTaskTitle.is-placeholder {
+  color: #9aaf9f;
+  opacity: 0.95;
+}
+
+html.light-mode .HomeActiveTask {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(75, 107, 88, 0.22);
+  box-shadow: 0 6px 22px rgba(30, 45, 36, 0.08);
+}
+
+html.light-mode .HomeActiveTaskLabel {
+  color: #4b6b58;
+  opacity: 0.95;
+}
+
+html.light-mode .HomeActiveTaskTitle {
+  color: #1e2d24;
+}
+
+html.light-mode .HomeActiveTaskTitle.is-placeholder {
+  color: #5c6b62;
+  opacity: 0.9;
 }
 
 .PlayButton {
@@ -1374,9 +1452,9 @@ li {
   display: none;
 }
 
-/* .SetInactive {
+.SetInactive {
   display: none;
-} */
+}
 
 .Clear {
   display: flex;

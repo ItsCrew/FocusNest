@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const PriorityDropdownMenu = document.querySelector(".PriorityDropdownMenu")
     const PriorityDropdownToggle = document.querySelector(".PriorityDropdownToggle")
     const AddPromptButton = document.querySelector(".AddPromptButton")
+    const HomeActiveTaskTitle = document.querySelector(".HomeActiveTaskTitle")
     const CurrentVersion = window.FOCUSNEST_VERSION
     // Version 3 wll be when i remake this website using react
     // TASKS PAGE
@@ -508,7 +509,10 @@ document.addEventListener("DOMContentLoaded", () => {
             taskTextElement.style.fontWeight = "bold";
             const isAuthenticated = await window.ensureAuthenticated();
             if (!isAuthenticated) return;
+            SetInactive.style.display = "block"
+            SetActive.style.display = "none"
             await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: true })
+            HomeActiveTaskTitle.textContent = taskTextElement.textContent.trim()
         }
     }
 
@@ -520,7 +524,10 @@ document.addEventListener("DOMContentLoaded", () => {
             taskTextElement.style.fontWeight = "normal";
             const isAuthenticated = await window.ensureAuthenticated();
             if (!isAuthenticated) return;
+            SetInactive.style.display = "none"
+            SetActive.style.display = "block"
             await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: false })
+            HomeActiveTaskTitle.textContent = "No task selected"
         }
     }
 
@@ -642,7 +649,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Clear Button Logic
     async function Clear_Tasks() {
-
         try {
             ListContainer.innerHTML = "";
             clearButton.style.display = "none";

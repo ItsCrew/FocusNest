@@ -18,7 +18,8 @@ const TasksSchema = new mongoose.Schema({
     },
     Priority: {
         type: String,
-        default: "P0"
+        enum: ['P0', 'P1', 'P2'],
+        default: 'P0'
     },
     orderIndex: {
         type: Number,
