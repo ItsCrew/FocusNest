@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const tempId = `temp-${Date.now()}`;
             const Priority = PriorityDropdownToggle.getAttribute("data-priority");
-            const taskElement = CreateTaskElement(Task, "", false, Priority, tempId);
+            const taskElement = CreateTaskElement(Task, "", false, Priority, false, tempId);
 
             const isAuthenticated = await window.ensureAuthenticated();
             if (!isAuthenticated) return;
@@ -179,11 +179,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function normalizePriority(value) {
+        if (value === "P0" || value === "P1" || value === "P2") return value;
+        return "P0";
+    }
+
     function CreateTaskElement(taskText, color = "", checked = false, Priority, IsActive = false, taskId = null) {
+        const priority = normalizePriority(Priority);
         const li = document.createElement("li");
         li.setAttribute("data-checked", checked);
-        li.setAttribute("data-priority", Priority);
-        li.setAttribute("data-isactive", IsActive); 
+        li.setAttribute("data-priority", priority);
+        li.setAttribute("data-isactive", String(!!IsActive));
         if (taskId) {
             li.dataset.taskId = taskId;
         }
@@ -192,12 +198,12 @@ document.addEventListener("DOMContentLoaded", () => {
             li.style.backgroundColor = color;
         }
 
-        const priorityClass = Priority === "P0" ? "PriorityZero" : Priority === "P1" ? "PriorityOne" : "PriorityTwo";
+        const priorityClass = priority === "P0" ? "PriorityZero" : priority === "P1" ? "PriorityOne" : "PriorityTwo";
         li.innerHTML = `
         <span class="TaskText"> 
             <i class="fa-regular fa-square"></i> 
             <span class="TaskContent">${taskText}</span> 
-            <span class="prioritybox ${priorityClass}"> ${Priority} <i class="fa-solid fa-circle-chevron-down chevron"> </i> </span>  
+            <span class="prioritybox ${priorityClass}"> ${priority} <i class="fa-solid fa-circle-chevron-down chevron"> </i> </span>  
             <i class="fa-solid fa-ellipsis-vertical KebabMenu" title="Drag to move\nClick to open menu"></i> 
         </span>
 `;
@@ -749,7 +755,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     TextBeforeAddingTasks.style.display = "flex";
                 }
             } else {
-                tasks.forEach(({ _id, Task, Color, Completed, Priority, IsActive }) => CreateTaskElement(Task, Color, Completed, Priority, IsActive, _id));
+                tasks.forEach((doc) => {
+                    const { _id, Task, Color, Completed, Priority, IsActive } = doc;
+                    CreateTaskElement(Task, Color || "", !!Completed, Priority, !!IsActive, _id);
+                });
                 if (TextBeforeAddingTasks && clearButton) {
                     clearButton.style.display = "block";
                     AddTasksButton.style.display = "block";
