@@ -145,6 +145,14 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 RemoveColour.style.display = "block"
             }
+
+            if (ContextMenu.currentTask.getAttribute("data-isactive") === "true") {
+                SetActive.style.display = "none"
+                SetInactive.style.display = "block"
+            } else {
+                SetActive.style.display = "block"
+                SetInactive.style.display = "none"
+            }
         }
     }
 
