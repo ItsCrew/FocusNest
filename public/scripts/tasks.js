@@ -503,9 +503,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function SetTaskActive(taskElement) {
         if (taskElement) {
+            const taskTextElement = taskElement.querySelector(".TaskText");
             const id = taskElement.dataset.taskId;
             taskElement.setAttribute("data-isactive", "true");
-            const taskTextElement = taskElement.querySelector(".TaskText");
             taskTextElement.style.fontWeight = "bold";
             const isAuthenticated = await window.ensureAuthenticated();
             if (!isAuthenticated) return;
@@ -518,16 +518,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function SetTaskInactive(taskElement) {
         if (taskElement) {
+            const taskTextElement = taskElement.querySelector(".TaskText");
             const id = taskElement.dataset.taskId;
             taskElement.setAttribute("data-isactive", "false");
-            const taskTextElement = taskElement.querySelector(".TaskText");
             taskTextElement.style.fontWeight = "normal";
             const isAuthenticated = await window.ensureAuthenticated();
             if (!isAuthenticated) return;
             SetInactive.style.display = "none"
             SetActive.style.display = "block"
             await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: false })
-            HomeActiveTaskTitle.textContent = "No task selected"
         }
     }
 
