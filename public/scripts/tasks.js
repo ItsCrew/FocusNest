@@ -511,8 +511,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isAuthenticated) return;
             SetInactive.style.display = "block"
             SetActive.style.display = "none"
+            // HomeActiveTaskTitle.textContent = taskTextElement.textContent.trim()
             await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: true })
-            HomeActiveTaskTitle.textContent = taskTextElement.textContent.trim()
         }
     }
 
