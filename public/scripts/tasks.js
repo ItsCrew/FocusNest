@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const li = document.createElement("li");
         li.setAttribute("data-checked", checked);
         li.setAttribute("data-priority", priority);
-        li.setAttribute("data-isactive", String(!!IsActive));
+        li.setAttribute("data-isactive", IsActive);
         if (taskId) {
             li.dataset.taskId = taskId;
         }
@@ -503,8 +503,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function SetTaskActive(taskElement) {
         if (taskElement) {
-            const taskTextElement = taskElement.querySelector(".TaskText");
             const id = taskElement.dataset.taskId;
+            const taskTextElement = taskElement.querySelector(".TaskText");
             taskElement.setAttribute("data-isactive", "true");
             taskTextElement.style.fontWeight = "bold";
             const isAuthenticated = await window.ensureAuthenticated();
