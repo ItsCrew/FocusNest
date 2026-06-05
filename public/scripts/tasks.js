@@ -190,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const li = document.createElement("li");
         li.setAttribute("data-checked", checked);
         li.setAttribute("data-priority", priority);
-        li.setAttribute("data-isactive", IsActive);
+        li.setAttribute("data-isactive", String(!!IsActive));
         if (taskId) {
             li.dataset.taskId = taskId;
         }
@@ -487,6 +487,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const isAuthenticated = await window.ensureAuthenticated();
             if (!isAuthenticated) return;
             await axios.patch(`/api/v1/Tasks/${id}`, { Completed: true })
+            // reload tasks to reflect any active -> inactive changes
+            loadTasksFromDatabase();
         }
     }
 
@@ -506,6 +508,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const isAuthenticated = await window.ensureAuthenticated();
             if (!isAuthenticated) return;
             await axios.patch(`/api/v1/Tasks/${id}`, { Completed: false })
+            loadTasksFromDatabase();
         }
     }
 
@@ -519,8 +522,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isAuthenticated) return;
             SetInactive.style.display = "block"
             SetActive.style.display = "none"
+            ContextMenu.style.display = "none";
             // HomeActiveTaskTitle.textContent = taskTextElement.textContent.trim()
             await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: true })
+            // reload to ensure other tasks are cleared on the UI
+            loadTasksFromDatabase();
         }
     }
 
@@ -534,7 +540,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isAuthenticated) return;
             SetInactive.style.display = "none"
             SetActive.style.display = "block"
+            ContextMenu.style.display = "none";
             await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: false })
+            loadTasksFromDatabase();
         }
     }
 

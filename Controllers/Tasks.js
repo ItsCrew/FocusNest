@@ -19,6 +19,16 @@ const CreateTask = asyncWrapper(async (req, res) => {
 
 const EditTask = asyncWrapper(async (req, res) => {
     const { id: TaskID } = req.params;
+    // If the request is trying to set this task active, clear any other active task for this user
+    if (req.body && req.body.IsActive === true) {
+        await Task.updateMany({ user: req.user._id, IsActive: true, _id: { $ne: TaskID } }, { IsActive: false });
+    }
+
+    // If task is being marked completed, ensure it is not active
+    if (req.body && req.body.Completed === true) {
+        req.body.IsActive = false;
+    }
+
     const Tasks = await Task.findByIdAndUpdate({ _id: TaskID, user: req.user._id }, req.body, {
         new: true,
         runValidators: true
