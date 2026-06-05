@@ -218,6 +218,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 iconElement.classList.add("fa-check-square");
             }
         }
+
+        if (IsActive) {
+            const taskTextElement = li.querySelector(".TaskText");
+            taskTextElement.style.fontWeight = "bold";
+            SetInactive.style.display = "block"
+            SetActive.style.display = "none"
+        }
+
         if (ListContainer) {
             ListContainer.appendChild(li);
         }
