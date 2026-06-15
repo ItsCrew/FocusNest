@@ -532,6 +532,9 @@ document.addEventListener("DOMContentLoaded", () => {
             SetActive.style.display = "none"
             ContextMenu.style.display = "none";
             // HomeActiveTaskTitle.textContent = taskTextElement.textContent.trim()
+            if (HomeActiveTaskTitle) {
+                HomeActiveTaskTitle.textContent = "Works"
+            }
             await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: true })
             // reload to ensure other tasks are cleared on the UI
             loadTasksFromDatabase();
