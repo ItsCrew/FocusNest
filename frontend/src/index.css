@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer utilities {
+      /* Chrome, Safari, Edge, Opera */
+      .no-spinner::-webkit-outer-spin-button,
+      .no-spinner::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      .no-spinner[type="number"] {
+        -moz-appearance: textfield;
+      }
+    }
+
+@theme {
+  --color-background-dark: #1e2d24;
+  --color-font-dark: #ededed;
+  --color-headings-dark: #6b8f71;
+  --color-navbg-dark: #2d3c33;
+  --color-background-version-dark: #6b8f7126;
+  --color-border-version-dark: #6b8f71b3;
+  --color-font-version-dark: #a3b18a;
+  --color-navigation-buttons-dark: #bbdbc1;
+  --color-navigation-hover-dark: #4b6b58;
+  --color-activetask-border-dark: #a3b18a47;
+  --color-activetask-bg-dark: #1e2d248c;
+  --color-tasksbox-bg: #101a14;
+  --color-input-bg: #1E1E1E;
+  --color-slider-bg: #4caf50;
+  --color-buttonsfocus-bg: #6b6868;
+  --color-modal-bg: #203829;
+  --color-modal-shadow-bg: #00000099;
+  --color-modal-border: #888;
+  --font-sans: "Franklin Gothic Medium" ,"Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Light mode */
+
+  --color-font-version-light: #1e2d24;
+  --color-background-version-light: #f4f6f4;
+  --color-border-version-light: #6b8f71b3;
+
+  --color-background-light: #f4f6f4;
+  --color-font-light: #1b2e23;
+  --color-font-muted-light: #526b5c;
+  --color-headings-light: #4a7c59;
+  --color-box-bg-light: #ffffff;
+  --color-navbg-light: #ffffff;
+  --color-navigation-buttons-light: #e4eee6;
+  --color-navigation-hover-light: #d1e3d5;
+  --color-input-bg-light: #f7faf7;
+  --color-item-bg-light: #f8faf8;
+  --color-item-hover-light: #edf3ee;
+}
+
+html.dark {
+  background-color: #1e2d24;
+  color: #ededed;
+}
+
+html:not(.dark) {
+  background-color: #f4f6f4;
+  color: #1b2e23;
+}

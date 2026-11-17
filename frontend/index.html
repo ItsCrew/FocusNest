@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FocusNest</title>
+    <script>
+      (function() {
+        try {
+          var storedTheme = localStorage.getItem('theme') || 'system';
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = storedTheme === 'dark' || (storedTheme === 'system' && prefersDark);
+          
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+
+          var bgType = localStorage.getItem('BackgroundOptions');
+          if (bgType === 'solid') {
+            var solidColor = localStorage.getItem('BackgroundSolidColor');
+            if (solidColor) {
+              document.documentElement.style.backgroundColor = solidColor;
+              document.documentElement.style.backgroundImage = 'none';
+            }
+          } else if (bgType === 'gradient') {
+            var gradient = localStorage.getItem('BackgroundGradientColor');
+            if (gradient) {
+              document.documentElement.style.backgroundImage = gradient;
+              document.documentElement.style.backgroundColor = 'transparent';
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
