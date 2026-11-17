@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Background circle so it stands out on any browser tab -->
+  <rect width="48" height="48" rx="12" fill="#1e2d24"/>
+  <!-- Clock Circle -->
+  <circle cx="24" cy="18" r="8" stroke="#72b093" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Clock Hands -->
+  <path d="M24 14V18L26.5 19.5" stroke="#72b093" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Nest Arcs -->
+  <path d="M14 24C16.5 28 31.5 28 34 24" stroke="#72b093" stroke-width="2" stroke-linecap="round"/>
+  <path d="M10 26C13 33 35 33 38 26" stroke="#72b093" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M12 30C15 36.5 33 36.5 36 30" stroke="#72b093" stroke-width="2" stroke-linecap="round"/>
+</svg>

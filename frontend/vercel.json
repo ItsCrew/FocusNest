@@ -1,0 +1,16 @@
+{
+      "rewrites": [
+        {
+          "source": "/api/:path*",
+          "destination": "https://focusnest-api.vercel.app/api/:path*"
+        },
+        {
+          "source": "/auth/:path*",
+          "destination": "https://focusnest-api.vercel.app/auth/:path*"
+        },
+        {
+          "source": "/(.*)",
+          "destination": "/"
+        }
+      ]
+    }
