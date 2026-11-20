@@ -7,12 +7,24 @@ export const AuthProvider = ({ children }) => {
     const isAuthenticated = (Boolean(user))
     const [loading, setLoading] = useState(true)
 
-    const login = () => {
-        window.location.href = '/auth/google'
+    const login = (customReturnTo) => {
+        const isCustomString = typeof customReturnTo === 'string' && customReturnTo.trim() !== '';
+        let returnPath = isCustomString ? customReturnTo : window.location.pathname;
+        if (returnPath === '/signin' || returnPath === '/login') {
+            returnPath = '/tasks';
+        } else if (returnPath === '/welcome') {
+            returnPath = '/home';
+        }
+        window.location.href = `/auth/google?returnTo=${encodeURIComponent(returnPath)}`;
     }
 
-    const logout = () => {
-        window.location.href = '/auth/logout'
+    const logout = (customReturnTo) => {
+        const isCustomString = typeof customReturnTo === 'string' && customReturnTo.trim() !== '';
+        let returnPath = isCustomString ? customReturnTo : window.location.pathname;
+        if (returnPath === '/tasks') {
+            returnPath = '/home';
+        }
+        window.location.href = `/auth/logout?returnTo=${encodeURIComponent(returnPath)}`;
     }
 
     const checkAuthStatus = async () => {
