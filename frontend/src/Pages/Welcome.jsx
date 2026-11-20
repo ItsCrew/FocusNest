@@ -29,9 +29,6 @@ const Welcome = () => {
 
   return (
     <div className='min-h-screen w-full flex flex-col justify-center items-center p-4 relative dark:bg-[#1e2d24] bg-background-light'>
-      <Theme />
-
-      {/* Top Left Back Navigation */}
       <button
         type='button'
         onClick={handleGoBack}
