@@ -19,11 +19,36 @@ export const TasksProvider = ({ children }) => {
     const { isAuthenticated } = useAuth()
 
     const addTasks = async (task, priority) => {
+        const tempId = `temp-${Date.now()}`
+        const optimisticTask = {
+            id: tempId,
+            task,
+            priority,
+            completed: false,
+            isActive: false,
+            color: ''
+        }
+
+        setTasks(prev => [...prev, optimisticTask])
+
         try {
             const { data } = await axios.post('/api/v1/Tasks', { Task: task, Priority: priority })
-            setTasks(prev => [...prev, normalizeTask(data.Tasks)])
+            const realTask = normalizeTask(data.Tasks)
+            setTasks(prev => prev.map(t => {
+                if (t.id === tempId) {
+                    return {
+                        ...realTask,
+                        completed: t.completed,
+                        isActive: t.isActive,
+                        task: t.task,
+                        color: t.color
+                    }
+                }
+                return t
+            }))
         } catch (error) {
             console.error('Error adding task:', error)
+            setTasks(prev => prev.filter(t => t.id !== tempId))
         }
     }
 
@@ -35,6 +60,8 @@ export const TasksProvider = ({ children }) => {
             prev.map((t) => (t.id == id ? { ...t, completed: !t.completed } : t))
         )
 
+        if (String(id).startsWith('temp-')) return
+
         try {
             await axios.patch(`/api/v1/Tasks/${id}`, { Completed: !target.completed })
         } catch (error) {
@@ -44,6 +71,9 @@ export const TasksProvider = ({ children }) => {
 
     const deleteTask = async (id) => {
         setTasks(prev => prev.filter(t => t.id !== id))
+
+        if (String(id).startsWith('temp-')) return
+
         try {
             await axios.delete(`/api/v1/Tasks/${id}`)
         } catch (error) {
@@ -68,6 +98,8 @@ export const TasksProvider = ({ children }) => {
             prev.map((t) => (t.id == id ? { ...t, isActive: !t.isActive } : { ...t, isActive: false }))
         )
 
+        if (String(id).startsWith('temp-')) return
+
         try {
             await axios.patch(`/api/v1/Tasks/${id}`, { IsActive: !target.isActive })
         } catch (error) {
@@ -80,6 +112,8 @@ export const TasksProvider = ({ children }) => {
             prev.map((t) => (t.id === id ? { ...t, task: updatedText } : t))
         )
 
+        if (String(id).startsWith('temp-')) return
+
         try {
             await axios.patch(`/api/v1/Tasks/${id}`, { Task: updatedText })
         } catch (error) {
@@ -91,6 +125,8 @@ export const TasksProvider = ({ children }) => {
         setTasks((prev) =>
             prev.map((t) => (t.id === id ? { ...t, color } : t))
         )
+
+        if (String(id).startsWith('temp-')) return
 
         try {
             await axios.patch(`/api/v1/Tasks/${id}`, { Color: color })
