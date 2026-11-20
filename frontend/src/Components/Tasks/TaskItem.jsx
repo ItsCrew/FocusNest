@@ -125,7 +125,7 @@ const TaskItem = ({ task }) => {
           />
         ) : (
           <p
-            className={`min-w-0 flex-1 [overflow-wrap:anywhere] [word-break:break-word] break-words leading-snug transition-all duration-200 ${
+            className={`min-w-0 flex-1 wrap-anywhere [word-break:break-word] leading-snug transition-all duration-200 ${
               task.completed ? 'line-through text-neutral-400 opacity-60' : 'dark:text-font-dark text-font-light font-medium'
             }`}
           >

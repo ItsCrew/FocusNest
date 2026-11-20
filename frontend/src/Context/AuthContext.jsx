@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import axios from 'axios'
 
 const AuthContext = createContext()
 
@@ -7,12 +8,24 @@ export const AuthProvider = ({ children }) => {
     const isAuthenticated = (Boolean(user))
     const [loading, setLoading] = useState(true)
 
-    const login = () => {
-        window.location.href = '/auth/google'
+    const login = (customReturnTo) => {
+        const isCustomString = typeof customReturnTo === 'string' && customReturnTo.trim() !== '';
+        let returnPath = isCustomString ? customReturnTo : window.location.pathname;
+        if (returnPath === '/signin' || returnPath === '/login') {
+            returnPath = '/tasks';
+        } else if (returnPath === '/welcome') {
+            returnPath = '/home';
+        }
+        window.location.href = `/auth/google?returnTo=${encodeURIComponent(returnPath)}`;
     }
 
-    const logout = () => {
-        window.location.href = '/auth/logout'
+    const logout = (customReturnTo) => {
+        const isCustomString = typeof customReturnTo === 'string' && customReturnTo.trim() !== '';
+        let returnPath = isCustomString ? customReturnTo : window.location.pathname;
+        if (returnPath === '/tasks') {
+            returnPath = '/home';
+        }
+        window.location.href = `/auth/logout?returnTo=${encodeURIComponent(returnPath)}`;
     }
 
     const checkAuthStatus = async () => {
@@ -35,6 +48,20 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         checkAuthStatus()
+
+        const interceptor = axios.interceptors.response.use(
+            (response) => response,
+            (error) => {
+                if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                    setUser(null)
+                }
+                return Promise.reject(error)
+            }
+        )
+
+        return () => {
+            axios.interceptors.response.eject(interceptor)
+        }
     }, [])
 
     return (
